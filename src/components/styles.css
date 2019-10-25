@@ -159,17 +159,13 @@ body {
 
 /* Header section starts here */
 .navBarDefault {
-  background-color: #372476;
+  background-color: #073963;
   border-radius: 0;
   border-top: 0;
   margin-bottom: 0;
   border: 0;
   display: flex;
   align-items: center;
-  box-shadow: -1px 0px 4px 1px rgba(175,158,232,.4);
-  -webkit-box-shadow: -1px 0px 4px 1px rgba(175,158,232,.4);
-  -moz-box-shadow: -1px 0px 4px 1px rgba(175,158,232,.8);
-  -o-box-shadow: -1px 0px 4px 1px rgba(175,158,232,.4);
   z-index: 1;
   padding: 15px;
 }
@@ -323,7 +319,7 @@ pre {
 }
 
 .hideFrontLine  .active >a{
-  background-color: #542683;
+  background-color: #073963;
   color: #fff !important;
 }
 .firstLevel ul li .collapser svg path {
