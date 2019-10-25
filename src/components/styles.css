@@ -55,10 +55,6 @@ body {
   opacity: 1;
 }
 
-.navbar-default .navbar-toggle .icon-bar {
-  background-color: #fff !important;
-}
-
 .navbar-default .navbar-toggle:focus,
 .navbar-default .navbar-toggle:hover {
   background-color: #073963;
@@ -174,7 +170,7 @@ body {
 }
 .navBarBrand {
   height: auto;
-  font-size: 28px;
+  font-size: 18px;
   line-height: 1.5;
   font-weight: 500;
   color: #333 !important;
@@ -382,7 +378,7 @@ pre {
 .titleWrapper {
   display: flex;
   align-items: center;
-  padding-bottom: 40px;
+  padding-bottom: 30px;
   border-bottom: 1px solid rgb(230, 236, 241);
   margin-bottom: 32px;
 }
@@ -394,7 +390,7 @@ pre {
   border-left: 2px solid #073963;
   padding: 0 16px;
   flex: 1;
-  margin-top: 0;
+  margin: 0;
   padding-top: 0;
 }
 
@@ -681,7 +677,7 @@ img {
     align-items: center;
   }
   .navBarBrand {
-    font-size: 20px;
+    font-size: 18px;
     padding: 15px;
     padding-left: 0;
     flex: 1;
@@ -735,7 +731,7 @@ img {
     padding: 10px;
   }
   .navBarBrand {
-    font-size: 22px;
+    font-size: 18px;
   }
   .navBarHeader {
     min-width: 240px;

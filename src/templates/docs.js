@@ -18,22 +18,6 @@ injectGlobal`
   }
 
   html, body {
-    font-family: -apple-system,
-      BlinkMacSystemFont,
-      "Segoe UI",
-      "Roboto",
-      "Roboto Light",
-      "Oxygen",
-      "Ubuntu",
-      "Cantarell",
-      "Fira Sans",
-      "Droid Sans",
-      "Helvetica Neue",
-      sans-serif,
-      "Apple Color Emoji",
-      "Segoe UI Emoji",
-      "Segoe UI Symbol";
-
     font-size: 16px;
   }
 
@@ -44,7 +28,6 @@ injectGlobal`
 `;
 
 const Edit = styled('div')`
-  padding: 1rem 1.5rem;
   text-align: right;
 
   a {
@@ -139,11 +122,6 @@ export default class MDXRuntimeTest extends Component {
         </Helmet>
         <div className={'titleWrapper'}>
           <h1 className={'title'}>{mdx.fields.title}</h1>
-          <Edit className={'mobileView'}>
-            <Link className={'gitBtn'} to={`${docsLocation}/${mdx.parent.relativePath}`}>
-              <img src={gitHub} alt={'Github logo'} /> Edit on GitHub
-            </Link>
-          </Edit>
         </div>
         <div className={'mainWrapper'}>
           <MDXRenderer>{mdx.body}</MDXRenderer>
@@ -151,6 +129,13 @@ export default class MDXRuntimeTest extends Component {
         <div className={'addPaddTopBottom'}>
           <NextPrevious mdx={mdx} nav={nav} />
         </div>
+        <p>
+          <small>
+            <Link className={'gitBtn'} to={`${docsLocation}/${mdx.parent.relativePath}`}>
+              <img src={gitHub} alt={'Github logo'} /> Edit on GitHub
+            </Link>
+          </small>
+        </p>
       </Layout>
     );
   }

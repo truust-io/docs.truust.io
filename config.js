@@ -11,7 +11,11 @@ const config = {
     githubUrl: 'https://github.com/truust-io/docs.truust.io',
     helpUrl: '',
     tweetText: '',
-    links: [{ text: 'Home', link: 'https://truust.io' }],
+    links: [
+      { text: 'Home', link: 'https://truust.io' },
+      { text: 'API Reference', link: 'https://dashboard.truust.io/documentation/api-reference/' },
+      { text: 'Contact Us', link: 'https://truust.io/contact/' }
+    ],
     search: {
       enabled: false,
       indexName: 'Docs',
