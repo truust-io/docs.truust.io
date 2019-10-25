@@ -8,7 +8,7 @@ metaDescription: 'We help you accept more payments, monitor your transactions in
 
 We help you accept more payments, monitor your transactions in real time and build a seamless payments flow. To get up and running right away, follow our quickstart guide or sign up for a test account.
 
-<div class="row css-kgl18x">
+<div class="row hero">
   <div class="col-sm-4 col-sm-offset-4">
     <img src="/b8ff40b8fbd43d33ace0e61e2b925801c940f8a4-25ccbfda-274e-41ee-87d5-592e35053e77.png" />
   </div>

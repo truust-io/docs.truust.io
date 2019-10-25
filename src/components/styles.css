@@ -4,6 +4,10 @@ body {
   font-family: 'Open Sans', sans-serif !important;
 }
 
+.hero {
+  margin-bottom: 30px;
+}
+
 .video-responsive {
   position: relative;
   padding-bottom: 56.2%;
