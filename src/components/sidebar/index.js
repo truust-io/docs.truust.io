@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 import Tree from './tree';
-import {StaticQuery, graphql} from "gatsby";
-import styled from "react-emotion";
-import {ExternalLink} from "react-feather";
+import { StaticQuery, graphql } from 'gatsby';
+import styled from 'react-emotion';
+import { ExternalLink } from 'react-feather';
 import '../styles.css';
 import config from '../../../config';
 
@@ -10,16 +10,16 @@ const forcedNavOrder = config.sidebar.forcedNavOrder;
 
 // eslint-disable-next-line no-unused-vars
 const ListItem = styled(({ className, active, level, ...props }) => {
-    return (
-      <li className={className}>
-        <a href={props.to} {...props} />
-      </li>
-    );
+  return (
+    <li className={className}>
+      <a href={props.to} {...props} />
+    </li>
+  );
 })`
   list-style: none;
 
   a {
-    color: #5C6975;
+    color: #5c6975;
     text-decoration: none;
     font-weight: ${({ level }) => (level === 0 ? 700 : 400)};
     padding: 0.45rem 0 0.45rem ${props => 2 + (props.level || 0) * 1}rem;
@@ -27,7 +27,7 @@ const ListItem = styled(({ className, active, level, ...props }) => {
     position: relative;
 
     &:hover {
-      color: rgb(116, 76, 188) !important;
+      text-decoration: underline;
     }
 
     ${props =>
@@ -62,8 +62,7 @@ const Sidebar = styled('aside')`
     padding-left: 0px;
     background: #0a4e87;
   }
-  @media (min-width: 767px) and (max-width:1023px)
-  {
+  @media (min-width: 767px) and (max-width: 1023px) {
     padding-left: 0;
   }
   @media only screen and (max-width: 1023px) {
@@ -72,7 +71,6 @@ const Sidebar = styled('aside')`
     height: 100vh;
   }
 `;
-
 
 const Divider = styled(props => (
   <li {...props}>
@@ -90,8 +88,7 @@ const Divider = styled(props => (
   }
 `;
 
-
-const SidebarLayout = ({location}) => (
+const SidebarLayout = ({ location }) => (
   <StaticQuery
     query={graphql`
       query {
@@ -107,13 +104,11 @@ const SidebarLayout = ({location}) => (
         }
       }
     `}
-    render={({allMdx}) => {
+    render={({ allMdx }) => {
       return (
         <Sidebar>
           <ul className={'sideBarUL'}>
-            <Tree
-              edges={allMdx.edges}
-            />
+            <Tree edges={allMdx.edges} />
             <Divider />
             {config.sidebar.links.map((link, key) => {
               if (link.link !== '' && link.text !== '') {

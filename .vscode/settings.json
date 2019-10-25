@@ -1,0 +1,7 @@
+{
+  "editor.formatOnSave": true,
+  "prettier.singleQuote": true,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "prettier.printWidth": 100
+}

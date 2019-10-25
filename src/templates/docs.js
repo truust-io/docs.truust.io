@@ -1,9 +1,9 @@
-import React, { Component } from "react";
-import Helmet from "react-helmet";
-import { graphql } from "gatsby";
-import MDXRenderer from "gatsby-plugin-mdx/mdx-renderer";
-import styled, { injectGlobal } from "react-emotion";
-import { Layout, Link } from "$components";
+import React, { Component } from 'react';
+import Helmet from 'react-helmet';
+import { graphql } from 'gatsby';
+import MDXRenderer from 'gatsby-plugin-mdx/mdx-renderer';
+import styled, { injectGlobal } from 'react-emotion';
+import { Layout, Link } from '$components';
 import NextPrevious from '../components/NextPrevious';
 import '../components/styles.css';
 import config from '../../config';
@@ -83,7 +83,7 @@ export default class MDXRuntimeTest extends Component {
 
     const navItems = allMdx.edges
       .map(({ node }) => node.fields.slug)
-      .filter(slug => slug !== "/")
+      .filter(slug => slug !== '/')
       .sort()
       .reduce(
         (acc, cur) => {
@@ -91,7 +91,7 @@ export default class MDXRuntimeTest extends Component {
             return { ...acc, [cur]: [cur] };
           }
 
-          const prefix = cur.split("/")[1];
+          const prefix = cur.split('/')[1];
 
           if (prefix && forcedNavOrder.find(url => url === `/${prefix}`)) {
             return { ...acc, [`/${prefix}`]: [...acc[`/${prefix}`], cur] };
@@ -108,10 +108,8 @@ export default class MDXRuntimeTest extends Component {
       }, [])
       .concat(navItems.items)
       .map(slug => {
-        if(slug) {
-          const { node } = allMdx.edges.find(
-            ({ node }) => node.fields.slug === slug
-          );
+        if (slug) {
+          const { node } = allMdx.edges.find(({ node }) => node.fields.slug === slug);
 
           return { title: node.fields.title, url: node.fields.slug };
         }
@@ -121,25 +119,26 @@ export default class MDXRuntimeTest extends Component {
     const metaTitle = mdx.frontmatter.metaTitle;
     const metaDescription = mdx.frontmatter.metaDescription;
     let canonicalUrl = config.gatsby.siteUrl;
-    canonicalUrl = config.gatsby.pathPrefix !== '/' ? canonicalUrl + config.gatsby.pathPrefix : canonicalUrl;
+    canonicalUrl =
+      config.gatsby.pathPrefix !== '/' ? canonicalUrl + config.gatsby.pathPrefix : canonicalUrl;
     canonicalUrl = canonicalUrl + mdx.fields.slug;
 
     return (
       <Layout {...this.props}>
         <Helmet>
-          {metaTitle ? <title>{metaTitle}</title> : null }
+          {metaTitle ? <title>{metaTitle}</title> : null}
           {metaTitle ? <meta name="title" content={metaTitle} /> : null}
           {metaDescription ? <meta name="description" content={metaDescription} /> : null}
           {metaTitle ? <meta property="og:title" content={metaTitle} /> : null}
           {metaDescription ? <meta property="og:description" content={metaDescription} /> : null}
           {metaTitle ? <meta property="twitter:title" content={metaTitle} /> : null}
-          {metaDescription ? <meta property="twitter:description" content={metaDescription} /> : null}
+          {metaDescription ? (
+            <meta property="twitter:description" content={metaDescription} />
+          ) : null}
           <link rel="canonical" href={canonicalUrl} />
         </Helmet>
         <div className={'titleWrapper'}>
-          <h1 className={'title'}>
-            {mdx.fields.title}
-          </h1>
+          <h1 className={'title'}>{mdx.fields.title}</h1>
           <Edit className={'mobileView'}>
             <Link className={'gitBtn'} to={`${docsLocation}/${mdx.parent.relativePath}`}>
               <img src={gitHub} alt={'Github logo'} /> Edit on GitHub
