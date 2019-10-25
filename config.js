@@ -12,7 +12,7 @@ const config = {
     helpUrl: '',
     tweetText: '',
     links: [
-      { text: 'Home', link: 'https://truust.io' },
+      { text: 'Truust Website', link: 'https://truust.io' },
       { text: 'API Reference', link: 'https://dashboard.truust.io/documentation/api-reference/' },
       { text: 'Contact Us', link: 'https://truust.io/contact/' }
     ],
@@ -26,7 +26,6 @@ const config = {
   },
   sidebar: {
     forcedNavOrder: [
-      '/introduction',
       '/getting-started',
       '/dashboard',
       '/payment-methods',

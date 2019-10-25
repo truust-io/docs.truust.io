@@ -1,32 +1,41 @@
 ---
-title: "Landing Page"
-metaTitle: "Truust"
-metaDescription: "Truust"
+title: 'Overview'
+metaTitle: 'Documentation Truust'
+metaDescription: 'We help you accept more payments, monitor your transactions in real time and build a seamless payments flow'
 ---
 
-Some introduction text. Lists out all the headings from h1 to h6. Easy to customise. Some more text. Additional text.
+## Build your perfect payments flow
 
-# Heading H1
-Heading 1 text
+We help you accept more payments, monitor your transactions in real time and build a seamless payments flow. To get up and running right away, follow our quickstart guide or sign up for a test account.
 
-## Heading H2
-Heading 2 text
+[Getting Started with Truust](/getting-started)
 
-### Heading H3
-Heading 3 text
+Truust helps you create any type of payments flow—from e-commerce to split payments and everything in between.
 
-#### Heading H4
-Heading 4 text
+---
 
-##### Heading H5
-Heading 5 text
+[Dashboard](/dashboard)
 
-###### Heading H6
-Heading 6 text
+Stay on top with your single source for tracking and analyzing your transactions, customer data and revenue.
 
-## Lists
-- Item 1
-- Item 2
-- Item 3
-- Item 4
-- Item 5
+---
+
+[Payment Methods](/payment-methods)
+
+Accept payments from all major card schemes and the most popular alternative payment methods.
+
+---
+
+[Payment Flows](/payment-flows)
+
+Truust provides a powerful API and other tools you need to accept payments, as well as pay sellers and service providers.
+
+---
+
+[Development & Integrations](/developers)
+
+Get up and running with our API and other tools and start developing your Truust integration.
+
+---
+
+Got more questions? Message us in the dashboard or email us at: [hello@truust.io](mailto:hello@truust.io)
