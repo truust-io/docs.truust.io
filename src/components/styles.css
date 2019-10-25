@@ -34,10 +34,7 @@ body {
   margin: 0 15px;
   border-right: 1px solid rgba(255, 255, 255, 0.3);
 }
-.navBarULRight {
-  /* position: absolute;
-  right: 30px; */
-}
+
 .githubIcon {
   width: 15px;
   margin-right: 5px;
@@ -212,6 +209,11 @@ pre {
   background-color: rgb(245, 247, 249); /* !important; */
 }
 
+blockquote p,
+blockquote h2 {
+  margin: 0 !important;
+}
+
 .mainWrapper ul,
 .mainWrapper ol {
   -webkit-padding-start: 40px;
@@ -320,7 +322,7 @@ pre {
   fill: #fff !important;
 }
 .active .collapser > svg > path {
-  fill: #663399 !important;
+  fill: #073963 !important;
 }
 
 .firstLevel ul .item ul .item {
