@@ -41,8 +41,6 @@ The first screen refers to the data of the product or service.
 
 Once you have completed the screen, click on the “Next” button.
 
-![](Untitled-1f64de0b-f658-4b85-951b-55fe6d47fb1e.png)
-
 #### Step 2: Buyer – Payer Details
 
 On this screen, you must enter the purchaser data.
@@ -54,8 +52,6 @@ On this screen, you must enter the purchaser data.
 
 Once completed click on the “Next” button.
 
-![](Untitled-2aa80a62-08a8-48ac-aa9c-4f6d190a7d3c.png)
-
 #### Step 3: Seller – Payee Details
 
 In this screen enter the data of the seller.
@@ -66,8 +62,6 @@ In this screen enter the data of the seller.
 - **Seller Error URL**: Page where we will redirect the merchant if there is a problem collecting payment information. Web addresses should start with http or https.
 
 Once completed click on the "Create Order" button.
-
-![](Untitled-ca951fe2-172e-4bac-b1c1-048804fda4e5.png)
 
 ### Cancel and Refund an Order
 
@@ -89,8 +83,6 @@ To access the Dashboard Pay Ins screen, click on the “Payins” option in 
 
 Once the buyer has made the payment, it will be listed in this section.
 
-![](Untitled-2cb72d83-b7b0-44e4-9d94-8ef57dfb744f.png)
-
 ## Payouts
 
 ### List all Payouts
@@ -98,8 +90,6 @@ Once the buyer has made the payment, it will be listed in this section.
 Payouts are the payments we make to the sellers, they are the payments that come out of the escrow account, the outflows of money.
 
 To access the Dashboard Payouts screen, click on the Payouts option in the left menu.
-
-![](Untitled-4f2a226f-98da-40cb-ba15-edc724488eb9.png)
 
 ## Products
 
@@ -115,5 +105,3 @@ To create a Product, access from the list products page and click on the "New" b
 - **Currency**: specifies the currency that will be used for each order.
 - **Description**: adds a brief description of the product.
 - **Image**: attach an image for the product.
-
-![](Untitled-4eeedfd7-50c0-47c4-89d5-313d94b00d38.png)

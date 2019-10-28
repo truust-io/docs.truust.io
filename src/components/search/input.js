@@ -9,6 +9,7 @@ const SearchIcon = styled(Search)`
   pointer-events: none;
   margin-right: 10px;
 `;
+
 const focus = css`
   background: white;
   color: ${props => props.theme.darkBlue};
@@ -19,6 +20,7 @@ const focus = css`
     margin: 0.3em;
   }
 `;
+
 const collapse = css`
   width: 0;
   cursor: pointer;
@@ -33,6 +35,7 @@ const collapse = css`
     color: ${props => props.theme.gray};
   }
 `;
+
 const expand = css`
   background: ${props => props.theme.veryLightGray};
   width: 6em;
@@ -42,6 +45,7 @@ const expand = css`
     margin: 0.3em;
   }
 `;
+
 const Input = styled.input`
   outline: none;
   border: none;
@@ -52,6 +56,7 @@ const Input = styled.input`
   {hightlight-next-line}
   ${props => (props.collapse ? collapse : expand)};
 `;
+
 const Form = styled.form`
   display: flex;
   flex-direction: row-reverse;

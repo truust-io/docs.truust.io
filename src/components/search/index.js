@@ -78,6 +78,7 @@ const HitsWrapper = styled.div`
     margin-bottom: 0.3em;
   }
 `;
+
 const Root = styled.div`
   position: relative;
   display: grid;
