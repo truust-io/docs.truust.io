@@ -1,6 +1,9 @@
 ---
 title: Overview
+metaTitle: 'Documentation Truust'
+metaDescription: 'We help you accept more payments, monitor your transactions in real time and build a seamless payments flow'
 ---
+
 > ## Build your perfect payments flow
 
 We help you accept more payments, monitor your transactions in real time and build a seamless payments flow. To get up and running right away, follow our quickstart guide or sign up for a test account.
@@ -30,7 +33,7 @@ Stay on top with your single source for tracking and analyzing your transactions
 </div>
 </div>
 
-- - -
+---
 
 <div class="row">
 <div class="col-sm-6">
@@ -49,12 +52,12 @@ Truust provides a powerful API and other tools you need to accept payments, as w
 </div>
 </div>
 
-- - -
+---
 
 [Development & Integrations](/developers)
 
 Get up and running with our API and other tools and start developing your Truust integration.
 
-- - -
+---
 
 Got more questions? Message us in the dashboard or email us at: <mailto:hello@truust.io>
