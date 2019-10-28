@@ -1,5 +1,8 @@
 ---
-title: 'Developers'
+title: Developers
+metaDescription: >-
+  Get up and running with our API and other tools and start developing your
+  Truust integration.
 ---
 
 > Get up and running with our API and other tools and start developing your Truust integration.
