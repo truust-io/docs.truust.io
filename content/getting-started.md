@@ -127,13 +127,19 @@ The account must be activated by its sole owner. If you wish to activate an acco
 
 Digital wallets are a way of storing payment information electronically so consumers can make transactions with a computer or smartphone -⁠- and without needing their physical credit or debit cards. Consumers love digital wallets because they're a secure, seamless way to pay on web and mobile. Businesses love them because they can help drive revenue.
 
-Even that we do not destinguish
+Some digital wallets use card details, but others are linked to a bank account. Either way, the wallet payment method style protects you from handling or tokenizing sensitive payment information.
 
 ### Virtual Wallets
 
 ### Escrow Wallets
 
 ## Currencies
+
+We offer options for both single currency and multi-currency setups. If you transact mostly with local customers, we recommend using the default single currency setup. If you transact with a larger international customer base, we recommend a multi-currency setup.
+
+By default, transactions will be created in your home currency. This method requires no additional work to set up, and if most of your transaction volume is domestic, this is all you need.
+
+Regardless of the currency you present in, customers in our supported countries should be able to purchase from you. If a customer makes a purchase using a different currency, the customer's bank will convert the charge to their home currency, and they will be subject to their bank’s currency conversion rates.
 
 ### Supported Currencies
 
@@ -144,6 +150,8 @@ Currently we support the following currencies:
 - USD
 
 ### Multi-currency Limitations
+
+When you set up your sandbox for the first time, your account will default to processing with a single currency setup – usually with the major currency in your region. If you’d like to test other currencies, you can create new accounts in the sandbox and specify which currency you would like to test for each one.
 
 When any Truust wallet receives payments in multiple currencies, Truust accumulates separate balances for each currency. If possible, Truust automatically sends payouts to an associated bank account for each currency, thereby avoiding exchange fees.
 
