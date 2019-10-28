@@ -1,19 +1,19 @@
-import system from "system-components/emotion";
+import system from 'system-components/emotion';
 
 const Pre = system(
   {
-    is: "pre",
+    is: 'pre',
     fontSize: 1,
     // fontFamily: "mono",
     m: 0
   },
   {
-    overflow: "auto",
+    overflow: 'auto'
   },
-  "fontFamily",
-  "space",
-  "color"
+  'fontFamily',
+  'space',
+  'color'
 );
-Pre.displayName = "Pre";
+Pre.displayName = 'Pre';
 
 export default Pre;
