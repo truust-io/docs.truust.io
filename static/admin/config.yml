@@ -1,5 +1,5 @@
 backend:
-  name: github
+  name: git-gateway
   repo: truust-io/docs.truust.io
 publish_mode: editorial_workflow
 media_folder: static/assets
