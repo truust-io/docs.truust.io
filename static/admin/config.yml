@@ -1,6 +1,7 @@
 backend:
   name: github
   repo: truust-io/docs.truust.io
+publish_mode: editorial_workflow
 media_folder: static/assets
 public_folder: assets
 collections:
@@ -10,4 +11,6 @@ collections:
     create: true
     fields:
       - { name: title, label: Title }
+      - { name: metaTitle, label: 'Meta Title', required: false }
+      - { name: metaDescription, label: 'Meta Description', widget: 'text', required: false }
       - { name: body, label: Body, widget: markdown }
