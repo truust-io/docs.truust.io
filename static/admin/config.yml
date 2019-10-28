@@ -1,0 +1,13 @@
+backend:
+  name: github
+  repo: truust-io/docs.truust.io
+media_folder: static/assets
+public_folder: assets
+collections:
+  - name: content
+    label: Article
+    folder: content
+    create: true
+    fields:
+      - { name: title, label: Title }
+      - { name: body, label: Body, widget: markdown }

@@ -51,7 +51,8 @@ const plugins = [
       anonymize: false
     }
   },
-  'gatsby-plugin-catch-links'
+  'gatsby-plugin-catch-links',
+  'gatsby-plugin-netlify-cms'
 ];
 
 if (
