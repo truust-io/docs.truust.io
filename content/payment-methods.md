@@ -34,7 +34,7 @@ SEPA Direct Debit payments are an asynchronous method, so funds are not immediat
 
 ### Errors in Bank Transfers
 
-## Payment Links (PayByLink)
+## Payment Links
 
 To accept payments via Truust you don’t need to know all the subtleties and perform technical integration. If you have few orders, you may send a link to order payment directly to your clients’ e-mails. Use a "Create Order" button in the Order section of your Dashboard to send a link to payment to a client’s e-mail address or generate it on the special page of the site.
 
