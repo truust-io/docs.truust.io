@@ -42,16 +42,25 @@ Accounts are the different groups with which you can organize your orders. Norma
 
 ### Registering an Account
 
-### Your Account
+The first step to start working with us is **registering your account into our platform**. Remember that we have two environments available for you, so our recommendation is to register first on the Sandbox environment. Once you are satisfied and understand all the basic details of our tool, you are ready to register on the Production environment.
 
-To set up your account click on the **"Accounts"** option in the left menu. Click the **"Accounts"** Settings button for the account you want to set up.
+To create your first account, access to the following links:
+
+- [Sandbox Registration](https://dashboard-sandbox.truust.io/register)
+- [Production Registration](https://dashboard.truust.io/register)
+
+Where you will be asked to complete your user details. If the registration is succesfull, you will be redirected to the following page to create your first account.
+
+### Your Account
 
 A screen with all options related to managing your Truust account will be displayed.
 
-- **Business Name**: account name.
-- **Logo**: company logo.
-- **Payment Method**: payment method that your customers will use to pay for your orders by default. You can set the individual payment method later creating the order.
-- **Fees:** commission value that will be applied by default to your transactions. You can indicate this commission in two ways: as a percentage and as an absolute value.
+- **Business Name**: Account Name. It will be your public identification, so make sure is an understandable reference to your users.
+- **Logo**: Company Logo.
+- **Payment Method**: Payment method that your customers will use to pay for your orders by default. You can set the individual payment method later creating the order.
+- **Fees:** commission value that will be applied by default to your transactions. You can indicate this commission in two ways: as a percentage and as an absolute value. Again, remember that you can set the individual fees for an invdiviual payment when creating the order.
+
+To edit later your account, click on the **"Accounts"** option in the left sidebar. Next, click the **"Accounts Settings""** button for the account you want to set up.
 
 ### Multiples Accounts
 
@@ -74,7 +83,7 @@ Each account can have several team members with different roles and permissions.
 
 You can also access this screen by clicking on **"Team Members"** in the left menu.
 
-In this screen you will be able to carry out all the operations related to the users of your account:
+In this screen you will be able to carry out all the operations related to the team members of your account:
 
 - Add a Team Member to your account
 - Edit current Team Members
