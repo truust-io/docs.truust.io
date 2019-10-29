@@ -67,9 +67,16 @@ You can register webhook URLs and the attached event and we will notify you any 
 
 Webhooks are necessary only for behind-the-scenes transactions. Most requests (e.g., creating links) generate results that are reported synchronously to your code. These do not require webhooks for verification.
 
-### Events
+To configure a webhook, you'll need to:
 
-Here is a complete list with all the available events we will trigger for your account:
+1. Create a webhook destination URL on your server
+2. Create a new webhook in the Dashboard by entering your webhook destination URL and selecting at least one type of event for the webhook to fire on
+3. Set up your server to parse incoming webhooks
+4. Test your webhook handling code
+
+### Notifications
+
+Here is a complete list with all the available notifications we will trigger for your account:
 
 - `Order Published` - The order has been succesfully paid
 - `Order Failed` - There has been an error completing the payment
@@ -81,7 +88,17 @@ Here is a complete list with all the available events we will trigger for your a
 
 ### Registering the Webhook Endpoint
 
-### Webhook Logs
+To create a webhook:
+
+1. Log into the Dashboard corresponding to the environemnt you want to setup
+2. Click on the Webhooks option on the side-menu
+3. Click the Create New Webhook button
+4. Provide your destination URL and your selected notification
+5. Click the Create Webhook button
+
+When adding a webhook in the Dashboard, you'll need to provide a destination URL using a valid HTTPS path. This URL will receive all webhook notifications as POST requests and must be a publicly accessible URL on your site
+
+You are able to create multiple webhook destination URLs in order to route certain webhook notifications to specific endpoints.
 
 ## API Reference
 
