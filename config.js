@@ -7,7 +7,7 @@ const config = {
   header: {
     logo: 'https://truust.io/wp-content/uploads/sites/18/2018/12/favicon-azul.png',
     logoLink: 'https://docs.truust.io',
-    title: 'Truust Documentation',
+    title: 'Documentation | Truust',
     githubUrl: 'https://github.com/truust-io/docs.truust.io',
     helpUrl: '',
     tweetText: '',
@@ -39,7 +39,7 @@ const config = {
     ignoreIndex: true
   },
   siteMetadata: {
-    title: 'Truust Documentation',
+    title: 'Documentation | Truust',
     description:
       'We help you accept more payments, monitor your transactions in real time and build a seamless payments flow.',
     ogImage: null,

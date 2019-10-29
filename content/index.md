@@ -1,15 +1,15 @@
 ---
-title: Truust Documentation
+title: Build your perfect payments flow
 metaTitle: Documentation Truust
 metaDescription: We help you accept more payments, monitor your transactions in real time and build a seamless payments flow
 ---
 
-> ## Build your perfect payments flow
+We help you accept more payments, monitor your transactions in real time and build a seamless payments flow. To get up and running right away, follow our [quickstart guide](/getting-started) or [sign up for a test account](http://dashboard-sandbox.truust.io/).
 
-We help you accept more payments, monitor your transactions in real time and build a seamless payments flow. To get up and running right away, follow our quickstart guide or sign up for a test account.
+---
 
 <div class="row hero">
-  <div class="col-sm-4 col-sm-offset-4">
+  <div class="col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
 
 ![](/assets/logo-truust.png)
 
