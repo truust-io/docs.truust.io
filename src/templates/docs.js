@@ -16,15 +16,6 @@ injectGlobal`
     padding: 0;
     box-sizing: border-box;
   }
-
-  html, body {
-    font-size: 16px;
-  }
-
-  a {
-    transition: color 0.15s;
-    color: #073963;
-  }
 `;
 
 const Edit = styled('div')`

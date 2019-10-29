@@ -25,10 +25,10 @@ To integrate with Truust, your developers will update the existing code for your
 
 There are two Dashboard and API environments:
 
-- [Sandbox Dashboard](http://dashboard-sandbox.truust.io/): Testing environment
-- [Production Dashboard](http://dashboard.truust.io/): Live production environment
+- [Sandbox Dashboard](https://dashboard-sandbox.truust.io/): Testing environment
+- [Production Dashboard](https://dashboard.truust.io/): Live production environment
 
-Both environments are mutually exclusive; they do not interact with each other, and it is possible to have different login credentials for each environment.
+Both environments are mutually exclusive; **they do not interact with each other**, and it is possible to have different login credentials for each environment.
 
 <div className="alert alert-warning">
 
@@ -46,8 +46,8 @@ The first step to start working with us is **registering your account into our p
 
 To create your first account, access to the following links:
 
-- [Sandbox Registration](https://dashboard-sandbox.truust.io/register)
-- [Production Registration](https://dashboard.truust.io/register)
+- [Sandbox Registration](https://dashboard-sandbox.truust.io/register): Testing environment
+- [Production Registration](https://dashboard.truust.io/register): Live production environment
 
 Where you will be asked to complete your user details. If the registration is succesfull, you will be redirected to the following page to create your first account.
 
@@ -140,7 +140,15 @@ Some digital wallets use card details, but others are linked to a bank account. 
 
 ### Virtual Wallets
 
+These kind of wallets can be used by your customers to retain their money and use it in future transactions. Every user will have, at least, one wallet available by default. You can use then this wallet as an origin for making a payment or a destination to receive a payout.
+
+Check our documentation about [Wallet Payments](/payment-flows#walletpayments) to learn about all the available wallet movements we offer throught our API.
+
 ### Escrow Wallets
+
+We use the escrow wallets to protect the funds corresponding to an order. Once the buyer has completed the payment, the funds will be transfered to an escrow wallet, where they will be held until the order is completed. Using these wallets we protect the money from every order, allowing a secure way to protect the funds.
+
+There is no available endpoint in our API to access these wallets, so we can guarantee that there is no way of access to these funds other than following our [Order Lifecycle](/payment-flows#orderlifecycle).
 
 ## Currencies
 

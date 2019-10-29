@@ -1,5 +1,5 @@
 ---
-title: Overview
+title: Truust Documentation
 metaTitle: Documentation Truust
 metaDescription: We help you accept more payments, monitor your transactions in real time and build a seamless payments flow
 ---

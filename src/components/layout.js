@@ -24,7 +24,7 @@ const Content = styled('main')`
   @media only screen and (max-width: 1023px) {
     padding-left: 0;
     margin: 0 10px;
-    margin-top: 3rem;
+    margin-top: 2rem;
   }
 `;
 

@@ -4,9 +4,10 @@ metaDescription: >-
   Get up and running with our API and other tools and start developing your
   Truust integration.
 ---
+
 > Get up and running with our API and other tools and start developing your Truust integration.
 
-- - -
+---
 
 ## Quick Start
 
@@ -35,7 +36,7 @@ To find your public key:
 - Click the "API Developers" tab from the top menu
 - Scroll to the API Keys section and you will see the "Public Key" value
 
-#### Secret key
+#### Secret key
 
 This is your account secret identifier. Each account associated with Truust will have their own secret key. Your secret key should not be shared outside the use of an API call – even with us.
 
@@ -53,9 +54,10 @@ Your secret key will be revealed in the Secret Key field on the same page.
 
 The environment specifies where requests via the API should be directed – sandbox or production. Because you have a different set of API keys for each environment, you'll need to update your code depending on which environment you're working in.
 
-There are both production and sandbox environments for the Control Panel and the API.
+There are both production and sandbox environments for the API. The URL endpoints will be:
 
-
+- https://api-sandbox.truust.io/ - Testing environment
+- https://api.truust.io/ - Live production environment
 
 ## Webhooks
 
@@ -69,13 +71,13 @@ Webhooks are necessary only for behind-the-scenes transactions. Most requests (e
 
 Here is a complete list with all the available events we will trigger for your account:
 
-* `Order Published`
-* `Order Failed`
-* `Order Accepted`
-* `Order Rejected`
-* `Order Cancelled`
-* `Payout Created`
-* `Order Released`
+- `Order Published` - The order has been succesfully paid
+- `Order Failed` - There has been an error completing the payment
+- `Order Accepted` - The order has been accepted by the seller or automatically settled
+- `Order Rejected` - The order has been rejected by the seller
+- `Order Cancelled` - The order has been cancelled for any reason
+- `Payout Created` - The payout associated with the order, has been created and we have the information needeed to proceed with the payout
+- `Order Released` - The order has been released and we have transfered the funds to the assigned payout account
 
 ### Registering the Webhook Endpoint
 
