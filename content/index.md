@@ -26,7 +26,7 @@ Truust helps you create any type of payments flow—from e-commerce to split pay
 </div>
 <div class="col-sm-6">
 
-[Dashboard](/dashboard)
+[The Dashboard](/dashboard)
 
 Stay on top with your single source for tracking and analyzing your transactions, customer data and revenue.
 

@@ -1,5 +1,5 @@
 ---
-title: 'Payment flows'
+title: 'Payment Flows'
 ---
 
 > Truust provides a powerful API and other tools you need to accept payments, as well as pay sellers and service providers.

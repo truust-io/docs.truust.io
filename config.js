@@ -35,12 +35,13 @@ const config = {
     links: [
       { text: 'API Reference', link: 'https://dashboard.truust.io/documentation/api-reference/' }
     ],
-    frontline: false,
+    frontLine: false,
     ignoreIndex: true
   },
   siteMetadata: {
-    title: 'Gatsby Gitbook Boilerplate | Hasura',
-    description: 'Documentation built with mdx. Powering learn.hasura.io ',
+    title: 'Documentation | Truust',
+    description:
+      'We help you accept more payments, monitor your transactions in real time and build a seamless payments flow.',
     ogImage: null,
     docsLocation: 'https://github.com/truust-io/docs.truust.io/tree/master/content',
     favicon: 'https://truust.io/wp-content/uploads/sites/18/2018/12/favicon-azul.png'
