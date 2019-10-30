@@ -1,10 +1,9 @@
 ---
-title: 'Payment Flows'
+title: Payment Flows
 ---
-
 > Truust provides a powerful API and other tools you need to accept payments, as well as pay sellers and service providers.
 
----
+- - -
 
 ## Order Lifecycle
 
@@ -16,17 +15,17 @@ Order statuses can help you understand where your money is in the order lifecycl
 
 The possible order status are the following:
 
-- `DRAFT` - The order has been initiated by someone.
-- `PENDING_PUBLISH` - The order has a buyer indentified and is pending to be paid.
-- `FAILURE` - The order payin has failed. The reason could be checked on the payins list.
-- `PUBLISHED` - The order has been paid and is waiting for acceptance.
-- `CANCELLED` - The order has been cancelled by the buyer. The refund is automatically done.
-- `ACCEPTED` - The order has been accepted by the seller and waiting for payout details.
-- `REJECTED` - The order has been rejected by the seller. The refund will be manually handled.
-- `PENDING_VALIDATE` - The payout details are completed and the order is waiting to be validated by someone (usually you or your platform).
-- `PENDING_RELEASE` - The order has been validated and waiting to be released. This process is automatic and does not require further action by your part.
-- `BLOCKED_RELEASE` - The order release has been blocked for some reason and will not be completed. Contact us for more information.
-- `RELEASED` - The order has been released.
+* `DRAFT` - The order has been initiated by someone.
+* `PENDING_PUBLISH` - The order has a buyer indentified and is pending to be paid.
+* `FAILURE` - The order payin has failed. The reason could be checked on the payins list.
+* `PUBLISHED` - The order has been paid and is waiting for acceptance.
+* `CANCELLED` - The order has been cancelled by the buyer. The refund is automatically done.
+* `ACCEPTED` - The order has been accepted by the seller and waiting for payout details.
+* `REJECTED` - The order has been rejected by the seller. The refund will be manually handled.
+* `PENDING_VALIDATE` - The payout details are completed and the order is waiting to be validated by someone (usually you or your platform).
+* `PENDING_RELEASE` - The order has been validated and waiting to be released. This process is automatic and does not require further action by your part.
+* `BLOCKED_RELEASE` - The order release has been blocked for some reason and will not be completed. Contact us for more information.
+* `RELEASED` - The order has been released.
 
 **About order status**
 You don't need to worry too much about this list. In our Dashboard, our order list follows a color-scheme, where you can easily identify each status.
@@ -35,9 +34,15 @@ You don't need to worry too much about this list. In our Dashboard, our order li
 
 ### Payin to Wallet
 
+![](/assets/payintowallet.png)
+
 ### Payin from Wallet
 
+![](/assets/payinfromwallet.png)
+
 ### Wallet Top-ups
+
+![](/assets/wallettopup.png)
 
 ### One to One
 
