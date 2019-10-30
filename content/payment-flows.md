@@ -1,10 +1,9 @@
 ---
 title: Payment Flows
 ---
-
 > Truust provides a powerful API and other tools you need to accept payments, as well as pay sellers and service providers.
 
----
+- - -
 
 ## Order Lifecycle
 
@@ -22,9 +21,9 @@ Once the order is created, you must share the order's `buyer_link` with the buye
 
 If you prefer to **complete the payment totally on your side** without sending the `buyer_link`, you must create the associated `payin` to this order directly with our API. The available payin types currenyly are:
 
-- `ADDON` - Completes the payment using our card-payments gateway
-- `BANKWIRE` - Completes the payment using a bank transfer
-- `WALLET` - Completes the payment using the funds located at the specified `wallet_id` parameter
+* `ADDON` - Completes the payment using our card-payments gateway
+* `BANKWIRE` - Completes the payment using a bank transfer
+* `WALLET` - Completes the payment using the funds located at the specified `wallet_id` parameter
 
 Once the `payin` is created through our API, you must redirect the user to the `direct_link` property. From this moment, **the user will be redirected from us to the gateway** page to complete the payment without any more interaction with us.
 
@@ -36,8 +35,8 @@ After the payment is done, you should notify the seller about the payment status
 
 Again, if **you prefer to complete this process totally on your side**, you must create the associated `payout` to this order and **accept the order with our API**. The available payout types are:
 
-- `ACCOUNT` - Sends the money to the bank account specified at the `bankaccount_id` API parameter
-- `WALLET` - Sends the money to the wallet specified at the `wallet_id` API parameter
+* `ACCOUNT` - Sends the money to the bank account specified at the `bankaccount_id` API parameter
+* `WALLET` - Sends the money to the wallet specified at the `wallet_id` API parameter
 
 The final status on this process shall be `PENDING_VALIDATE`.
 
@@ -57,17 +56,17 @@ If you choose to perform an `ACCOUNT` payout, expect the money to be available o
 
 Remember. As money travels from the customer to your (or other) bank account, the order is given a series of statuses. The possible order status are the following:
 
-- `DRAFT` - The order has been initiated by someone.
-- `PENDING_PUBLISH` - The order has a buyer indentified and is pending to be paid.
-- `FAILURE` - The order payin has failed. The reason could be checked on the payins list.
-- `PUBLISHED` - The order has been paid and is waiting for acceptance.
-- `CANCELLED` - The order has been cancelled by the buyer. The refund is automatically done.
-- `ACCEPTED` - The order has been accepted by the seller and waiting for payout details.
-- `REJECTED` - The order has been rejected by the seller. The refund will be manually handled.
-- `PENDING_VALIDATE` - The payout details are completed and the order is waiting to be validated by someone (usually you or your platform).
-- `PENDING_RELEASE` - The order has been validated and waiting to be released. This process is automatic and does not require further action by your part.
-- `BLOCKED_RELEASE` - The order release has been blocked for some reason and will not be completed. Contact us for more information.
-- `RELEASED` - The order has been released.
+* `DRAFT` - The order has been initiated by someone.
+* `PENDING_PUBLISH` - The order has a buyer indentified and is pending to be paid.
+* `FAILURE` - The order payin has failed. The reason could be checked on the payins list.
+* `PUBLISHED` - The order has been paid and is waiting for acceptance.
+* `CANCELLED` - The order has been cancelled by the buyer. The refund is automatically done.
+* `ACCEPTED` - The order has been accepted by the seller and waiting for payout details.
+* `REJECTED` - The order has been rejected by the seller. The refund will be manually handled.
+* `PENDING_VALIDATE` - The payout details are completed and the order is waiting to be validated by someone (usually you or your platform).
+* `PENDING_RELEASE` - The order has been validated and waiting to be released. This process is automatic and does not require further action by your part.
+* `BLOCKED_RELEASE` - The order release has been blocked for some reason and will not be completed. Contact us for more information.
+* `RELEASED` - The order has been released.
 
 <div class="alert alert-info">
 
@@ -96,13 +95,21 @@ This movement will transfer the funds from the buyer's wallet to the seller's ba
 
 ### Wallet Top-up
 
-This movement will transfer the funds from the customer`s card or bank account to the own wallet.
+This movement will transfer the funds from the customer's card or bank account to the own wallet.
 
 ![](/assets/wallettopup.png)
 
-### One to One
+### Wallet to Wallet
+
+![](/assets/wallettowallet.png)
 
 ### One to Many
+
+To perform a One to Many payment you have to combine multiples previous movements. In this case, the full operation will be composed of:
+
+\- Wallet Top-up to the customer acting as One.
+
+\- Payin from Wallet
 
 ### Many to One
 
