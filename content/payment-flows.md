@@ -6,6 +6,8 @@ title: Payment Flows
 
 ---
 
+Truust is built following a transaction based flow. **Every movement registered on the platform must be associated with an order** and it must follows the standard lifecycle.
+
 ## Order Lifecycle
 
 Every order follows a standard life-cycle. You need to check and understand how this life-cycle will fit into your platform. Order statuses can help you understand where your money is in the order lifecycle.
@@ -16,7 +18,7 @@ The process will usually start when a new transaction happens in your platform. 
 
 The current order status shall be `DRAFT`.
 
-### 2. Buyer receives the buyer_link and completes the payment
+### 2. Buyer receives the buyer_link and completes the Pay in
 
 Once the order is created, you must share the order's `buyer_link` with the buyer to complete the payment. The process of sharing the link can be done through our own platform for manual use or the notification methods you normally use on your site.
 
@@ -30,7 +32,7 @@ Once the `payin` is created through our API, you must redirect the user to the `
 
 When the buyer finishes the payment process, he is redirected to the URL that you set when creating the order on the step 1 or a default one provided by us. The order status on this moment shall be `PUBLISHED` if the payment is sucessful or `FAILURE` if there is a problem during the payment.
 
-### 3. Seller receives seller_link and accepts the order
+### 3. Seller receives seller_link, accepts the order and completes the Payout
 
 After the payment is done, you should notify the seller about the payment status. The seller must navigate to the `seller_link` provided by us, accept the order and fill the bank account information where the money will be deposited. Once the seller fills in that information, he is redirected to the URL that you set up on step 1.
 
@@ -43,7 +45,7 @@ The final status on this process shall be `PENDING_VALIDATE`.
 
 ### 4. Order is validated.
 
-At this moment, the money will be held and waiting for release. **This action is not automatic** and you are responsible to trigger the validation, depending on your bussines rules. Use [our API](/developers) to complete this action or use our Dashboard [Order Actions](/dashboard#orderactions).
+At this moment, the money will be held and waiting for release. **This action is not automatic and you are responsible to trigger the validation**, depending on your bussines rules. Use [our API](/developers) to complete this action or use our Dashboard [Order Actions](/dashboard#orderactions).
 
 The status at this moment shall be `PENDING_RELEASE`.
 
@@ -76,17 +78,44 @@ You don't need to worry too much about this list. In our Dashboard, our order li
 
 </div>
 
+## Split Payments
+
+Our tool features seamless payment collection, disbursement and management. It helps you reduce your operational costs with our automated split payments. All while tracking the flow of funds from a customer to a recipient, fully recording all transactions.
+
+### Default Split Payments
+
+![](/assets/default.png)
+
+![](/assets/defaultflow.png)
+
+### Multiple Split
+
+To use a multiple split payment, our system provides a set of wallet payments flows.
+
 ## Wallet Payments
 
 Using our standard order life-cycle and our available payin and payout types we offer a variety of money flows to cover almost every need.
 
-This kind of complex movements are only available with our API.
+This kind of complex movements are **only available through our API and it requires you to follow our guidelines** to complete the desired output. Please, read carefully the following descriptions in orders to understand the full cycle.
 
 ### Payin to Wallet
 
-This movement will transfer the funds from the buyer's card or bank account to the seller's wallet.
+This movement will transfer the funds **from the buyer's card or bank account to the seller's wallet**, following a one to one relationship.
+
+Using our API we will require you to create the following objects and relationships:
 
 ![](/assets/payintowallet.png)
+
+Remember to use, at least, the following values when creating the objects:
+
+- **Customer**: You will use the Customer ID for both users and the seller's Wallet ID
+- **Order**: Use the Customer ID releated with every user for the `buyer_id` and the `seller_id` respective fields
+- **Payin**: Create a payin using the `CARD` or `BANKWIRE` type
+- **Payout**: Create a payout using the type `WALLET` and use the seller's Wallet ID
+
+In this case, the money will flow from the buyer's card, stay held on the order's wallet and, finally, released following the next scheme:
+
+![](/assets/payintowalletflow.png)
 
 ### Payin from Wallet
 
@@ -94,11 +123,22 @@ This movement will transfer the funds from the buyer's wallet to the seller's ba
 
 ![](/assets/payinfromwallet.png)
 
+The money will flow as follows:
+
+![](/assets/payinfromwalletflow.png)
+
 ### Wallet Top-up
 
-This movement will transfer the funds from the customer`s card or bank account to the own wallet.
+This movement will transfer the funds from the customer's card or bank account to a wallet, allowing him to top-up his own wallet for future usages:
 
 ![](/assets/wallettopup.png)
+
+- **Customer**: You will only need the Customer ID and Wallet ID for the user performing the top-up
+- **Order**: Use the same Customer ID for the order's `buyer_id` and order's `seller_id` fields
+- **Payin**: Create a payin using the `ADDON` or `BANKWIRE` type
+- **Payout**: Create a payout using the type `WALLET` and the customer's Wallet ID
+
+![](/assets/wallettopupflow.png)
 
 ### One to One
 
@@ -107,14 +147,6 @@ This movement will transfer the funds from the customer`s card or bank account t
 ### Many to One
 
 ### Many to Many
-
-## Split Payments
-
-Our tool features seamless payment collection, disbursement and management. It helps you reduce your operational costs with our automated split payments. All while tracking the flow of funds from a customer to a recipient, fully recording all transactions.
-
-### Default Split Payments
-
-### Multiple Split
 
 ## Escrow Payments
 

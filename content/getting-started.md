@@ -107,7 +107,9 @@ Fill in the fields to create a new user.
 
 To start working with Truust you must verify your account by providing your personal data, product/service data and company legal data.
 
-https://www.youtube.com/watch?v=pe_gRGE3BLE
+---
+
+<iframe width="100%" height="315" src="https://www.youtube.com/embed/pe_gRGE3BLE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 #### Step 1: Your Product Details
 
