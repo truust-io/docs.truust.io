@@ -110,7 +110,7 @@ Remember to use, at least, the following values when creating the objects:
 
 - **Customer**: You will use the Customer ID for both users and the seller's Wallet ID
 - **Order**: Use the Customer ID releated with every user for the `buyer_id` and the `seller_id` respective fields
-- **Payin**: Create a payin using the `CARD` or `BANKWIRE` type
+- **Payin**: Create a payin using the `ADDON` or `BANKWIRE` type
 - **Payout**: Create a payout using the type `WALLET` and use the seller's Wallet ID
 
 In this case, the money will flow from the buyer's card, stay held on the order's wallet and, finally, released following the next scheme:
