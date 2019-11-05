@@ -1,10 +1,10 @@
 ---
 title: Build your perfect payments flow
 metaTitle: Documentation Truust
-metaDescription: We help you accept more payments, monitor your transactions in real time and build a seamless payments flow
+metaDescription: We help you accept more payments, monitor your transactions in real-time and build a seamless payments flow
 ---
 
-We help you accept more payments, monitor your transactions in real time and build a seamless payments flow. To get up and running right away, follow our [quickstart guide](/getting-started) or [sign up for a test account](http://dashboard-sandbox.truust.io/).
+We help you accept more payments, monitor your transactions in real-time and build a seamless payments flow. To get up and running right away, follow our [quickstart guide](/getting-started) or [sign up for a test account](http://dashboard-sandbox.truust.io/).
 
 ---
 
@@ -26,7 +26,7 @@ We help you accept more payments, monitor your transactions in real time and bui
 </div>
 <div class="col-sm-6">
 
-Truust helps you create any type of payments flow—from e-commerce to split payments and everything in between.
+Truust helps you create any type of payment flow—from e-commerce to split payments and everything in between.
 
 </div>
 <div class="col-sm-3">

@@ -16,7 +16,7 @@ Integrating with Truust offers your customers many different ways to pay – and
 
 ### Non-secure Payments
 
-To mitigate transaction dispute events, Truust demands a Deposit against risks. The amount is calculated based on company risk perception, the average amount of payouts and volume of transactions. Based on those parameters, Truust can demand additional funds for your deposit. You will be communicated about these needs. In case you miss the period of deposit, payouts are blocked. Once the deposit is made, payouts are normalised.
+To mitigate transaction dispute events, Truust demands a Deposit against risks. The amount is calculated based on company risk perception, the average amount of payouts and volume of transactions. Based on those parameters, Truust can demand additional funds for your deposit. You will be communicated about these needs. In case you miss the period of deposit, payouts are blocked. Once the deposit is made, payouts are normalized.
 
 ### Card Tokenization
 
@@ -30,15 +30,15 @@ Fraudulent activities can happen to any business, and it is your responsibility 
 
 ### How we handle Bank Transfer Payments
 
-SEPA Direct Debit payments are an asynchronous method, so funds are not immediately available. A payin created from a `BANKWIRE` type can remain in a pending state for up to 14 business days from its creation, though the average time is around five business days. Once the charge is confirmed, its status is updated to succeeded.
+SEPA Direct Debit payments are an asynchronous method, so funds are not immediately available. A payin created from a `BANKWIRE` type can remain pending for up to 14 business days from its creation, though the average time is around five business days. Once the charge is confirmed, its status is updated to succeed.
 
 ### Errors in Bank Transfers
 
 ## Payment Links
 
-To accept payments via Truust you don’t need to know all the subtleties and perform technical integration. If you have few orders, you may send a link to order payment directly to your clients’ e-mails. Use a "Create Order" button in the Order section of your Dashboard to send a link to payment to a client’s e-mail address or generate it on the special page of the site.
+To accept payments via Truust you don’t need to know all the subtleties and perform technical integration. If you have a few orders, you may send a link to order payment directly to your clients’ e-mails. Use a "Create Order" button in the Order section of your Dashboard to send a link to payment to a client’s e-mail address or generate it on the special page of the site.
 
-You and your customers can safely create and share payment links in seconds. Payment links are useful for all kinds of businesses. An accountant sending e-invoices, an e-commerce making their social channels shoppable: the applications are endless.
+You and your customers can safely create and share payment links in seconds. Payment links are useful for all kinds of businesses. An accountant sending e-invoices, e-commerce making their social channels shoppable: the applications are endless.
 
 ### Batch Creation
 

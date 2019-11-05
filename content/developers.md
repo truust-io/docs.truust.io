@@ -27,7 +27,7 @@ Sandbox API keys are different from those in the production environment, so they
 
 #### Public key
 
-This is your account specific public identifier. Each account associated with Truust will have their own public key.
+This is your account-specific public identifier. Each account associated with Truust will have its public key.
 
 To find your public key:
 
@@ -38,7 +38,7 @@ To find your public key:
 
 #### Secret key
 
-This is your account secret identifier. Each account associated with Truust will have their own secret key. Your secret key should not be shared outside the use of an API call – even with us.
+This is your account secret identifier. Each account associated with Truust will have its secret key. Your secret key should not be shared outside the use of an API call – even with us.
 
 To find your secret key:
 
@@ -61,9 +61,9 @@ There are both production and sandbox environments for the API. The URL endpoint
 
 ## Webhooks
 
-Truust can send webhook events that **notify your application any time an event happens on your account**. This is especially useful for events that are not triggered by a direct API request, like order status change and many user actions. This mechanism is also useful for services that are not directly responsible for making an API request, but still need to receive the response from that request.
+Truust can send webhook events that **notify your application any time an event happens on your account**. This is especially useful for events that are not triggered by a direct API request, like order status change and many user actions. This mechanism is also useful for services that are not directly responsible for making an API request, but still, need to receive the response from that request.
 
-You can register webhook URLs and the attached event and we will notify you any time that event happens in your account. When the event occurs we will create a request containing **all the relevant information about what just happened**, via an HTTP `POST` request, to any endpoint URLs that you have defined in your account´s Webhooks settings.
+You can register webhook URLs and the attached event and we will notify you any time that event happens in your account. When the event occurs we will create a request containing **all the relevant information about what just happened**, via an HTTP `POST` request, to any endpoint URLs that you have defined in your account´s Webhooks settings.
 
 Webhooks are necessary only for behind-the-scenes transactions. Most requests (e.g., creating links) generate results that are reported synchronously to your code. These do not require webhooks for verification.
 
@@ -78,19 +78,19 @@ To configure a webhook, you'll need to:
 
 Here is a complete list with all the available notifications we will trigger for your account:
 
-- `Order Published` - The order has been succesfully paid
+- `Order Published` - The order has been successfully paid
 - `Order Failed` - There has been an error completing the payment
 - `Order Accepted` - The order has been accepted by the seller or automatically settled
 - `Order Rejected` - The order has been rejected by the seller
-- `Order Cancelled` - The order has been cancelled for any reason
-- `Payout Created` - The payout associated with the order, has been created and we have the information needeed to proceed with the payout
-- `Order Released` - The order has been released and we have transfered the funds to the assigned payout account
+- `Order Cancelled` - The order has been canceled for any reason
+- `Payout Created` - The payout associated with the order, has been created and we have the information needed to proceed with the payout
+- `Order Released` - The order has been released and we have transferred the funds to the assigned payout account
 
 ### Registering the Webhook Endpoint
 
 To create a webhook:
 
-1. Log into the Dashboard corresponding to the environemnt you want to setup
+1. Log into the Dashboard corresponding to the environment you want to setup
 2. Click on the Webhooks option on the side-menu
 3. Click the Create New Webhook button
 4. Provide your destination URL and your selected notification
@@ -98,7 +98,7 @@ To create a webhook:
 
 When adding a webhook in the Dashboard, you'll need to provide a destination URL using a valid HTTPS path. This URL will receive all webhook notifications as POST requests and must be a publicly accessible URL on your site
 
-You are able to create multiple webhook destination URLs in order to route certain webhook notifications to specific endpoints.
+You can create multiple webhook destination URLs to route certain webhook notifications to specific endpoints.
 
 ## API Reference
 
