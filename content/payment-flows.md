@@ -10,19 +10,21 @@ Truust is built following a transaction based flow. **Every movement registered 
 
 By default, our platform will require an `order` **with a previously created buyer and seller**, following a one to one relationship. This order will have two more relationships: a `payin` and a `payout`.
 
+Please, consider reviewing our [API Reference](/developers#apireference) to get a list with all the available endpoints and parameters.
+
 ## Order Lifecycle
 
-Every order follows a standard life-cycle. You need to check and understand how this life-cycle will fit into your platform. Order statuses can help you understand where your money is in the order lifecycle.
+Every order follows a standard life-cycle. You need to check it and understand how this life-cycle will fit into your platform. Order statuses can help you locate where your money is in the order lifecycle.
 
 ### 1. Order is created
 
-The process will usually start when a new transaction happens in your platform. **You will then create an order through our available methods** indicating a `name`, `amount`, the IDs of both `buyer_id` and `seller_id` and (if you desire) the confirmation and denial URLs for both users (`buyer_*` for the buyer and `seller_*` for the seller). For a complete parameters list check our API Reference.
+The process will usually start when a new transaction happens in your platform. **You will then create an order through our available methods** indicating a `name`, `amount`, the IDs of both `buyer_id` and `seller_id` and (as optional parameters) the confirmation and denial URLs for both users (`buyer_*` for the buyer and `seller_*` for the seller).
 
 The current order status shall be `DRAFT`.
 
 ### 2. Buyer receives the buyer_link and completes the Pay in
 
-Once the order is created, you must share the order's `buyer_link` with the buyer to complete the payment. The process of sharing the link can be done through our own platform for manual use or the notification methods you normally use on your site.
+Once the order is created, you must share the order's `buyer_link` with the buyer to complete the payment. The process of sharing the link can be done through our own platform (using our Dashboard) or the notification methods you normally use on your site, like push or email.
 
 If you prefer to **complete the payment totally on your side** without sending the `buyer_link`, you must create the associated `payin` to this order directly with our API. The available payin types currenyly are:
 
@@ -30,13 +32,15 @@ If you prefer to **complete the payment totally on your side** without sending t
 - `BANKWIRE` - Completes the payment using a bank transfer
 - `WALLET` - Completes the payment using the funds located at the specified `wallet_id` parameter
 
-Once the `payin` is created through our API, you must redirect the user to the `direct_link` property. From this moment, **the user will be redirected from us to the gateway** page to complete the payment without any more interaction with us.
+Once the `payin` is created through our API, you must redirect the user to the `direct_link` property. From this moment, **the user will be redirected again from our site to the payments gateway** to complete the transaction. We won't have any interaction with the user in the payments page.
 
-When the buyer finishes the payment process, he is redirected to the URL that you set when creating the order on the step 1 or a default one provided by us. The order status on this moment shall be `PUBLISHED` if the payment is sucessful or `FAILURE` if there is a problem during the payment.
+When the buyer finishes the payment process, **he will be redirected to the URL that you set** when creating the order (Step 1) or a default one provided by us.
+
+The order status on this moment shall be `PUBLISHED` if the payment is sucessful or `FAILURE` if there is a problem during the payment. In this case, **you can use the same link to allow the user a new try** without the need to create a new order/payin.
 
 ### 3. Seller receives seller_link, accepts the order and completes the Payout
 
-After the payment is done, you should notify the seller about the payment status. The seller must navigate to the `seller_link` provided by us, accept the order and fill the bank account information where the money will be deposited. Once the seller fills in that information, he is redirected to the URL that you set up on step 1.
+After the payment is done, you should notify the seller about the payment status. The seller must navigate to the `seller_link` provided by us, accept the order and fill the bank account information where the money will be deposited. Once the seller fills in that information, he is redirected to the URL that you set on Step 1.
 
 Again, if **you prefer to complete this process totally on your side**, you must create the associated `payout` to this order and **accept the order with our API**. The available payout types are:
 
@@ -53,9 +57,9 @@ The status at this moment shall be `PENDING_RELEASE`.
 
 ### 5. Order is released.
 
-Once we received the order to release the payout, we begin the process to close the order. Depending on your payout type the time expected to the funds be available will vary. If you choose to perform a `WALLET` payout, the funds will be available almost instantly.
+**Once we received the validation** to release the order, we begin the process to complete the payout. Depending on your payout type the time expected to the funds to be available will vary.
 
-If you choose to perform an `ACCOUNT` payout, expect the money to be available on the specified bank account in between 24-72h.
+If you choose to perform a `WALLET` payout, the funds will be available almost instantly. If you choose to perform an `ACCOUNT` payout, expect the money to be available on the specified bank account in between 24-72h.
 
 ## Order Status
 
@@ -88,7 +92,7 @@ Our tool features seamless payment collection, disbursement and management. It h
 
 Truust will use your **account default's payment method** (Card or Bankwire) for the order's `payin` and bank account for the order's `payout`.
 
-Using this configuration, the **standard relationship** between customers, orders, pay ins and payouts will result in something like:
+Using this default configuration, the **standard relationship** between customers, orders, pay ins and payouts will result in something like:
 
 ![](/assets/default.png)
 
@@ -107,7 +111,7 @@ Once we get the validation to release the payment, **we will split the funds in 
 
 **Note about fees**:
 
-Remember, **fees are not mandatory on every order** and you can perform the default split without any commissions applied. In this case, the complete payin amount will be transfered as a payout amount.
+Remember, **fees are not mandatory on every order** and you can perform the default split without any commissions applied. In this case, the total payin amount will be transfered as a payout amount.
 
 This condition is valid to every movement listed on the [wallet payments](/payment-flows#walletpayments).
 
@@ -117,7 +121,7 @@ This condition is valid to every movement listed on the [wallet payments](/payme
 
 To use a multiple split payment, our system provides a set of [wallet payments](/payment-flows#walletpayments) flows that you will have to combine in order to acomplish a multiple split.
 
-Check the [use cases](/payment-flows#usecases) section in order to get more information about how multiple splits work.
+Check the [use cases](/payment-flows#usecases) section in order to get more information about how multiple splits works.
 
 ## Wallet Payments
 
@@ -140,7 +144,7 @@ Remember to use, at least, the following values when creating the objects:
 - **Payin**: Create a payin using the `ADDON` or `BANKWIRE` type
 - **Payout**: Create a payout using the type `WALLET` and use the seller's Wallet ID
 
-In this case, the money will flow from the buyer's card, stay held on the order's wallet and, finally, released following the next scheme:
+In this case, the money will flow from the buyer's card, stay held on the order's wallet and, finally, released to the seller's wallet following the next scheme:
 
 ![](/assets/payintowalletflow.png)
 
