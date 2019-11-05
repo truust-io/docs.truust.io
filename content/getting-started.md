@@ -13,13 +13,13 @@ We offer a variety of products that make it easy for you to accept payments in y
 
 ### The Dashboard
 
-The Dashboard is our user-friendly interface focused on the tools you need to keep your business running smoothly – allowing you to manually set up orders, manage transactions, pull reports and more. [Learn more about the Dashboard](/dashboard).
+The Dashboard is our user-friendly interface focused on the tools you need to keep your business running smoothly – allowing you to manually **set up orders, manage transactions, pull reports and more**. [Learn more about the Dashboard](/dashboard).
 
 ### The API
 
 The API is the architecture of our gateway – our complete set of code that powers everything we do, from payments to customer management.
 
-To integrate with Truust, your developers will update the existing code for your website or mobile app to make requests to our API, allowing you to automate processes and customize the way you interact with the gateway. Our [developer docs](/developers) will guide your developers through everything they'll need for a complete integration.
+To integrate with Truust, your developers will update the existing code for your website or mobile app to make requests to our API, allowing you to **automate processes and customize the way you interact with the gateway**. Our [developer docs](/developers) will guide your developers through everything they'll need for a complete integration.
 
 ## Environments
 
@@ -42,25 +42,29 @@ Accounts are the different groups with which you can organize your orders. Norma
 
 ### Registering an Account
 
-The first step to start working with us is **registering your account into our platform**. Remember that we have two environments available for you, so our recommendation is to register first on the Sandbox environment. Once you are satisfied and understand all the basic details of our tool, you are ready to register on the Production environment.
+The first step to start working with us is **registering your account into our platform**.
+
+Remember that we have two environments available for you, so our recommendation is to **register first on the Sandbox environment to test the platform**. Once you are satisfied and understand all the basic details of our tool, you are ready to register on the Production environment.
 
 To create your first account, access to the following links:
 
 - [Sandbox Registration](https://dashboard-sandbox.truust.io/register): Testing environment
 - [Production Registration](https://dashboard.truust.io/register): Live production environment
 
-Where you will be asked to complete your user details. If the registration is succesfull, you will be redirected to the following page to create your first account.
+Where you will be asked to complete your user details.
+
+If the registration is succesfull, you will be redirected to the following page to create your first account.
 
 ### Your Account
 
 A screen with all options related to managing your Truust account will be displayed.
 
-- **Business Name**: Account Name. It will be your public identification, so make sure is an understandable reference to your users.
-- **Logo**: Company Logo.
+- **Business Name**: It will be your account name. It will be your public identification, so make sure is an understandable reference to your users.
+- **Logo**: Company Logo. It will be displayed on your checkout page if you use the payments links feature.
 - **Payment Method**: Payment method that your customers will use to pay for your orders by default. You can set the individual payment method later creating the order.
 - **Fees:** commission value that will be applied by default to your transactions. You can indicate this commission in two ways: as a percentage and as an absolute value. Again, remember that you can set the individual fees for an invdiviual payment when creating the order.
 
-To edit later your account, click on the **"Accounts"** option in the left sidebar. Next, click the **"Accounts Settings""** button for the account you want to set up.
+To edit later your account, click on the **"Accounts"** option in the left sidebar. Then, click the **"Accounts Settings""** button for the account you want to set up.
 
 ### Multiples Accounts
 

@@ -8,6 +8,8 @@ title: Payment Flows
 
 Truust is built following a transaction based flow. **Every movement registered on the platform must be associated with an order** and it must follows the standard lifecycle.
 
+By default, our platform will require an `order` **with a previously created buyer and seller**, following a one to one relationship. This order will have two more relationships: a `payin` and a `payout`.
+
 ## Order Lifecycle
 
 Every order follows a standard life-cycle. You need to check and understand how this life-cycle will fit into your platform. Order statuses can help you understand where your money is in the order lifecycle.
@@ -84,13 +86,38 @@ Our tool features seamless payment collection, disbursement and management. It h
 
 ### Default Split Payments
 
+Truust will use your **account default's payment method** (Card or Bankwire) for the order's `payin` and bank account for the order's `payout`.
+
+Using this configuration, the **standard relationship** between customers, orders, pay ins and payouts will result in something like:
+
 ![](/assets/default.png)
+
+In this case, the money will be transferred and splitted following the next scheme:
 
 ![](/assets/defaultflow.png)
 
+As you can see, the money will be charged from the buyer's card and transferred to the [order's wallet](/getting-started#wallets) once the payment is succesfully completed. In this moment, **the funds will be retained** until you [validate the order](/payment-flows/).
+
+Once we get the validation to release the payment, **we will split the funds in two parts**:
+
+- **Amount**: This value will correspond to the total amount to be sent to the seller.
+- **Account Fees**: This value will correspond to the total amount transferred to your account's wallet corresponding to this order. Use `fee_amount = 0` to disable the fees on any specific order and override your [default fees](/getting-started#fees).
+
+<div class="alert alert-warning">
+
+**Note about fees**:
+
+Remember, **fees are not mandatory on every order** and you can perform the default split without any commissions applied. In this case, the complete payin amount will be transfered as a payout amount.
+
+This condition is valid to every movement listed on the [wallet payments](/payment-flows#walletpayments).
+
+</div>
+
 ### Multiple Split
 
-To use a multiple split payment, our system provides a set of wallet payments flows.
+To use a multiple split payment, our system provides a set of [wallet payments](/payment-flows#walletpayments) flows that you will have to combine in order to acomplish a multiple split.
+
+Check the [use cases](/payment-flows#usecases) section in order to get more information about how multiple splits work.
 
 ## Wallet Payments
 
@@ -100,7 +127,7 @@ This kind of complex movements are **only available through our API and it requi
 
 ### Payin to Wallet
 
-This movement will transfer the funds **from the buyer's card or bank account to the seller's wallet**, following a one to one relationship.
+This movement will transfer the funds **from the buyer's card or bank account to the seller's wallet**.
 
 Using our API we will require you to create the following objects and relationships:
 
