@@ -1,5 +1,6 @@
 ---
-title: 'Payment Methods'
+title: Payment Methods
+metaTitle: Payment Methods
 ---
 
 > Accept payments from all major card schemes and the most popular alternative payment methods.
