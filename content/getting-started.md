@@ -1,8 +1,9 @@
 ---
-title: 'Getting Started with Truust'
+title: Getting Started with Truust
 ---
+> Truust helps you create any type of payments flow—from e-commerce to split payments and everything in between.
 
-> Truust helps you create any type of payments flow—from e-commerce to split payments and everything in between
+
 
 ## Overview
 
@@ -11,9 +12,13 @@ We offer a variety of products that make it easy for you to accept payments in y
 1. The Dashboard
 2. The Application Programming Interface (API)
 
+
+
 ### The Dashboard
 
 The Dashboard is our user-friendly interface focused on the tools you need to keep your business running smoothly – allowing you to manually **set up orders, manage transactions, pull reports and more**. [Learn more about the Dashboard](/dashboard).
+
+
 
 ### The API
 
@@ -21,12 +26,14 @@ The API is the architecture of our gateway – our complete set of code that pow
 
 To integrate with Truust, your developers will update the existing code for your website or mobile app to make requests to our API, allowing you to **automate processes and customize the way you interact with the gateway**. Our [developer docs](/developers) will guide your developers through everything they'll need for complete integration.
 
+
+
 ## Environments
 
 There are two Dashboard and API environments:
 
-- [Sandbox Dashboard](https://dashboard-sandbox.truust.io/): Testing environment
-- [Production Dashboard](https://dashboard.truust.io/): Live production environment
+* [Sandbox Dashboard](https://dashboard-sandbox.truust.io/): Testing environment
+* [Production Dashboard](https://dashboard.truust.io/): Live production environment
 
 Both environments are mutually exclusive; **they do not interact with each other**, and it is possible to have different login credentials for each environment.
 
@@ -36,50 +43,66 @@ Both environments are mutually exclusive; **they do not interact with each other
 
 </div>
 
+
+
 ## Accounts
 
 Accounts are the different groups with which you can organize your orders. Normally, an **account will correspond to the business** with which you want to use our platform.
 
+Each account can have several team members with different roles and permissions. 
+
+Our tool becomes the portal to include all the participants from your company in the process. For example, you can have a customer service profile, consulting our panel and reviewing the status of orders and this way giving support to your customers.
+
+
+
 ### Registering an Account
 
-The first step to start working with us is **registering your account into our platform**.
+The first step to start working with us is **creating an account into our platform**.
 
 Remember that we have two environments available for you, so our recommendation is to **register first on the Sandbox environment to test the platform**. Once you are satisfied and understand all the basic details of our tool, you are ready to register on the Production environment.
 
 To create your first account, access to the following links:
 
-- [Sandbox Registration](https://dashboard-sandbox.truust.io/register): Testing environment
-- [Production Registration](https://dashboard.truust.io/register): Live production environment
+* [Sandbox Registration](https://dashboard-sandbox.truust.io/register): Testing environment
+* [Production Registration](https://dashboard.truust.io/register): Live production environment
 
-Where you will be asked to complete your user details.
+In the **Production Registration** you will be asked to complete your user and company details.
 
 If the registration is successful, you will be redirected to the following page to create your first account.
+
+
 
 ### Your Account
 
 A screen with all options related to managing your Truust account will be displayed.
 
-- **Business Name**: It will be your account name. It will be your public identification, so make sure is an understandable reference to your users.
-- **Logo**: Company Logo. It will be displayed on your checkout page if you use the payments links feature.
-- **Payment Method**: Payment method that your customers will use to pay for your orders by default. You can set the individual payment method later creating the order.
-- **Fees:** commission value that will be applied by default to your transactions. You can indicate this commission in two ways: as a percentage and as an absolute value. Again, remember that you can set the individual fees for an individual payment when creating the order.
+* **Business Name**: It will be your account name. It will be your public identification, so make sure is an understandable reference to your users.
+* **Logo**: Company Logo. It will be displayed on your checkout page if you use the payments links feature.
+* **Payment Method**: Payment method that your customers will use to pay for your orders by default. You can set the individual payment method later creating the order.
+* **Fees:** commission value that will be applied by default to your transactions. You can indicate this commission in two ways: as a percentage and as an absolute value. Again, remember that you can set the individual fees for an individual payment when creating the order.
 
 To edit later your account, click on the **"Accounts"** option in the left sidebar. Then, click the **"Accounts Settings"** button for the account you want to set up.
 
+
+
 ### Multiples Accounts
 
-You can create additional Truust accounts associated with your email address. You might create some accounts yourself, and might be given access to other accounts as a team member. To create a new account, click on the name of your current Truust account at the lower-left corner, and select **New account**.
+You can create additional Truust accounts associated with your email address. 
+
+You might create some accounts yourself, and might be given access to other accounts as a team member. To create a new account, click on the name of your current Truust account at the lower-left corner, and select **New account**.
 
 You must use separate Truust accounts for projects, websites, or businesses that operate independently from one another. When you activate a new account, it is subject to Truust’s standard policies and pricing—it does not inherit any special status or other similar considerations that may apply to your existing account.
 
 Using additional accounts has several benefits:
 
-- **Separate tax and legal entity information:** Each account can only be associated with the tax ID and legal entity of one business. If you operate multiple businesses that have separate tax ID information (e.g., separate legal entities), you must create additional accounts for each.
-- **Unique statement descriptor and public business information**Using the same Truust account for separate businesses can confuse the public business information used is the same for both. For example, a customer who purchases from your business “XYZ” may see a charge from your business “ABC” on their statement, potentially resulting in a dispute. Each additional account has its public information to accurately describe your business and payments.
-- **Easier reporting and reconciliation**Separating the payments processed by your businesses make it easier to find payments, create and export reports, and reconcile payouts to your bank account.
-- **Payouts to separate bank accounts**Each additional account can use a separate bank account for payouts (although you can use the same bank account if you wish).
+* **Separate tax and legal entity information:** Each account can only be associated with the tax ID and legal entity of one business. If you operate multiple businesses that have separate tax ID information (e.g., separate legal entities), you must create additional accounts for each.
+* **Unique statement descriptor and public business information**Using the same Truust account for separate businesses can confuse the public business information used is the same for both. For example, a customer who purchases from your business “XYZ” may see a charge from your business “ABC” on their statement, potentially resulting in a dispute. Each additional account has its public information to accurately describe your business and payments.
+* **Easier reporting and reconciliation**Separating the payments processed by your businesses make it easier to find payments, create and export reports, and reconcile payouts to your bank account.
+* **Payouts to separate bank accounts**Each additional account can use a separate bank account for payouts (although you can use the same bank account if you wish).
 
 If you need to create many new accounts—or provision accounts automatically—while maintaining centralized reporting and management, you may wish to consider using tags instead of using multiple conventional Truust accounts.
+
+
 
 ### Team Members and Roles
 
@@ -89,9 +112,11 @@ You can also access this screen by clicking on **"Team Members"** in the left me
 
 In this screen you will be able to carry out all the operations related to the team members of your account:
 
-- Add a Team Member to your account
-- Edit current Team Members
-- Delete a Team Member
+* Add a Team Member to your account
+* Edit current Team Members
+* Delete a Team Member
+
+
 
 #### Add a Team Member
 
@@ -99,44 +124,54 @@ Click the "Create Team Member" button at the top right of the screen.
 
 Fill in the fields to create a new user.
 
-- **Name**: Name of the new user.
-- **Role**: the role we give it.
-  - **Manager**: manages the users of the account (add, delete users and assign permissions).
-  - **Customer Service**: has reduced permissions. You can see the data but not modify it.
-- **Email**: Email of the new user.
-- **Countries**: country or countries in which the new user will operate.
-- **Accounts**: account to which we give access.
+* **Name**: Name of the new user.
+* **Role**: the role we give it.
+  * **Manager**: manages the users of the account (add, delete users and assign permissions).
+  * **Customer Service**: has reduced permissions. You can see the data but not modify it.
+* **Email**: Email of the new user.
+* **Countries**: country or countries in which the new user will operate.
+* **Accounts**: account to which we give access.
+
+
 
 ### Account Activation
 
 To start working with Truust you must verify your account by providing your data, product/service data, and company legal data.
 
----
+- - -
 
 <iframe width="100%" height="315" src="https://www.youtube.com/embed/pe_gRGE3BLE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+
+
 #### Step 1: Your Product Details
 
-- **Business website**: In case of not having a website, it is necessary to share either the link to the app or a profile in social networks.
-- **Product Description**: A brief description of what you sell, who you sell to, and how much you charge your customers.
+* **Business website**: In case of not having a website, it is necessary to share either the link to the app or a profile in social networks.
+* **Product Description**: A brief description of what you sell, who you sell to, and how much you charge your customers.
+
+
 
 #### Step 2: Business Details
 
-- **Legal Name**
-- **Tax identification number**
-- **Legal Address**
-- **Tax verification**: you must attach a document with the tax identification number for companies/copy of identification number for freelancers.
-- **Company verification**: you must upload the company registration voucher or the tax registration voucher for self-employed.
-- **Business Administrator Verification**: you must attach a copy of the Business Administrator’s identification number.
-- **Bank verification**: you must upload a bank account ownership certificate.
+* **Legal Name**
+* **Tax identification number**
+* **Legal Address**
+* **Tax verification**: you must attach a document with the tax identification number for companies/copy of identification number for freelancers.
+* **Company verification**: you must upload the company registration voucher or the tax registration voucher for self-employed.
+* **Business Administrator Verification**: you must attach a copy of the Business Administrator’s identification number.
+* **Bank verification**: you must upload a bank account ownership certificate.
+
+
 
 #### Step 3: Legal Representative Details
 
 The account must be activated by its sole owner. If you wish to activate an account in someone else’s name, you must invite them to the account so that they can complete the activation themselves.
 
-- **Representative Name**
-- **Representative Email**
-- **Representative Phone Number**
+* **Representative Name**
+* **Representative Email**
+* **Representative Phone Number**
+
+
 
 ## Wallets
 
@@ -144,11 +179,15 @@ Digital wallets are a way of storing payment information electronically so consu
 
 Some digital wallets use card details, but others are linked to a bank account. Either way, the wallet payment method style protects you from handling or tokenizing sensitive payment information.
 
+
+
 ### Virtual Wallets
 
 These kind of wallets can be used by your customers to retain their money and use it in future transactions. Every user will have, at least, one wallet available by default. You can use then this wallet as an origin for making a payment or a destination to receive a payout.
 
 Check our documentation about [Wallet Payments](/payment-flows#walletpayments) to learn about all the available wallet movements we offer through our API.
+
+
 
 ### Escrow Wallets
 
@@ -164,13 +203,17 @@ By default, transactions will be created in your home currency. This method requ
 
 Regardless of the currency you present in, customers in our supported countries should be able to purchase from you. If a customer makes a purchase using a different currency, the customer's bank will convert the charge to their home currency, and they will be subject to their bank’s currency conversion rates.
 
+
+
 ### Supported Currencies
 
 Currently, we support the following currencies:
 
-- EUR
-- GBP
-- USD
+* EUR
+* GBP
+* USD
+
+
 
 ### Multi-currency Limitations
 
@@ -180,10 +223,12 @@ When any Truust wallet receives payments in multiple currencies, Truust accumula
 
 When it’s time to pay out a currency balance to a bank account (or debit card):
 
-- If there is a bank account for that currency, no conversion occurs
-- If there is not a bank account for that currency, we automatically convert those funds to your default currency
+* If there is a bank account for that currency, no conversion occurs
+* If there is not a bank account for that currency, we automatically convert those funds to your default currency
 
 If you regularly charge in multiple currencies, you may be able to establish multiple bank accounts to have multiple settlement currencies and avoid conversions.
+
+
 
 ## Fees
 
@@ -195,23 +240,29 @@ In each account, you can indicate a fee value that will be applied by default to
 
 For each transaction, you will have 2 calculated values of fees (% and abs.). **We will always use the highest value**. For example, if you configure a 10% fee and an absolute value of 5€, the results will be:
 
-- In a 100€ payment, we will apply 10% (with a total result of 10€ in fees).
-- In a 20€ payment, we will apply the absolute 5€ (since 10% of 20€ does not exceed the other value).
+* In a 100€ payment, we will apply 10% (with a total result of 10€ in fees).
+* In a 20€ payment, we will apply the absolute 5€ (since 10% of 20€ does not exceed the other value).
 
 </div>
+
+
 
 ### Default Fees Scheme
 
 For each transaction, you will have 2 calculated values of fees (% and abs.). **We will always use the highest value**. For example, if you configure a 10% fee and an absolute value of 5€, the results will be:
 
-- In a 100€ payment, we will apply 10% (with a total result of 10€ in fees).
-- In a 20€ payment, we will apply the absolute 5€ (since 10% of 20€ does not exceed the other value).
+* In a 100€ payment, we will apply 10% (with a total result of 10€ in fees).
+* In a 20€ payment, we will apply the absolute 5€ (since 10% of 20€ does not exceed the other value).
+
+
 
 ### Your Fees and Our Fees
 
 Keep in mind that these fee values **must pay for our commissions**, so they can never be lower than the minimum imposed by the platform.
 
 Additionally, each order can have an individual fee that will apply only to that order. These values can be indicated when **creating a link** with the different existing parameters. In the same way, it will apply the same logic of fees mentioned above.
+
+
 
 ### Changing the Default Fees Scheme
 
@@ -223,13 +274,15 @@ Can you make the buyer assume your service fees instead of the seller? Yes, you 
 
 A marketplace wants to charge 10% to the buyer and a product is listed at 100€. By default in our platform, we will charge the buyer 100€ and transfer 90€ to the seller. If you want to charge the buyer, the following values must be used:
 
-- **`amount`** - 110€
-- **`fee_amount`** - 10€
-- **`fee_percent`** - 0%
+* **`amount`** - 110€
+* **`fee_amount`** - 10€
+* **`fee_percent`** - 0%
 
 With these values, the buyer will end up being charged 110€ and the seller will receive 100€. It's important to note that **the `fee_percent` must be 0** to avoid calculating the 10% of 110€. The result of this calculation will end up in a total fee value of 11€, which is incorrect.
 
 </div>
+
+
 
 ## Glossary
 
@@ -237,35 +290,75 @@ With these values, the buyer will end up being charged 110€ and the seller wil
 
 Accounts are the different groups with which you classify your orders. Normally, an account will correspond to the business with which you want to use our platform.
 
+Each account can have several team members with different roles and permissions. Our tool becomes the portal to include all the participants from your company in the process. For example, you can have a customer service profile, consulting our panel and reviewing the status of orders and this way giving support to your customers.
+
 _Other industry names: Merchant Account_
+
+
 
 ### Bank Account
 
 ### Customer
 
-Natural person (natural user) or a legal person (legal user) acting as a buyer (buying a product or a service) or as a seller (selling a product or a service).
+Customers are the users who participate in an order. Can be a natural person (natural user) or a legal person (legal user) acting as a buyer (buying a product or a service) or as a seller (selling a product or a service).
 
 _Other industry names: Buyers, Sellers, Users_
+
+
 
 ### KYC - Know Your Customer
 
 KYC is the process of a company verifying the identity of its clients. Truust is fully compliant with legislations about KYC and AML (Anti Money Laundering) measures. **We require from the business that wants to use our platform to comply with our rules** and provide the information and documentation requested when signing up to our services.
 
+Users must also provide the following information and documentation to comply with our KYC standards:
+
+* **Simple KYC:** Users with payments < 1000€ / year must fill in their personal data and phone number. This is sufficient for low income accounts.
+*  **Average KYC:** Users with payments > 1000€ / year must include a copy of their ID.
+* **KYC Strong:** Truust may request additional documentation about a user with abnormal activities such as: large orders, high frequency of transactions and other situations that we consider abnormal. The additional documentation requested may be proof of services rendered, proof of residence or proof of income.
+
+
+
 ### Order
 
-Orders are the main entities with which our tool works. **An order is associated with a buyer and a seller**, identified by their phone numbers or email addresses.
+Truust works with the concept **orders**. Orders are the main entities with which our tool works. An order is **a transaction associated with a buyer and a seller**, identified by their phone numbers or email addresses.
+
+Each order will end up having associated at least one Payin (incoming money) and one or more Payouts (outgoing money).
+
+To create orders is necessary the information of the product, the information of the buyer and the information of the seller.
 
 You do not have to understand order as a product. An order should be understood as **a unique access to a payment gateway** with stable actors and fixed values.
 
 _Other industry names: Transaction, Checkout_
 
+
+
 ### Payin
 
 Deposit of funds by a user to pay for an order.
 
+A Payin represents a customer's payment, money inflows. When a Payin is generated, the platform specifies the amount of money that has been paid, the name of the order, the reference, the day of payment and the type of payment (transfer, card or via wallet).
+
+ The payins are associated with different actions:
+
+* **Refund payin:** we can return the payment to the buyer.
+* **Delete payin:** delete the payment order.
+* **View order:** access to the transaction details.
+
+
+
 ### Payout
 
 Withdrawal of funds from an order to an end-user bank account or wallet.
+
+Payouts are the payments we make to sellers, they are the payments that come out of the escrow account, the outflows of money.
+
+There are three options to send the funds:
+
+* to bank accounts.
+* to credit cards.
+* to truust users wallets.
+
+
 
 ### Products
 
@@ -276,9 +369,15 @@ If you do not know the buyer or seller of the transaction you must create a prod
 
 _Other industry names: Bundles, Campaigns, Services_
 
+
+
 ### Refund
 
 Reimbursement to a user from a corresponding payin. We also use this term for a rebate, calling them "partial refund".
+
+
+
+
 
 ### Wallet
 
