@@ -26,6 +26,26 @@ Tokenization is the process Truust uses to collect sensitive card or bank accoun
 
 Fraudulent activities can happen to any business, and it is your responsibility to know who you should do business with. Chargebacks are the term that explains when there is a lost dispute about a transaction. We charge a standard fee in the event of a chargeback.
 
+### Test Cards
+
+Use the credit card values below to trigger different responses from the gateway.
+
+#### Valid card numbers
+
+These credit card numbers will not trigger specific credit card errors. However, this does not necessarily mean that a transaction will be successful in the sandbox. Other values can impact transaction success.
+
+| Number           | Expiration | CCV | CIP    |
+| ---------------- | ---------- | --- | ------ |
+| 4548812049400004 | 12/21      | 123 | 123456 |
+
+#### Card numbers for unsuccessful verification
+
+The following credit card numbers will simulate an unsuccessful card verification response.
+
+| Number           | Expiration | CCV |
+| ---------------- | ---------- | --- |
+| 1111111111111117 | 12/21      | 123 |
+
 ## Bank Transfers
 
 ### How we handle Bank Transfer Payments
