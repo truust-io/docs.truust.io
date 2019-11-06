@@ -11,9 +11,7 @@ All accounts have access to a personalized dashboard from which to perform all o
 
 The easiest way to use our services is with our Dashboard. You can create orders, track transactions and manage all order activity. 
 
-### Search and Sort
 
-### Reporting
 
 ## Orders
 
@@ -26,6 +24,8 @@ To create orders is necessary the information of the product, the information of
 You do not have to understand order as a product. An order should be understood as **a unique access to a payment gateway** with stable actors and fixed values.
 
 _Other industry names: Transaction, Checkout_
+
+__
 
 ### List all Orders
 
@@ -40,11 +40,10 @@ To start creating orders follow the steps below:
 
 A screen will open with the 3 steps necessary to generate the Order.
 
-> **NOTE**
->
-> \
->
+> **NOTE**\
 > Orders can be created when we know the seller and the buyer, if we do not have the information, we must use the "bundles" functionality (explained later in this document).
+
+
 
 #### Step 1: Order – Main Details
 
@@ -84,13 +83,19 @@ In this screen enter the data of the seller.
 
 Once completed click on the "Create Order" button.
 
+
+
 ### Cancel and Refund an Order
 
 Refunds are the term that explains when there is a lost dispute over a transaction and a refund must be made to the buyer.
 
+
+
 ### Validate an Order
 
 It's the action you take to release the money in the seller's account. This action can only be performed when the payment has been confirmed by Redsys and the merchant has entered their details into the platform.
+
+
 
 ### Block and Unblock an Order
 
@@ -120,17 +125,52 @@ Instructions:
    \
    A notification confirming the unblocking action will be shown, and the order status will change to its previous status.
 
+
+
+### Search and Sort
+
+Use the search funcionality to find payments, buyers, sellers, accounts, status and more.
+
+You can use the Truust mechanism available in the Dashboard to look up information about:
+
+* ID
+* Name
+* Tag
+* Account
+* Status
+* Buyer Code
+* Buyer Phone
+* Buyer Email
+* Seller Code
+* Seller Phone
+* Seller Email
+* Metadata
+* Created At
+
+After performing a search you see all the results matching with your query. From the resulting data you can click **"Order by"** or **"Sort"** to use our advanced filter options.
+
+
+
+### Reporting
+
+When you perform a search you can export the results in a csv file to build your own database.
+
+
+
 ### Add a Bank Account for a Payout
 
-## Pay Ins
+## Payins
 
-### List all Pay Ins
+### List all Payins
 
-Pay Ins are the payments made by buyers, the inflows of money.
+Payins are the payments made by buyers, the inflows of money. To access the Dashboard Payins screen follow the instructions below.
 
-To access the Dashboard Pay Ins screen, click on the “Payins” option in the left menu.
+1. Sign in to your [Truust account](https://dashboard.truust.io/login).
+2. Click on the “Payins” option on the left menu.
 
 Once the buyer has made the payment, it will be listed in this section.
+
+
 
 ## Payouts
 
