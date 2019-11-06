@@ -103,6 +103,14 @@ This movement will transfer the funds from the customer's card or bank account t
 
 ![](/assets/wallettowallet.png)
 
+
+
+### One to One
+
+A customer is charged and a transfer is sent to a recipient, a relationship between charging and sending funds.
+
+
+
 ### One to Many
 
 To perform a One to Many payment you have to combine multiples previous movements. In this case, the full operation will be composed of:
@@ -130,6 +138,10 @@ We enable escrow payments in the sharing economy, adding trust to your transacti
 ### PSD2 Payments
 
 ### Escrow for Crowdfunding
+
+A crowdfunding requires that all funds collected go into a third party deposit account and remain there until the funding target is achieved or are immediately returned to investors if the target is not achieved. Because funding portals cannot touch the funds, a third party is needed who can meet the escrow requirements of crowdfunding regulations.
+
+
 
 ### Escrow for Crowdlending
 
