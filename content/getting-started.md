@@ -3,8 +3,6 @@ title: Getting Started with Truust
 ---
 > Truust helps you create any type of payments flow—from e-commerce to split payments and everything in between.
 
-
-
 ## Overview
 
 We offer a variety of products that make it easy for you to accept payments in your app or website. You’ll interact with us in two ways:
@@ -113,6 +111,23 @@ Fill in the fields to create a new user.
 * **Email**: Email of the new user.
 * **Countries**: country or countries in which the new user will operate.
 * **Accounts**: account to which we give access.
+
+**Edit users**
+
+To change the settings of your team members click on the Team Members option in the left menu.
+
+Click the edit button for the user you want to edit.
+
+Change the information of the fields you want to edit
+
+* Name: name of the user.
+* Role: the role we give him.
+* Manager: manages the users of the account.
+* (add, delete users and assign permissions).
+* Customer Service: reduced permissions. It is used to see the data but not to modify them.
+* Email: user’s email.
+* Countries: country or countries in which the user will operate.
+* Accounts: account to which we give access.
 
 ### Account Activation
 
