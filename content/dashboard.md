@@ -163,10 +163,12 @@ When you perform a search you can export the results in a csv file to build your
 
 ### List all Payins
 
-Payins are the payments made by buyers, the inflows of money. To access the Dashboard Payins screen follow the instructions below.
+Payins are the payments made by buyers, the inflows of money.
+
+To access the Dashboard Payins screen follow the instructions below.
 
 1. Sign in to your [Truust account](https://dashboard.truust.io/login).
-2. Click on the “Payins” option on the left menu.
+2. Click on the **“Payins”** option on the left menu.
 
 Once the buyer has made the payment, it will be listed in this section.
 
@@ -178,13 +180,30 @@ Once the buyer has made the payment, it will be listed in this section.
 
 Payouts are the payments we make to the sellers, they are the payments that come out of the escrow account, the outflows of money.
 
-To access the Dashboard Payouts screen, click on the Payouts option in the left menu.
+To access the Payouts page follow the instructions below.
+
+1. Sign in to your [Truust account](https://dashboard.truust.io/login).
+2. Click on the **"Payout"** option on the left menu.
+
+Every time a payment is done to he seller, it will be listed in this section.
+
+
+
+
 
 ## Products
 
 ### List all Products
 
 ### Create and Edit Products
+
+A **Product** is a grouping of orders with its own payment link, can be a product, a service or a joint financing campaign.
+
+**Products** allow you to sell several quantities of the same product with a single link or generate a campaign associated with a deadline. 
+
+Orders can only be created when we can identify both parties so working with **Products** is the best alternative when the buyer and/or seller of the transaction is unknown. 
+
+
 
 To create a Product, access from the list products page and click on the "New" button. Next, fill in the following fields to create a new product:
 
