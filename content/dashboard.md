@@ -203,9 +203,14 @@ A **Product** is a grouping of orders with its own payment link, can be a produc
 
 Orders can only be created when we can identify both parties so working with **Products** is the best alternative when the buyer and/or seller of the transaction is unknown. 
 
+Instructions:
 
+**How to create a Product**
 
-To create a Product, access from the list products page and click on the "New" button. Next, fill in the following fields to create a new product:
+1. Sign in to your [Truust account](https://dashboard.truust.io/login).
+2. Click on the **"Products"** option on the left menu.
+3. Click on the "New" button.
+4.  Next, fill in the following fields to create a new product:
 
 * **Name**: write the name of the product. It will be the name that will be shown on the payment screen, make sure it is recognizable by users.
 * **Account**: select from the account that you want to make the transaction.
@@ -213,3 +218,16 @@ To create a Product, access from the list products page and click on the "New" b
 * **Currency**: specifies the currency that will be used for each order.
 * **Description**: adds a brief description of the product.
 * **Image**: attach an image for the product.
+
+   5. Once completed click on the **"Create product"** product button.
+
+
+
+
+
+**How to edit a Product**
+
+1. Sign in to your [Truust account](https://dashboard.truust.io/login).
+2. Click on the **"Products"** option on the left menu.
+3. From the Products page, click the **\[···]** menu on the right of the product you want to edit.
+4. Change the information you need and click the save button.
