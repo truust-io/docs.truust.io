@@ -2,10 +2,9 @@
 title: Payment Methods
 metaTitle: Payment Methods
 ---
-
 > Accept payments from all major card schemes and the most popular alternative payment methods.
 
----
+- - -
 
 Integrating with Truust offers your customers many different ways to pay – and we’re always working on adding more. Here's a quick list of what we currently offer, and whom they are available to.
 
@@ -66,3 +65,5 @@ You and your customers can safely create and share payment links in seconds. Pay
 ### Two-sided Payment Links
 
 ### Sharing Payment Links
+
+Truust offers the possibility of generating payment links that can be shared via SMS, Whatsapp, Facebook, and Pinterest.
