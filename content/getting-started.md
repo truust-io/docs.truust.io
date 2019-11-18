@@ -265,6 +265,10 @@ _Other industry names: Merchant Account_
 
 ### Bank Account
 
+A bank account is an account assigned to its customers by a bank. It makes it possible to track the client's inflows, outflows and balances of money for this product or products.
+
+
+
 ### Customer
 
 Customers are the users who participate in an order. Can be a natural person (natural user) or a legal person (legal user) acting as a buyer (buying a product or a service) or as a seller (selling a product or a service).
@@ -329,6 +333,8 @@ _Other industry names: Bundles, Campaigns, Services_
 ### Refund
 
 Reimbursement to a user from a corresponding payin. We also use this term for a rebate, calling them "partial refund".
+
+_Other industry names: compensation, reimbursement, settlement, money-back_
 
 ### Wallet
 
