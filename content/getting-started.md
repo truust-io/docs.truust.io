@@ -191,8 +191,8 @@ Regardless of the currency you present in, customers in our supported countries 
 Currently, we support the following currencies:
 
 * EUR
-* GBP
-* USD
+
+
 
 ### Multi-currency Limitations
 
@@ -266,8 +266,6 @@ _Other industry names: Merchant Account_
 ### Bank Account
 
 A bank account is an account assigned to its customers by a bank. It makes it possible to track the client's inflows, outflows and balances of money for this product or products.
-
-
 
 ### Customer
 
