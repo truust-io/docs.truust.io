@@ -11,8 +11,6 @@ All accounts have access to a personalized dashboard from which to perform all o
 
 The easiest way to use our services is with our Dashboard. You can create orders, track transactions and manage all order activity. 
 
-
-
 ## Orders
 
 Truust works with the concept **orders**. Orders are the main entities with which our tool works. An order is **a transaction associated with a buyer and a seller**, identified by their phone numbers or email addresses.
@@ -42,8 +40,6 @@ A screen will open with the 3 steps necessary to generate the Order.
 
 > **NOTE**\
 > Orders can be created when we know the seller and the buyer, if we do not have the information, we must use the "bundles" functionality (explained later in this document).
-
-
 
 #### Step 1: Order – Main Details
 
@@ -83,19 +79,13 @@ In this screen enter the data of the seller.
 
 Once completed click on the "Create Order" button.
 
-
-
 ### Cancel and Refund an Order
 
 Refunds are the term that explains when there is a lost dispute over a transaction and a refund must be made to the buyer.
 
-
-
 ### Validate an Order
 
 It's the action you take to release the money in the seller's account. This action can only be performed when the payment has been confirmed by Redsys and the merchant has entered their details into the platform.
-
-
 
 ### Block and Unblock an Order
 
@@ -125,8 +115,6 @@ Instructions:
    \
    A notification confirming the unblocking action will be shown, and the order status will change to its previous status.
 
-
-
 ### Search and Sort
 
 Use the search funcionality to find payments, buyers, sellers, accounts, status and more.
@@ -149,21 +137,17 @@ You can use the Truust mechanism available in the Dashboard to look up informati
 
 After performing a search you see all the results matching with your query. From the resulting data you can click **"Order by"** or **"Sort"** to use our advanced filter options.
 
-
-
 ### Reporting
 
 When you perform a search you can export the results in a csv file to build your own database.
-
-
 
 ### Add a Bank Account for a Payout
 
 ## Payins
 
-### List all Payins
-
 Payins are the payments made by buyers, the inflows of money.
+
+### List all Payins
 
 To access the Dashboard Payins screen follow the instructions below.
 
@@ -171,8 +155,6 @@ To access the Dashboard Payins screen follow the instructions below.
 2. Click on the **“Payins”** option on the left menu.
 
 Once the buyer has made the payment, it will be listed in this section.
-
-
 
 ## Payouts
 
@@ -187,19 +169,15 @@ To access the Payouts page follow the instructions below.
 
 Every time a payment is done to he seller, it will be listed in this section.
 
-
-
-
-
 ## Products
-
-### List all Products
-
-### Create and Edit Products
 
 A **Product** is a grouping of orders with its own payment link, can be a product, a service or a joint financing campaign.
 
 **Products** allow you to sell several quantities of the same product with a single link or generate a campaign associated with a deadline. 
+
+### List all Products
+
+### Create and Edit Products
 
 Orders can only be created when we can identify both parties so working with **Products** is the best alternative when the buyer and/or seller of the transaction is unknown. 
 
@@ -210,7 +188,7 @@ Instructions:
 1. Sign in to your [Truust account](https://dashboard.truust.io/login).
 2. Click on the **"Products"** option on the left menu.
 3. Click on the "New" button.
-4.  Next, fill in the following fields to create a new product:
+4. Next, fill in the following fields to create a new product:
 
 * **Name**: write the name of the product. It will be the name that will be shown on the payment screen, make sure it is recognizable by users.
 * **Account**: select from the account that you want to make the transaction.
@@ -218,12 +196,7 @@ Instructions:
 * **Currency**: specifies the currency that will be used for each order.
 * **Description**: adds a brief description of the product.
 * **Image**: attach an image for the product.
-
-   5. Once completed click on the **"Create product"** product button.
-
-
-
-
+  5. Once completed click on the **"Create product"** product button.
 
 **How to edit a Product**
 
