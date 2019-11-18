@@ -64,9 +64,9 @@ You and your customers can safely create and share payment links in seconds. Pay
 
 With the API, you should be able to create many API requests at the same time to do multiple payins or payouts for example.
 
-
-
 ### Two-sided Payment Links
+
+When creating an order two payment links will be visible, the first one is for the buyer from which will do the transfer through a TPV, the second one will allow the seller to confirm the payment and validate the order.
 
 ### Sharing Payment Links
 
