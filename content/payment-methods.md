@@ -66,4 +66,6 @@ You and your customers can safely create and share payment links in seconds. Pay
 
 ### Sharing Payment Links
 
-Truust offers the possibility of generating payment links that can be shared via SMS, Whatsapp, Facebook, and Pinterest.
+Truust offers the possibility of generating payment links that can be shared via SMS, Whatsapp, Facebook and Pinterest straight forward from the Dashboard.
+
+Also, after genereting the payment link you can share it via email or any other channel that fits with your business. You just have to copy and paste the link that is provided in truust.
