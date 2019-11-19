@@ -1,10 +1,10 @@
 ---
-title: 'Payment Methods'
+title: Payment Methods
+metaTitle: Payment Methods
 ---
-
 > Accept payments from all major card schemes and the most popular alternative payment methods.
 
----
+- - -
 
 Integrating with Truust offers your customers many different ways to pay – and we’re always working on adding more. Here's a quick list of what we currently offer, and whom they are available to.
 
@@ -62,6 +62,14 @@ You and your customers can safely create and share payment links in seconds. Pay
 
 ### Batch Creation
 
+With the API, you should be able to create many API requests at the same time to do multiple payins or payouts for example.
+
 ### Two-sided Payment Links
 
+When creating an order two payment links will be visible, the first one is for the buyer from which will do the transfer through a TPV, the second one will allow the seller to confirm the payment and validate the order.
+
 ### Sharing Payment Links
+
+Truust offers the possibility of generating payment links that can be shared via SMS, Whatsapp, Facebook and Pinterest straight forward from the Dashboard.
+
+Also, after genereting the payment link you can share it via email or any other channel that fits with your business. You just have to copy and paste the link that is provided in truust.
