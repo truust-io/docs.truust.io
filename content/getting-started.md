@@ -141,7 +141,7 @@ The account must be activated by its sole owner. If you wish to activate an acco
 During the activation process your account may be in the following statuses:
 
 - `CREATED` - Default status when you are registered into the platform.
-- `REQUESTED` - You or someone on your account team members have send us the required information to activate your account and we are reviewing it. We will contact you as soon as your account has been activated.
+- `REQUESTED` - You or some team member have send us the required information to activate your account and we are reviewing it. We will contact you as soon as your account has been activated.
 - `VALIDATED` - Your account has been fully onboarded on the platform. Orders are directed to the real payment gateway, test credit card do not work anymore.
 - `REFUSED` - This status is used if account activation has been rejected for any reason.
 
