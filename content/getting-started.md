@@ -1,5 +1,5 @@
 ---
-title: 'Getting Started with Truust'
+title: "Getting Started with Truust"
 ---
 
 > Truust helps you create any type of payments flow—from e-commerce to split payments and everything in between
@@ -111,8 +111,6 @@ Fill in the fields to create a new user.
 
 To start working with Truust you must verify your account by providing your data, product/service data, and company legal data.
 
----
-
 <iframe width="100%" height="315" src="https://www.youtube.com/embed/pe_gRGE3BLE" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 #### Step 1: Your Product Details
@@ -137,6 +135,15 @@ The account must be activated by its sole owner. If you wish to activate an acco
 - **Representative Name**
 - **Representative Email**
 - **Representative Phone Number**
+
+### Account Status
+
+During the activation process your account may be in the following statuses:
+
+- `CREATED` - Default status when you are registered into the platform.
+- `REQUESTED` - You or someone on your account team members have send us the required information to activate your account and we are reviewing it. We will contact you as soon as your account has been activated.
+- `VALIDATED` - Your account has been fully onboarded on the platform. Orders are directed to the real payment gateway, test credit card do not work anymore.
+- `REFUSED` - This status is used if account activation has been rejected for any reason.
 
 ## Wallets
 
