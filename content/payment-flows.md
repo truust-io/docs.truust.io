@@ -170,23 +170,3 @@ This movement will transfer the funds from the customer's card or bank account t
 - **Payout**: Create a payout using the type `WALLET` and the customer's Wallet ID
 
 ![](/assets/wallettopupflow.png)
-
-### One to One
-
-### One to Many
-
-### Many to One
-
-### Many to Many
-
-## Escrow Payments
-
-We enable escrow payments in the sharing economy, adding trust to your transactions and assuring that money is released only when commercial conditions are met. You can safely and easily buy and sell goods or services all over the world with the protection of our escrow based technology.
-
-### PSD2 Payments
-
-### Escrow for Crowdfunding
-
-### Escrow for Crowdlending
-
-## Use Cases
