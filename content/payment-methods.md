@@ -52,16 +52,19 @@ The following credit card numbers will simulate an unsuccessful card verificatio
 
 SEPA Direct Debit payments are an asynchronous method, so funds are not immediately available. A payin created from a `BANKWIRE` type can remain pending for up to 14 business days from its creation, though the average time is around five business days. Once the charge is confirmed, its status is updated to succeed.
 
-### Errors in Bank Transfers
-
 ## Payment Links
 
 To accept payments via Truust you don’t need to know all the subtleties and perform technical integration. If you have a few orders, you may send a link to order payment directly to your clients’ e-mails. Use a "Create Order" button in the Order section of your Dashboard to send a link to payment to a client’s e-mail address or generate it on the special page of the site.
 
 You and your customers can safely create and share payment links in seconds. Payment links are useful for all kinds of businesses. An accountant sending e-invoices, e-commerce making their social channels shoppable: the applications are endless.
 
-### Batch Creation
+## Gateways
 
-### Two-sided Payment Links
+This is the current list of countries where Truust API calls the local online payment gateway. As a merchant, please contact the local provider to request a merchant id and enter your merchant's credentials in Truust Account settings section (see Getting Started section).
 
-### Sharing Payment Links
+- UK, Ireland: [Global Payments](https://www.globalpaymentsinc.com/en-gb/accept-payments/online) (Realex gateway)
+- USA: [Global Payments](https://www.heartlandpaymentsystems.com/products/payment/online-payments) (Heartland gateway)
+- Canada: [Global Payments](https://www.globalpaymentsinc.com/en-ca) (Realex gateway)
+- Spain: [TPV Caixabank](https://www.comerciaglobalpayments.com/index_es.html) (Redsys and Addon gateways), [TPV Banco Santander](https://www.bancosantander.es/en/empresas/cobros-pagos/cobros/tpv/tpv-virtual), [TPV BBVA](https://www.bbva.es/empresas/productos/tpv/tpv-virtual.html), [TPV B. Sabadell](https://www.bancsabadell.com/cs/Satellite/SabAtl/TPV-Virtual/1191332200922/es/), etc.
+- Czech Republic, Austria, Romania, Slovakia: [Global Payments](https://www.globalpaymentsinc.com/en-cz) (Webpay gateway)
+- Wordwide: [Stripe](https://stripe.com/)
