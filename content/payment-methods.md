@@ -34,9 +34,12 @@ Use the credit card values below to trigger different responses from the gateway
 
 These credit card numbers will not trigger specific credit card errors. However, this does not necessarily mean that a transaction will be successful in the sandbox. Other values can impact transaction success.
 
-| Number           | Expiration | CCV | CIP    |
-| ---------------- | ---------- | --- | ------ |
-| 4548812049400004 | 12/21      | 123 | 123456 |
+| Payin Type | Number           | Expiration | CCV | CIP    |
+| ---------- | ---------------- | ---------- | --- | ------ |
+| REDSYS     | 4548812049400004 | 12/21      | 123 | 123456 |
+| ADDON_HPP  | 4263970000005262 | 11/22      | 333 | (none) |
+| GPWEBPAY   | 4056070000000008 | 12/21      | 200 | (none) |
+| HEARTLAND  | 4012002000060016 | 12/25      | 123 | (none) |
 
 #### Card numbers for unsuccessful verification
 
