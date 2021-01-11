@@ -116,6 +116,6 @@ Our Truust connector for Mirakl is the only one in the market that allows the ma
 
 The platform connects directly to its own online payment gateway to execute the shopping cart pay-in to the funding account. The connector monitors Mirakl activity fetching everything from Sellers, Orders and Vouchers. It checks if the pay-in transaction has been correctly split among Fees and Sellers balance. Only then, Truust executes pay-outs to Sellers' IBAN and settles the platform fee. Our technology runs its own ledger where each Seller balance is managed by a Truust wallet.
 
-## WooCommerce for ecommerce
+### WooCommerce for ecommerce
 
 Our WordPress plugin for WooCommerce is available to download for free at the following GitHub repository: [https://github.com/truust-io/woocommerce-truust](https://github.com/truust-io/woocommerce-truust)
