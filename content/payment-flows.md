@@ -28,7 +28,7 @@ Once the order is created, you must share the order's `buyer_link` with the buye
 
 If you prefer to **complete the payment totally on your side** without sending the `buyer_link`, you must create the associated `payin` to this order directly with our API. The available payin types of currently are:
 
-- `REDSYS` - Completes the payment using our card-payments gateway
+- `REDSYS_V2` - Completes the payment using our card-payments gateway
 - `BANKWIRE` - Completes the payment using a bank transfer
 - `WALLET` - Completes the payment using the funds located at the specified `wallet_id` parameter
 
