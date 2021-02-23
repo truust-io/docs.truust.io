@@ -36,7 +36,7 @@ These credit card numbers will not trigger specific credit card errors. However,
 
 | Payin Type | Number           | Expiration | CCV | CIP    |
 | ---------- | ---------------- | ---------- | --- | ------ |
-| REDSYS     | 4548812049400004 | 12/21      | 123 | 123456 |
+| REDSYS_V2  | 4548812049400004 | 12/21      | 123 | 123456 |
 | ADDON_HPP  | 4263970000005262 | 11/22      | 333 | (none) |
 | GPWEBPAY   | 4056070000000008 | 12/21      | 200 | (none) |
 | HEARTLAND  | 4012002000060016 | 12/25      | 123 | (none) |
