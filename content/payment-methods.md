@@ -61,6 +61,10 @@ To accept payments via Truust you don’t need to know all the subtleties and pe
 
 You and your customers can safely create and share payment links in seconds. Payment links are useful for all kinds of businesses. An accountant sending e-invoices, e-commerce making their social channels shoppable: the applications are endless.
 
+## Recurring Payments and Subscriptions
+
+With subscriptions you can receive recurring payments from your customers over time. Your customers will make their first payment as they make any other payment on Truust, relevant information will be tokenized and stored in a PCI-compliant way, and payments will be made periodically without further customer interaction. You could customize the subscriptions in many ways: set up a number of times it will be executed or specify an end date, choose the frequency of the payments, or ask for a set-up fee as first payment. You will get notifications which each payment of the subscription.
+
 ## Gateways
 
 This is the current list of countries where Truust API calls the local online payment gateway. As a merchant, please contact the local provider to request a merchant id and enter your merchant's credentials in Truust Account settings section (see Getting Started section).
