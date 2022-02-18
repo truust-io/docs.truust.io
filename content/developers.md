@@ -104,7 +104,7 @@ You can create multiple webhook destination URLs to route certain webhook notifi
 
 If you need an extensive integration and apply your own rules, you can access our services via API. To review our technical API Reference, visit the following link:
 
-> <https://dashboard.truust.io/documentation/api-reference/>
+> <https://documenter.getpostman.com/view/594572/S11KPdvF#bc62c8aa-1295-48b8-8e75-2a04d78892dc>
 
 Our technical team is here to help. If you are a company with more complex technical needs, contact us at <mailto:hello@truust.io>.
 
