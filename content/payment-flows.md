@@ -28,7 +28,7 @@ Once the order is created, you must share the order's `buyer_link` with the buye
 
 If you prefer to **complete the payment totally on your side** without sending the `buyer_link`, you must create the associated `payin` to this order directly with our API. The available payin types of currently are:
 
-- `REDSYS_V2` - Completes the payment using our card-payments gateway
+- `REDSYS_V2` or `CECABANK` - Completes the payment using one of our card-payments gateway
 - `BANKWIRE` - Completes the payment using a bank transfer
 - `WALLET` - Completes the payment using the funds located at the specified `wallet_id` parameter
 
@@ -141,7 +141,7 @@ Remember to use, at least, the following values when creating the objects:
 
 - **Customer**: You will use the Customer ID for both users and the seller's Wallet ID
 - **Order**: Use the Customer ID related with every user for the `buyer_id` and the `seller_id` respective fields
-- **Payin**: Create a payin using the `REDSYS` or `BANKWIRE` type
+- **Payin**: Create a payin using the `REDSYS_V2`, `CECABANK` or `BANKWIRE` type
 - **Payout**: Create a payout using the type `WALLET` and use the seller's Wallet ID
 
 In this case, the money will flow from the buyer's card, stay held on the order's wallet and, finally, released to the seller's wallet following the next scheme:
@@ -166,7 +166,7 @@ This movement will transfer the funds from the customer's card or bank account t
 
 - **Customer**: You will only need the Customer ID and Wallet ID for the user performing the top-up
 - **Order**: Use the same Customer ID for the order's `buyer_id` and order's `seller_id` fields
-- **Payin**: Create a payin using the `REDSYS` or `BANKWIRE` type
+- **Payin**: Create a payin using the `REDSYS_V2`, `CECABANK` or `BANKWIRE` type
 - **Payout**: Create a payout using the type `WALLET` and the customer's Wallet ID
 
 ![](/assets/wallettopupflow.png)
