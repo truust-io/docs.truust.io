@@ -40,6 +40,7 @@ These credit card numbers will not trigger specific credit card errors. However,
 | CECABANK   | 5540500001000004 | 12/22      | 989 | (none) |
 | ADDON_HPP  | 4263970000005262 | 12/22      | 333 | (none) |
 | ADDON_V2   | 4918019199883839 | 12/34      | 123 | (none) |
+| ADDON_V2   | 5410080000000021 | 12/40      | 123 | (none) |
 | GPWEBPAY   | 4056070000000008 | 12/22      | 200 | (none) |
 | HEARTLAND  | 4012002000060016 | 12/25      | 123 | (none) |
 
