@@ -26,8 +26,10 @@ const config = {
   },
   sidebar: {
     forcedNavOrder: [
+      '/introduction',
       '/getting-started',
       '/dashboard',
+      '/hosted-checkout',
       '/payment-methods',
       '/payment-flows',
       '/developers'

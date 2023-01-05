@@ -1,15 +1,16 @@
 ---
-title: "Getting Started with Truust"
+title: "Getting Started"
 ---
 
 > Truust helps you create any type of payments flow—from e-commerce to split payments and everything in between
 
 ## Overview
 
-We offer a variety of products that make it easy for you to accept payments in your app or website. You’ll interact with us in two ways:
+We offer a variety of products that make it easy for you to accept payments in your app or website. You’ll interact with us in three ways:
 
 1. The Dashboard
 2. The Application Programming Interface (API)
+3. [The Hosted Checkout](/hosted-checkout)
 
 ### The Dashboard
 

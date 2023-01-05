@@ -31,13 +31,15 @@ Truust helps you create any type of payment flow—from e-commerce to split paym
 </div>
 <div class="col-sm-3">
 
+- [Introduction](/introduction)
 - [Get ready](/getting-started)
 - [Environments](/getting-started#environments)
-- [Accounts](/getting-started#accounts)
+
 
 </div>
 <div class="col-sm-3">
 
+- [Accounts](/getting-started#accounts)
 - [Wallets](/getting-started#wallets)
 - [Glossary](/getting-started#glossary)
 

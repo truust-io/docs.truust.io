@@ -8,6 +8,12 @@ title: 'Payment Methods'
 
 Integrating with Truust offers your customers many different ways to pay – and we’re always working on adding more. Here's a quick list of what we currently offer, and whom they are available to.
 
+## Gateways
+
+This is the current list of countries where Truust API calls the local online payment gateway. As a merchant, please contact the local provider to request a merchant id and enter your merchant's credentials in Truust Account settings section (see Getting Started section).
+
+![Gateways](/assets/gateways.png)
+
 ## Cards
 
 ### 3DS
@@ -36,12 +42,12 @@ These credit card numbers will not trigger specific credit card errors. However,
 
 | Payin Type | Number           | Expiration | CCV | CIP    |
 | ---------- | ---------------- | ---------- | --- | ------ |
-| REDSYS_V2  | 4548812049400004 | 12/22      | 123 | 123456 |
-| CECABANK   | 5540500001000004 | 12/22      | 989 | (none) |
-| ADDON_HPP  | 4263970000005262 | 12/22      | 333 | (none) |
+| REDSYS_V2  | 4548812049400004 | 12/23      | 123 | 123456 |
+| CECABANK   | 5540500001000004 | 12/23      | 989 | (none) |
+| ADDON_HPP  | 4263970000005262 | 12/23      | 333 | (none) |
 | ADDON_V2   | 4918019199883839 | 12/34      | 123 | (none) |
 | ADDON_V2   | 5410080000000021 | 12/40      | 123 | (none) |
-| GPWEBPAY   | 4056070000000008 | 12/22      | 200 | (none) |
+| GPWEBPAY   | 4056070000000008 | 12/23      | 200 | (none) |
 | HEARTLAND  | 4012002000060016 | 12/25      | 123 | (none) |
 
 #### Card numbers for unsuccessful verification
@@ -67,14 +73,3 @@ You and your customers can safely create and share payment links in seconds. Pay
 ## Recurring Payments and Subscriptions
 
 With subscriptions you can receive recurring payments from your customers over time. Your customers will make their first payment as they make any other payment on Truust, relevant information will be tokenized and stored in a PCI-compliant way, and payments will be made periodically without further customer interaction. You could customize the subscriptions in many ways: set up a number of times it will be executed or specify an end date, choose the frequency of the payments, or ask for a set-up fee as first payment. You will get notifications which each payment of the subscription.
-
-## Gateways
-
-This is the current list of countries where Truust API calls the local online payment gateway. As a merchant, please contact the local provider to request a merchant id and enter your merchant's credentials in Truust Account settings section (see Getting Started section).
-
-- UK, Ireland: [Global Payments](https://www.globalpaymentsinc.com/en-gb/accept-payments/online) (Realex gateway)
-- USA: [Global Payments](https://www.heartlandpaymentsystems.com/products/payment/online-payments) (Heartland gateway)
-- Canada: [Global Payments](https://www.globalpaymentsinc.com/en-ca) (Realex gateway)
-- Spain: [TPV Caixabank](https://www.comerciaglobalpayments.com/index_es.html) (Redsys and Addon gateways), [TPV Banco Santander](https://www.bancosantander.es/en/empresas/cobros-pagos/cobros/tpv/tpv-virtual), [TPV BBVA](https://www.bbva.es/empresas/productos/tpv/tpv-virtual.html), [TPV B. Sabadell](https://www.bancsabadell.com/cs/Satellite/SabAtl/TPV-Virtual/1191332200922/es/), etc.
-- Czech Republic, Austria, Romania, Slovakia: [Global Payments](https://www.globalpaymentsinc.com/en-cz) (Webpay gateway)
-- Wordwide: [Stripe](https://stripe.com/)
