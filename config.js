@@ -32,6 +32,7 @@ const config = {
       '/hosted-checkout',
       '/payment-methods',
       '/payment-flows',
+      '/reporting',
       '/developers'
     ],
     links: [

@@ -1,9 +1,18 @@
 ---
-title: Hosted Checkout
+title: The Hosted Checkout
 ---
+
 > Truust Hosted Checkout: the ultimate payment hub. Build and scale the payment experience in any market and channel.
 
+---
+
+## Overview
+
+All accounts can display its own branded Checkout where the customer can perform all the payment-related operations.
+
 ![Hosted Checkout](/assets/hosted-checkout.png)
+
+It allows the following functionality and customization:
 
 ## Customer onboarding and sign-in
 

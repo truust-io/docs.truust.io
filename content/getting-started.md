@@ -10,7 +10,7 @@ We offer a variety of products that make it easy for you to accept payments in y
 
 1. The Dashboard
 2. The Application Programming Interface (API)
-3. [The Hosted Checkout](/hosted-checkout)
+3. The Hosted Checkout
 
 ### The Dashboard
 
@@ -21,6 +21,15 @@ The Dashboard is our user-friendly interface focused on the tools you need to ke
 The API is the architecture of our gateway – our complete set of code that powers everything we do, from payments to customer management.
 
 To integrate with Truust, your developers will update the existing code for your website or mobile app to make requests to our API, allowing you to **automate processes and customize the way you interact with the gateway**. Our [developer docs](/developers) will guide your developers through everything they'll need for complete integration.
+
+### The Hosted Checkout
+
+The Hosted Checkout is an immediate way to enjoy the full power of Truust's API through a much easier integration. Simply get the order's `buyer_link`, which can be:
+
+- Embedded in an iframe within your website or application
+- Shared with the customer through any channel such as: Email, SMS, WhatsApp, Facebook Messenger, Instagram, etc. to get paid.
+
+[Learn more about the Hosted Checkout](/hosted-checkout)
 
 ## Environments
 
