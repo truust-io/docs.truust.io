@@ -13,7 +13,7 @@ const config = {
     tweetText: '',
     links: [
       { text: 'Truust Website', link: 'https://truust.io' },
-      { text: 'API Reference', link: 'https://documenter.getpostman.com/view/4961785/UV5f6tDm' },
+      { text: 'API Reference', link: 'https://documenter.getpostman.com/view/27442666/2s93kxb5RQ' },
       { text: 'Contact Us', link: 'https://truust.io/contact/' }
     ],
     search: {
@@ -36,7 +36,7 @@ const config = {
       '/developers'
     ],
     links: [
-      { text: 'API Reference', link: 'https://documenter.getpostman.com/view/4961785/UV5f6tDm' }
+      { text: 'API Reference', link: 'https://documenter.getpostman.com/view/27442666/2s93kxb5RQ' }
     ],
     frontLine: false,
     ignoreIndex: true
