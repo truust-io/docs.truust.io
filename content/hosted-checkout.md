@@ -2,38 +2,41 @@
 title: The Hosted Checkout
 ---
 
-> Truust Hosted Checkout: the ultimate payment hub. Build and scale the payment experience in any market and channel.
-
----
+> Truust Hosted Checkout: Your comprehensive, scalable payment solution designed to enhance customer experience across multiple markets and channels.
 
 ## Overview
 
-All accounts can display its own branded Checkout where the customer can perform all the payment-related operations.
+Every account features a branded Checkout interface, enabling customers to complete all payment-related operations seamlessly.
 
 ![Hosted Checkout](/assets/hosted-checkout.png)
 
-It allows the following functionality and customization:
+Explore the functionalities and customization options available:
 
-## Customer onboarding and sign-in
+## Customer Onboarding and Sign-In
 
-- Get to know your payor
-- Provide them tokens, payment history and loyalty policies
-- Set KYC options, even video identification for AML6 compliance
-- Connect other fintech products: Wallet, Credit card issuing, virtual IBAN
+Enhance your customer's experience from the very first interaction:
 
-## Payment services orchestrator
+- **Personalized Engagement**: Understand your payors by providing payment histories and loyalty rewards.
+- **Security and Compliance**: Utilize KYC options including video identification to ensure AML6 compliance.
+- **Integrated Fintech Solutions**: Offer additional services such as digital wallets, credit card issuing, and virtual IBANs for a comprehensive payment ecosystem.
 
-- As a Merchant, maximize your purchase conversion:
-  - **Credit Card**: preinstalled providers around the globe
-  - **Buy Now Pay Later** preinstalled providers
-  - **Pay with Wallet**, Pay with eVoucher
-  - **Local methods**: Spain-Bizum, Australia-Azupay, Zepto, ATM, etc. 
-- Add your own desired payment gateways
-- Connect landed-based POS
-- Design fallback rules across methods
+## Payment Services Orchestrator
+
+As a merchant, you can optimize your purchase conversions through diverse and robust payment options:
+
+- **Global Credit Card Providers**: Pre-installed credit card services available worldwide.
+- **Buy Now, Pay Later**: Access pre-installed providers to offer flexible payment solutions.
+- **Wallets and eVouchers**: Enable payments using digital wallets or eVouchers.
+- **Local Payment Methods**: Cater to local preferences with options like Spain's Bizum, Australia's Azupay and Zepto, and others.
+- **Custom Gateways and POS Integration**: Add your preferred payment gateways and connect to land-based Point of Sale systems.
+- **Fallback Rules**: Designate fallback options across different payment methods to ensure transaction completion.
 
 ## Channels and Analytics
 
-- Start selling on any channel: online, in-app, over the phone, chatbot, QR, paylink.
-- Set your Google Tag Manager and Clarity scripts
-- Tackle any market and industry: Retail, Telco, Banking, Insurance, debt collection, hotels, close-loop festivals, zoos, museums etc.
+Maximize your sales potential and insights across all platforms:
+
+- **Multiple Sales Channels**: Reach customers online, in-app, via the phone, through chatbots, with QR codes, and paylinks.
+- **Analytics Integration**: Implement Google Tag Manager and Clarity scripts for in-depth analytics and data-driven decision making.
+- **Industry Versatility**: Effectively serve various sectors including retail, telecommunications, banking, insurance, and more.
+
+From debt collection to managing visitor transactions in hotels, festivals, zoos, and museums, Truust Hosted Checkout is engineered to support your business’s unique needs across all fronts.

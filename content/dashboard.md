@@ -1,233 +1,87 @@
 ---
 title: The Dashboard
 ---
-> Stay on top with your single source for tracking and analyzing your transactions, customer data and revenue.
 
-- - -
+> Your centralized platform for monitoring transactions, customer data, and revenue.
 
 ## Overview
 
-All accounts have access to a personalized dashboard from which to perform all operations.
-
-The easiest way to use our services is with our Dashboard. You can create orders, track transactions and manage all order activity. 
-
-
+Access your personalized dashboard to effortlessly manage account operations including creating orders, tracking transactions, and overseeing all order activities.
 
 ## Orders
 
-Truust works with the concept **orders**. Orders are the main entities with which our tool works. An order is **a transaction associated with a buyer and a seller**, identified by their phone numbers or email addresses.
+### Introduction to Orders
 
-Each order will end up having associated at least one Payin (incoming money) and one or more Payouts (outgoing money).
+In Truust, **orders** represent transactional interactions between a buyer and a seller identified by their contact information. Each order involves at least one incoming payment (Payin) and one or more outgoing payments (Payout).
 
-To create orders is necessary the information of the product, the information of the buyer and the information of the seller.
+#### Definitions
 
-You do not have to understand order as a product. An order should be understood as **a unique access to a payment gateway** with stable actors and fixed values.
+- **Order**: A transaction linked to a buyer and a seller, serving as a unique access to a payment gateway. 
+- Other industry terms include "Transaction", "Checkout".
 
-_Other industry names: Transaction, Checkout_
+### Order Management
 
-__
+#### Creating and Updating Orders
 
-### List all Orders
+To create an order:
 
-## Order Actions
+1. Navigate to the left sidebar and select "Orders".
+2. Click the “New” button at the top right corner to initiate the three-step order creation process.
 
-### Create and Edit Orders
+##### Step 1: Main Details
+- **Name**: Enter the product/service name.
+- **Account**: Select the relevant account for the transaction.
+- **Amount**: Set the transaction amount in euros.
+- Additional options include attaching an image, adding a tag for internal organization, and setting a custom fee.
 
-To start creating orders follow the steps below:
+##### Step 2: Buyer Details
+- Provide contact details and URLs for payment success and error redirection for the buyer.
 
-1. Go to the orders page from the menu on the left of the page. Click “Orders”.
-2. Once on the page, click on the “New” button at the top right of the page.
+##### Step 3: Seller Details
+- Similar to buyer details, provide contact information and redirection URLs for the seller.
 
-A screen will open with the 3 steps necessary to generate the Order.
+After completing all steps, click "Create Order".
 
-> **NOTE**\
-> Orders can be created when we know the seller and the buyer, if we do not have the information, we must use the "bundles" functionality (explained later in this document).
+### Order Actions
 
+- **Cancel and Refund**: Procedures when disputes are lost and refunds are needed.
+- **Validate**: Action taken to release payment to the seller once payment is confirmed.
+- **Block/Unblock**: Useful for preventing or resuming payment under specific conditions such as suspected malpractice or pending product returns.
 
+### Searching and Sorting
 
-#### Step 1: Order – Main Details
+Utilize the dashboard's search functionality to find payments, buyers, sellers, and other transaction details. Filters and sorting options are available after search results are displayed.
 
-The first screen refers to the data of the product or service.
+### Reports
 
-* **Name**: Write the name of the product or service. It will be the name that will be displayed on the payment screen, make sure it is recognizable by users.
-* **Account**: select the account from which you want to make the transaction. Remember that a user can create several accounts under the same user, for example, a business with different locations or an entrepreneur with different businesses.
-* **Amount**: specify in this field the amount of money to be requested for the product or service. The value of the transaction will be in euros.
+Export search results to a CSV file for offline analysis or database integration.
 
-We have _additional information_ that we can add to the order and that can be of great help to us to organize our orders internally.
+## Financial Transactions
 
-* **Image:** add an image to the product or service.
-* **Tag:** to relate the order with a tag that allows us to locate it easily (only visible internally).
-* **Fee:** you can indicate a Fee for a specific order that overwrites the one configured by default in your account. The Fee can be specified both in percentage and in absolute value. We will go into detail with the Fees in the account configuration section.
+### Payins
 
-Once you have completed the screen, click on the “Next” button.
+Monitor incoming payments made by buyers.
 
-#### Step 2: Buyer – Payer Details
+### Payouts
 
-On this screen, you must enter the purchaser data.
-
-* **Buyer Prefix**: the prefix of the buyer’s telephone.
-* **Buyer Phone**: the buyer’s telephone number.
-* **Buyer Confirmation URL**: page to which we will redirect the buyer once the payment has been completed. Web addresses should start with http or https. If you don't have any we will use our default page with your logo.
-* **Buyer URL Error**: Page where we will redirect the buyer if there is any problem with the payment. Web addresses should start with http or https. If you don't have any we will use our default page with your logo.
-
-Once completed click on the “Next” button.
-
-#### Step 3: Seller – Payee Details
-
-In this screen enter the data of the seller.
-
-* **Seller Prefix**: the seller’s telephone prefix.
-* **Seller Phone**: the phone number of the seller.
-* **Seller Confirmation URL**: page where we will redirect the seller once we have collected the payment information. Web addresses should start with http or https. If you don't have any we will use our default page with your logo.
-* **Seller Error URL**: Page where we will redirect the merchant if there is a problem collecting payment information. Web addresses should start with http or https. If you don't have any we will use our default page with your logo.
-
-Once completed click on the "Create Order" button.
-
-
-
-### Cancel and Refund an Order
-
-Refunds are the term that explains when there is a lost dispute over a transaction and a refund must be made to the buyer.
-
-
-
-### Validate an Order
-
-It's the action you take to release the money in the seller's account. This action can only be performed when the payment has been confirmed by Redsys and the merchant has entered their details into the platform.
-
-
-
-### Block and Unblock an Order
-
-You can block an order to stop from releasing the payment to the seller. This dashboard functionality is very useful, for exemple, for transactions that may be suspicious of malpractice or when a return is requested and thus block the outflow of payment until the product has been returned and verified.
-
- When executing **"Block order"** the process will be stopped indefinitely until we **"Unblock order"**.
-
-Instructions:
-
-**How to block an order**
-
-1. Sign in to your [Truust account](https://dashboard.truust.io/login).
-2. From the order section, click the **\[···]** menu on the right of the order you want to block.
-3. Then click **Block order**. 
-   \
-   A notification confirming the blocking action will be shown on the screen, and the order status will change to **"Blocked release"**.
-
-The order will remain blocked till the unblock action is done.
-
-Instructions:
-
-**How to unblock an order**
-
-1. Sign in to your [Truust account](https://dashboard.truust.io/login).
-2. From the order page, click the **\[···]** menu on the right of the order you want to unblock
-3. Then click **Unblock order**. 
-   \
-   A notification confirming the unblocking action will be shown, and the order status will change to its previous status.
-
-
-
-### Search and Sort
-
-Use the search funcionality to find payments, buyers, sellers, accounts, status and more.
-
-You can use the Truust mechanism available in the Dashboard to look up information about:
-
-* ID
-* Name
-* Tag
-* Account
-* Status
-* Buyer Code
-* Buyer Phone
-* Buyer Email
-* Seller Code
-* Seller Phone
-* Seller Email
-* Metadata
-* Created At
-
-After performing a search you see all the results matching with your query. From the resulting data you can click **"Order by"** or **"Sort"** to use our advanced filter options.
-
-
-
-### Reporting
-
-When you perform a search you can export the results in a csv file to build your own database.
-
-
-
-### Add a Bank Account for a Payout
-
-## Payins
-
-### List all Payins
-
-Payins are the payments made by buyers, the inflows of money.
-
-To access the Dashboard Payins screen follow the instructions below.
-
-1. Sign in to your [Truust account](https://dashboard.truust.io/login).
-2. Click on the **“Payins”** option on the left menu.
-
-Once the buyer has made the payment, it will be listed in this section.
-
-
-
-## Payouts
-
-### List all Payouts
-
-Payouts are the payments we make to the sellers, they are the payments that come out of the escrow account, the outflows of money.
-
-To access the Payouts page follow the instructions below.
-
-1. Sign in to your [Truust account](https://dashboard.truust.io/login).
-2. Click on the **"Payout"** option on the left menu.
-
-Every time a payment is done to he seller, it will be listed in this section.
-
-
-
-
+Track outgoing payments to sellers, reflecting transactions that have completed from the escrow account.
 
 ## Products
 
-### List all Products
+### Managing Products
 
-### Create and Edit Products
+Products represent a bundle that can encapsulate multiple orders. They are essential when buyer or seller details are not initially available.
 
-A **Product** is a grouping of orders with its own payment link, can be a product, a service or a joint financing campaign.
+#### Creating and Editing Products
 
-**Products** allow you to sell several quantities of the same product with a single link or generate a campaign associated with a deadline. 
+1. Navigate to "Products" from the sidebar.
+2. Click on "New" and fill in the necessary information such as name, account, amount, currency, description, and an image.
+3. Save the new product by clicking on "Create product".
 
-Orders can only be created when we can identify both parties so working with **Products** is the best alternative when the buyer and/or seller of the transaction is unknown. 
+#### Editing a Product
 
-Instructions:
+Follow a similar process as creating a product but select the existing product you wish to edit from the product list.
 
-**How to create a Product**
+---
 
-1. Sign in to your [Truust account](https://dashboard.truust.io/login).
-2. Click on the **"Products"** option on the left menu.
-3. Click on the "New" button.
-4.  Next, fill in the following fields to create a new product:
-
-* **Name**: write the name of the product. It will be the name that will be shown on the payment screen, make sure it is recognizable by users.
-* **Account**: select from the account that you want to make the transaction.
-* **Amount**: specify in this field the amount of money that will be requested in each order.
-* **Currency**: specifies the currency that will be used for each order.
-* **Description**: adds a brief description of the product.
-* **Image**: attach an image for the product.
-
-   5. Once completed click on the **"Create product"** product button.
-
-
-
-
-
-**How to edit a Product**
-
-1. Sign in to your [Truust account](https://dashboard.truust.io/login).
-2. Click on the **"Products"** option on the left menu.
-3. From the Products page, click the **\[···]** menu on the right of the product you want to edit.
-4. Change the information you need and click the save button.
+For detailed operational procedures and real-time assistance, log into your dashboard or contact our support team.

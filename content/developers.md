@@ -1,113 +1,92 @@
 ---
 title: Developers
-metaDescription: >-
-  Get up and running with our API and other tools and start developing your
-  Truust integration.
+metaDescription: Get started with our API and other tools to develop your Truust integration swiftly and effectively.
 ---
 
-> Get up and running with our API and other tools and start developing your Truust integration.
+# Developers Guide
+
+Welcome to the Truust Developers Guide! This guide provides all the necessary information to quickly set up and begin using the Truust API and other integration tools.
 
 ---
 
-## Quick Start
+## Quick Start Guide
 
-### Getting API Keys
+### Obtaining Your API Keys
 
-There are several different identifiers associated with your Truust account. Here are some important ones you'll need to know.
+Each Truust account is uniquely identified by a set of public and secret API keys. Here's how you can find and manage these keys:
 
-The public and secret keys together make up your account's API keys. Each account associated with Truust will have their own set of API keys, which they can change or rotate at any time for added security. Because this affects your integration, it should be done with caution.
+#### Public Key
+
+Your public key is a unique identifier for your account.
+
+**Steps to locate your public key:**
+
+1. Log into the Truust Dashboard (Production or Sandbox, based on your environment).
+2. Navigate to "Accounts Settings" in the "Accounts" page menu.
+3. Select the "API Developers" tab.
+4. In the "API Keys" section, your public key will be listed under "Public Key".
+
+#### Secret Key
+
+The secret key is a confidential identifier that should only be used within API requests.
+
+**Steps to access your secret key:**
+
+1. Follow the steps to navigate to the "API Keys" section as described above.
+2. Next to the "Secret Key" field, click the "Reveal" button.
+3. Your secret key will appear in the field.
+
+#### Important Considerations
+
+- **Environment Specifics:** API keys differ between Sandbox and Production environments. Ensure they are updated in your application when switching environments.
+- **Security:** Rotate these keys periodically to enhance security. Remember that key rotations require updates in your integrations.
 
 <div class="alert alert-warning">
-
-**IMPORTANT**
-
-Sandbox API keys are different from those in the production environment, so they must be updated in your code by your developers when switching between environments. More information about switching environments is available in our developer docs.
-
+    <strong>Important:</strong> Sandbox and Production API keys are different and should be updated accordingly by your development team when transitioning environments.
 </div>
 
-#### Public key
+### API Environments
 
-This is your account-specific public identifier. Each account associated with Truust will have its public key.
+Truust provides two environments for API interaction:
 
-To find your public key:
+- Sandbox: `https://api-sandbox.truust.io/` (For testing and development)
+- Production: `https://api.truust.io/` (For live operations)
 
-- Log into either the production Dashboard or the sandbox Dashboard, depending on which environment you are working in
-- Click on the "Accounts Settings" button from your "Accounts" page list
-- Click the "API Developers" tab from the top menu
-- Scroll to the API Keys section and you will see the "Public Key" value
-
-#### Secret key
-
-This is your account secret identifier. Each account associated with Truust will have its secret key. Your secret key should not be shared outside the use of an API call – even with us.
-
-To find your secret key:
-
-- Log into either the production Dashboard or the sandbox Dashboard, depending on which environment you are working in
-- Click on the "Accounts Settings" button from your "Accounts" page list
-- Click the "API Developers" tab from the top menu
-- Scroll to the API Keys section and you will see an empty "Secret Key" field
-- Click the "Reveal" button located next to the Secret Key field
-
-Your secret key will be revealed in the Secret Key field on the same page.
-
-### Environments
-
-The environment specifies where requests via the API should be directed – sandbox or production. Because you have a different set of API keys for each environment, you'll need to update your code depending on which environment you're working in.
-
-There are both production and sandbox environments for the API. The URL endpoints will be:
-
-- https://api-sandbox.truust.io/ - Testing environment
-- https://api.truust.io/ - Live production environment
+Adjust your API keys and endpoints based on the environment you are working in.
 
 ## Webhooks
 
-Truust can send webhook events that **notify your application any time an event happens on your account**. This is especially useful for events that are not triggered by a direct API request, like order status change and many user actions. This mechanism is also useful for services that are not directly responsible for making an API request, but still, need to receive the response from that request.
+Webhooks in Truust allow your applications to receive automatic updates about events happening within your account, such as order changes and more.
 
-You can register webhook URLs and the attached event and we will notify you any time that event happens in your account. When the event occurs we will create a request containing **all the relevant information about what just happened**, via an HTTP `POST` request, to any endpoint URLs that you have defined in your account´s Webhooks settings.
+### Configuring Webhooks
 
-Webhooks are necessary only for behind-the-scenes transactions. Most requests (e.g., creating links) generate results that are reported synchronously to your code. These do not require webhooks for verification.
+To set up a webhook:
 
-To configure a webhook, you'll need to:
+1. Log into the Truust Dashboard.
+2. Navigate to "Webhooks" and click "Create New Webhook".
+3. Enter your destination URL and select the event types you want to subscribe to.
+4. Confirm by clicking "Create Webhook".
 
-1. Create a webhook destination URL on your server
-2. Create a new webhook in the Dashboard by entering your webhook destination URL and selecting at least one type of event for the webhook to fire on
-3. Set up your server to parse incoming webhooks
-4. Test your webhook handling code
+**Webhook Notifications Include:**
 
-### Notifications
+- Order Published
+- Order Failed
+- Order Accepted
+- Order Rejected
+- Order Cancelled
+- Payout Created
+- Order Released
 
-Here is a complete list with all the available notifications we will trigger for your account:
-
-- `Order Published` - The order has been successfully paid
-- `Order Failed` - There has been an error completing the payment
-- `Order Accepted` - The order has been accepted by the seller or automatically settled
-- `Order Rejected` - The order has been rejected by the seller
-- `Order Cancelled` - The order has been canceled for any reason
-- `Payout Created` - The payout associated with the order, has been created and we have the information needed to proceed with the payout
-- `Order Released` - The order has been released and we have transferred the funds to the assigned payout account
-
-### Registering the Webhook Endpoint
-
-To create a webhook:
-
-1. Log into the Dashboard corresponding to the environment you want to setup
-2. Click on the Webhooks option on the side-menu
-3. Click the Create New Webhook button
-4. Provide your destination URL and your selected notification
-5. Click the Create Webhook button
-
-When adding a webhook in the Dashboard, you'll need to provide a destination URL using a valid HTTPS path. This URL will receive all webhook notifications as POST requests and must be a publicly accessible URL on your site
-
-You can create multiple webhook destination URLs to route certain webhook notifications to specific endpoints.
+Ensure your server is properly configured to handle incoming webhook data, which is sent via HTTP POST requests.
 
 ## API Reference
 
-If you need an extensive integration and apply your own rules, you can access our services via API. To review our technical API Reference, visit the following link:
+For detailed information on integrating and using our extensive API, visit our [API Documentation](https://documenter.getpostman.com/view/27442666/2s93kxb5RQ).
 
-> <https://documenter.getpostman.com/view/27442666/2s93kxb5RQ>
-
-Our technical team is here to help. If you are a company with more complex technical needs, contact us at <mailto:hello@truust.io>.
+For assistance, contact our technical support team at [hello@truust.io](mailto:hello@truust.io).
 
 ## Connectors
 
-![Connectors](/assets/connectors.png)
+For visualizing how different components connect within our system, refer to the following diagram:
+
+![Connectors Diagram](/assets/connectors.png)
