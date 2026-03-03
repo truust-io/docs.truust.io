@@ -40,11 +40,9 @@ There are two Dashboard and API environments:
 
 Both environments are mutually exclusive; **they do not interact with each other**, and it is possible to have different login credentials for each environment.
 
-<div className="alert alert-warning">
-
+<Warning>
 **Your sandbox account is not linked to your production account in any way**. Nothing created in the sandbox will transfer to production. This includes processing options and recurring billing settings. Your login information, account settings and API keys will also be different.
-
-</div>
+</Warning>
 
 ## Accounts
 
@@ -206,16 +204,14 @@ If you regularly charge in multiple currencies, you may be able to establish mul
 
 In each account, you can indicate a fee value that will be applied by default to your orders. It can be indicated in % or absolute value.
 
-<div className="alert alert-info">
-
+<Note>
 **Example**
 
 For each transaction, you will have 2 calculated values of fees (% and abs.). **We will always use the highest value**. For example, if you configure a 10% fee and an absolute value of 5€, the results will be:
 
 - In a 100€ payment, we will apply 10% (with a total result of 10€ in fees).
 - In a 20€ payment, we will apply the absolute 5€ (since 10% of 20€ does not exceed the other value).
-
-</div>
+</Note>
 
 ### Default Fees Scheme
 
@@ -234,8 +230,7 @@ Additionally, each order can have an individual fee that will apply only to that
 
 Can you make the buyer assume your service fees instead of the seller? Yes, you can. In that case, you must indicate in the amount field, the total value (resulting from the sum of the original amount plus your fees in absolute value), in the **`fee_amount`** field, the value of your fees in absolute value and the **`fee_percent`** field, use zero.
 
-<div className="alert alert-info">
-
+<Note>
 **Example**
 
 A marketplace wants to charge 10% to the buyer and a product is listed at 100€. By default in our platform, we will charge the buyer 100€ and transfer 90€ to the seller. If you want to charge the buyer, the following values must be used:
@@ -245,8 +240,7 @@ A marketplace wants to charge 10% to the buyer and a product is listed at 100€
 - **`fee_percent`** - 0%
 
 With these values, the buyer will end up being charged 110€ and the seller will receive 100€. It's important to note that **the `fee_percent` must be 0** to avoid calculating the 10% of 110€. The result of this calculation will end up in a total fee value of 11€, which is incorrect.
-
-</div>
+</Note>
 
 ## Glossary
 

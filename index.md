@@ -143,4 +143,4 @@ Get up and running with our API and other tools and start developing your Truust
 
 ---
 
-Got more questions? Message us in the dashboard or email us at: <mailto:hello@truust.io>
+Got more questions? Message us in the dashboard or email us at: [hello@truust.io](mailto:hello@truust.io)

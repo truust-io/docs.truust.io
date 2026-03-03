@@ -1,7 +1,12 @@
+# Mintlify
+.mintlify/
+
+# Gatsby (legacy)
 public
 .cache
+
+# General
 node_modules
 *DS_Store
 *.env
-
 .idea/

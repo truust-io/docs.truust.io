@@ -1,0 +1,70 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Truust",
+  "url": "https://docs.truust.io",
+  "logo": {
+    "light": "/assets/logo-truust.png",
+    "dark": "/assets/logo-truust.png",
+    "href": "https://truust.io"
+  },
+  "favicon": "/assets/logo-truust.png",
+  "colors": {
+    "primary": "#073963",
+    "light": "#058ed8",
+    "dark": "#073963"
+  },
+  "topbarLinks": [
+    {
+      "name": "Truust Website",
+      "url": "https://truust.io"
+    },
+    {
+      "name": "Contact Us",
+      "url": "https://truust.io/contact/"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "API Reference",
+    "url": "https://documenter.getpostman.com/view/27442666/2s93kxb5RQ"
+  },
+  "anchors": [
+    {
+      "name": "API Reference",
+      "icon": "code",
+      "url": "https://documenter.getpostman.com/view/27442666/2s93kxb5RQ"
+    },
+    {
+      "name": "Dashboard",
+      "icon": "chart-line",
+      "url": "http://dashboard-sandbox.truust.io"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Overview",
+      "pages": [
+        "introduction",
+        "getting-started"
+      ]
+    },
+    {
+      "group": "Platform",
+      "pages": [
+        "dashboard",
+        "hosted-checkout",
+        "payment-methods",
+        "payment-flows",
+        "reporting"
+      ]
+    },
+    {
+      "group": "Developers",
+      "pages": [
+        "developers"
+      ]
+    }
+  ],
+  "footerSocials": {
+    "website": "https://truust.io"
+  }
+}

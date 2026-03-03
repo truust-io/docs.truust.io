@@ -17,13 +17,11 @@ There are several different identifiers associated with your Truust account. Her
 
 The public and secret keys together make up your account's API keys. Each account associated with Truust will have their own set of API keys, which they can change or rotate at any time for added security. Because this affects your integration, it should be done with caution.
 
-<div class="alert alert-warning">
-
+<Warning>
 **IMPORTANT**
 
 Sandbox API keys are different from those in the production environment, so they must be updated in your code by your developers when switching between environments. More information about switching environments is available in our developer docs.
-
-</div>
+</Warning>
 
 #### Public key
 
@@ -104,9 +102,9 @@ You can create multiple webhook destination URLs to route certain webhook notifi
 
 If you need an extensive integration and apply your own rules, you can access our services via API. To review our technical API Reference, visit the following link:
 
-> <https://documenter.getpostman.com/view/27442666/2s93kxb5RQ>
+> [https://documenter.getpostman.com/view/27442666/2s93kxb5RQ](https://documenter.getpostman.com/view/27442666/2s93kxb5RQ)
 
-Our technical team is here to help. If you are a company with more complex technical needs, contact us at <mailto:hello@truust.io>.
+Our technical team is here to help. If you are a company with more complex technical needs, contact us at [hello@truust.io](mailto:hello@truust.io).
 
 ## Connectors
 

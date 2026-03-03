@@ -77,12 +77,9 @@ Remember. As money travels from the customer to your (or other) bank account, th
 - `BLOCKED_RELEASE` - The order release has been blocked for some reason and will not be completed. Contact us for more information.
 - `RELEASED` - The order has been released.
 
-<div class="alert alert-info">
-
-**About order status**
-You don't need to worry too much about this list. In our Dashboard, our order list follows a color-scheme, where you can easily identify each status.
-
-</div>
+<Note>
+**About order status:** You don't need to worry too much about this list. In our Dashboard, our order list follows a color-scheme, where you can easily identify each status.
+</Note>
 
 ## Split Payments
 
@@ -107,15 +104,11 @@ Once we get the validation to release the payment, **we will split the funds int
 - **Amount**: This value will correspond to the total amount to be sent to the seller.
 - **Account Fees**: This value will correspond to the total amount transferred to your account's wallet corresponding to this order. Use `fee_amount = 0` to disable the fees on any specific order and override your [default fees](/getting-started#fees).
 
-<div class="alert alert-warning">
-
-**Note about fees**:
-
-Remember, **fees are not mandatory on every order** and you can perform the default split without any commissions applied. In this case, the total payin amount will be transferred as a payout amount.
+<Warning>
+**Note about fees:** Remember, **fees are not mandatory on every order** and you can perform the default split without any commissions applied. In this case, the total payin amount will be transferred as a payout amount.
 
 This condition is valid for every movement listed on the [wallet payments](/payment-flows#walletpayments).
-
-</div>
+</Warning>
 
 ### Multiple Split
 

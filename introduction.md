@@ -3,11 +3,9 @@ title: Introduction
 ---
 > Truust.io is a powerful and innovative technological payment platform that allows customized money flows for digital business models.
 
-<div class="alert alert-info">
-
+<Note>
 **Truust.io is the first Payments-as-a-Service platform.** Clients can easily prototype, build and scale every use case connecting our available financial services or demanding new ones.
-
-</div>
+</Note>
 
 - - -
 

@@ -40,25 +40,29 @@ Use the credit card values below to trigger different responses from the gateway
 
 These credit card numbers will not trigger specific credit card errors. However, this does not necessarily mean that a transaction will be successful in the sandbox. Other values can impact transaction success.
 
-| Payin Type | Number           | Expiration | CCV | CIP    |
-| ---------- | ---------------- | ---------- | --- | ------ |
-| REDSYS_V2  | 4548812049400004 | 12/26      | 123 | 123456 |
-| CECABANK   | 5540500001000004 | 12/26      | 989 | (none) |
-| ADDON_HPP  | 4263970000005262 | 12/26      | 333 | (none) |
-| ADDON_V2   | 4918019199883839 | 12/34      | 123 | 1234   |
-| ADDON_V2   | 5410080000000021 | 12/40      | 123 | 1234   |
-| GPWEBPAY   | 4056070000000008 | 12/26      | 200 | (none) |
-| HEARTLAND  | 4012002000060016 | 12/26      | 123 | (none) |
-| DCP Izipay | 4012001037141112 | 12/27      | 840 | (none) |
-| DCP Izipay | 4005520000000129 | 12/27      | 973 | (none) |
+```
+Payin Type    Number              Expiration   CCV   CIP
+─────────────────────────────────────────────────────────────
+REDSYS_V2     4548812049400004    12/26        123   123456
+CECABANK      5540500001000004    12/26        989   —
+ADDON_HPP     4263970000005262    12/26        333   —
+ADDON_V2      4918019199883839    12/34        123   1234
+ADDON_V2      5410080000000021    12/40        123   1234
+GPWEBPAY      4056070000000008    12/26        200   —
+HEARTLAND     4012002000060016    12/26        123   —
+DCP Izipay    4012001037141112    12/27        840   —
+DCP Izipay    4005520000000129    12/27        973   —
+```
 
 #### Card numbers for unsuccessful verification
 
 The following credit card numbers will simulate an unsuccessful card verification response.
 
-| Number           | Expiration | CCV |
-| ---------------- | ---------- | --- |
-| 1111111111111117 | 12/21      | 123 |
+```
+Number              Expiration   CCV
+────────────────────────────────────
+1111111111111117    12/21        123
+```
 
 ## Bank Transfers
 

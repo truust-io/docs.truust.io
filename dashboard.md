@@ -40,8 +40,9 @@ To start creating orders follow the steps below:
 
 A screen will open with the 3 steps necessary to generate the Order.
 
-> **NOTE**\
-> Orders can be created when we know the seller and the buyer, if we do not have the information, we must use the "bundles" functionality (explained later in this document).
+<Note>
+Orders can be created when we know the seller and the buyer, if we do not have the information, we must use the "bundles" functionality (explained later in this document).
+</Note>
 
 
 
