@@ -1,0 +1,97 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "Truust",
+  "colors": {
+    "primary": "#073963",
+    "light": "#058ed8",
+    "dark": "#073963"
+  },
+  "favicon": "/assets/logo-truust.png",
+  "navigation": {
+    "anchors": [
+      {
+        "anchor": "Documentation",
+        "icon": "book-open",
+        "groups": [
+          {
+            "group": "Overview",
+            "pages": [
+              "introduction",
+              "getting-started"
+            ]
+          },
+          {
+            "group": "Platform",
+            "pages": [
+              "dashboard",
+              "hosted-checkout",
+              "payment-methods",
+              "payment-flows",
+              "reporting"
+            ]
+          },
+          {
+            "group": "Developers",
+            "pages": [
+              "developers"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": [
+        {
+          "anchor": "API Reference",
+          "href": "https://documenter.getpostman.com/view/27442666/2s93kxb5RQ",
+          "icon": "code"
+        },
+        {
+          "anchor": "Dashboard",
+          "href": "http://dashboard-sandbox.truust.io",
+          "icon": "chart-line"
+        }
+      ]
+    }
+  },
+  "logo": {
+    "light": "/assets/logo-truust.png",
+    "dark": "/assets/logo-truust.png",
+    "href": "https://truust.io"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Truust Website",
+        "href": "https://truust.io"
+      },
+      {
+        "label": "Contact Us",
+        "href": "https://truust.io/contact/"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "API Reference",
+      "href": "https://documenter.getpostman.com/view/27442666/2s93kxb5RQ"
+    }
+  },
+  "footer": {
+    "socials": {
+      "website": "https://truust.io"
+    }
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "grok",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
+  }
+}

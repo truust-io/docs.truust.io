@@ -66,5 +66,13 @@
   ],
   "footerSocials": {
     "website": "https://truust.io"
+  },
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude"
+    ]
   }
 }
