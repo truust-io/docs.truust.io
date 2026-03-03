@@ -1,145 +1,85 @@
 ---
 title: Build your perfect payments flow
-metaTitle: Documentation Truust
-metaDescription: We help you accept more payments, monitor your transactions in real-time and build a seamless payments flow
+description: "We help you accept more payments, monitor your transactions in real-time and build a seamless payments flow"
 ---
 
 We help you accept more payments, monitor your transactions in real-time and build a seamless payments flow. To get up and running right away, follow our [quickstart guide](/getting-started) or [sign up for a test account](http://dashboard-sandbox.truust.io/).
 
----
+## Getting Started
 
-<div class="row hero">
-  <div class="col-sm-4 col-sm-offset-4 col-xs-6 col-xs-offset-3">
+<CardGroup cols={2}>
+  <Card title="Introduction" icon="book-open" href="/introduction">
+    Learn about Truust and how it helps you build any type of payment flow
+  </Card>
+  <Card title="Get Ready" icon="rocket" href="/getting-started">
+    Set up your account and start accepting payments
+  </Card>
+  <Card title="Environments" icon="flask" href="/getting-started#environments">
+    Sandbox and production environments
+  </Card>
+  <Card title="Accounts & Wallets" icon="wallet" href="/getting-started#accounts">
+    Manage accounts, wallets and fees
+  </Card>
+</CardGroup>
 
-![](/assets/logo-truust.png)
+## The Dashboard
 
-  </div>
-</div>
+<CardGroup cols={2}>
+  <Card title="Overview" icon="chart-line" href="/dashboard">
+    Track and analyze your transactions, customer data and revenue
+  </Card>
+  <Card title="Orders" icon="receipt" href="/dashboard#orders">
+    Create and manage orders
+  </Card>
+  <Card title="Order Actions" icon="sliders" href="/dashboard#orderactions">
+    Validate, block and manage order actions
+  </Card>
+  <Card title="Pay Ins & Payouts" icon="arrow-right-arrow-left" href="/dashboard#payins">
+    Track incoming and outgoing payments
+  </Card>
+</CardGroup>
 
----
+## Payment Methods
 
-<div class="row">
-<div class="col-xs-12">
+<CardGroup cols={3}>
+  <Card title="Cards" icon="credit-card" href="/payment-methods#cards">
+    Accept major card schemes
+  </Card>
+  <Card title="Bank Transfers" icon="building-columns" href="/payment-methods#banktransfers">
+    SEPA and bank wire transfers
+  </Card>
+  <Card title="Payment Links" icon="link" href="/payment-methods#paymentlinks">
+    Send payment links to customers
+  </Card>
+</CardGroup>
 
-#### Getting Started
+## Payment Flows
 
-</div>
-<div class="col-sm-6">
+<CardGroup cols={3}>
+  <Card title="Wallet Payments" icon="wallet" href="/payment-flows#walletpayments">
+    Manage wallet-based money flows
+  </Card>
+  <Card title="Split Payments" icon="code-branch" href="/payment-flows#splitpayments">
+    Split payments between multiple parties
+  </Card>
+  <Card title="Order Status" icon="list-check" href="/payment-flows#orderstatus">
+    Understand the order lifecycle and statuses
+  </Card>
+</CardGroup>
 
-Truust helps you create any type of payment flow—from e-commerce to split payments and everything in between.
+## Developers
 
-</div>
-<div class="col-sm-3">
-
-- [Introduction](/introduction)
-- [Get ready](/getting-started)
-- [Environments](/getting-started#environments)
-
-
-</div>
-<div class="col-sm-3">
-
-- [Accounts](/getting-started#accounts)
-- [Wallets](/getting-started#wallets)
-- [Glossary](/getting-started#glossary)
-
-</div>
-</div>
-
----
-
-<div class="row">
-<div class="col-xs-12">
-
-#### The Dashboard
-
-</div>
-<div class="col-sm-6">
-
-Stay on top with your single source for tracking and analyzing your transactions, customer data and revenue.
-
-</div>
-<div class="col-sm-3">
-
-- [Overview](/dashboard)
-- [Orders](/dashboard#orders)
-- [Order Actions](/dashboard#orderactions)
-
-</div>
-<div class="col-sm-3">
-
-- [Pay Ins](/dashboard#payins)
-- [Payouts](/dashboard#payouts)
-- [Products](/dashboard#products)
-
-</div>
-</div>
-
----
-
-<div class="row">
-<div class="col-xs-12">
-
-#### Payment Methods
-
-</div>
-<div class="col-sm-6">
-
-Accept payments from all major card schemes and the most popular alternative payment methods.
-
-</div>
-<div class="col-sm-6">
-
-- [Cards](/payment-methods#cards)
-- [Bank transfers](/payment-methods#banktransfers)
-- [Payment links](/payment-methods#paymentlinks)
-
-</div>
-</div>
-
----
-
-<div class="row">
-<div class="col-xs-12">
-
-#### Payment Flows
-
-</div>
-<div class="col-sm-6">
-
-Truust provides a powerful API and other tools you need to accept payments, as well as pay sellers and service providers.
-
-</div>
-<div class="col-sm-6">
-
-- [Wallet Payments](/payment-flows#walletpayments)
-- [Split Payments](/payment-flows#splitpayments)
-- [Escrow Payments](/payment-flows#escrowpayments)
-
-</div>
-</div>
-
----
-
-<div class="row">
-<div class="col-xs-12">
-
-#### Developers
-
-</div>
-<div class="col-sm-6">
-
-Get up and running with our API and other tools and start developing your Truust integration.
-
-</div>
-<div class="col-sm-6">
-
-- [Getting your API Keys](/developers#quickstart)
-- [Webhooks](/developers#webhooks)
-- [API Reference](/developers#apireference)
-
-</div>
-</div>
+<CardGroup cols={3}>
+  <Card title="API Keys" icon="key" href="/developers#quickstart">
+    Get your API keys and start integrating
+  </Card>
+  <Card title="Webhooks" icon="webhook" href="/developers#webhooks">
+    Set up webhook notifications
+  </Card>
+  <Card title="API Reference" icon="code" href="/developers#apireference">
+    Full API documentation
+  </Card>
+</CardGroup>
 
 ---
 

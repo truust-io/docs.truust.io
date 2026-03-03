@@ -9,6 +9,7 @@ metaDescription: >-
 
 ---
 
+<span id="quickstart"></span>
 ## Quick Start
 
 ### Getting API Keys
@@ -98,6 +99,7 @@ When adding a webhook in the Dashboard, you'll need to provide a destination URL
 
 You can create multiple webhook destination URLs to route certain webhook notifications to specific endpoints.
 
+<span id="apireference"></span>
 ## API Reference
 
 If you need an extensive integration and apply your own rules, you can access our services via API. To review our technical API Reference, visit the following link:

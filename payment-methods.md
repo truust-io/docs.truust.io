@@ -64,12 +64,14 @@ Number              Expiration   CCV
 1111111111111117    12/21        123
 ```
 
+<span id="banktransfers"></span>
 ## Bank Transfers
 
 ### How we handle Bank Transfer Payments
 
 SEPA Direct Debit payments are an asynchronous method, so funds are not immediately available. A payin created from a `BANKWIRE` type can remain pending for up to 14 business days from its creation, though the average time is around five business days. Once the charge is confirmed, its status is updated to succeed.
 
+<span id="paymentlinks"></span>
 ## Payment Links
 
 To accept payments via Truust you don’t need to know all the subtleties and perform technical integration. If you have a few orders, you may send a link to order payment directly to your clients’ e-mails. Use a "Create Order" button in the Order section of your Dashboard to send a link to payment to a client’s e-mail address or generate it on the special page of the site.

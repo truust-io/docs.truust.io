@@ -12,6 +12,7 @@ By default, our platform will require an `order` **with a previously created buy
 
 Please, consider reviewing our [API Reference](/developers#apireference) to get a list with all the available endpoints and parameters.
 
+<span id="orderlifecycle"></span>
 ## Order Lifecycle
 
 Every order follows a standard life-cycle. You need to check it and understand how this life-cycle will fit into your platform. Order statuses can help you locate where your money is in the order lifecycle.
@@ -61,6 +62,7 @@ The status at this moment shall be `PENDING_RELEASE`.
 
 If you choose to perform a `WALLET` payout, the funds will be available almost instantly. If you choose to perform an `ACCOUNT` payout, expect the money to be available on the specified bank account in between 24-72h.
 
+<span id="orderstatus"></span>
 ## Order Status
 
 Remember. As money travels from the customer to your (or other) bank account, the order is given a series of statuses. The possible order status is the following:
@@ -81,6 +83,7 @@ Remember. As money travels from the customer to your (or other) bank account, th
 **About order status:** You don't need to worry too much about this list. In our Dashboard, our order list follows a color-scheme, where you can easily identify each status.
 </Note>
 
+<span id="splitpayments"></span>
 ## Split Payments
 
 Our tool features seamless payment collection, disbursement, and management. It helps you reduce your operational costs with our automated split payments. All while tracking the flow of funds from a customer to a recipient, fully recording all transactions.
@@ -116,6 +119,7 @@ To use multiple split payments, our system provides a set of [wallet payments](/
 
 Check the [use cases](/payment-flows#usecases) section to get more information about how multiple splits work.
 
+<span id="walletpayments"></span>
 ## Wallet Payments
 
 Using our standard order life-cycle and our available payin and payout types we offer a variety of money flows to cover almost every need.
