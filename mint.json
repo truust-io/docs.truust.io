@@ -70,9 +70,13 @@
   "contextual": {
     "options": [
       "copy",
-      "view",
       "chatgpt",
-      "claude"
+      "claude",
+      "perplexity",
+      "grok",
+      "mcp",
+      "cursor",
+      "vscode"
     ]
   }
 }
