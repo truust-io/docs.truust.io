@@ -17,7 +17,11 @@ The flow consists of:
 3. Displaying the payment button to the customer
 4. Handling the payment confirmation
 5. Retrieving the subscription identifier and card token
-6. Charging subsequent recurring payments
+
+Once the initial payment is set up, the guide also covers:
+
+- [Charging Recurring Payments](#charging-recurring-payments) — how to process subsequent charges automatically
+- [Custom Payment Button](#custom-payment-button) — how to render the Apple Pay or Google Pay button in your own UI
 
 ## Prerequisites
 
@@ -29,7 +33,7 @@ The flow consists of:
 
 ## Step 1: Create the Initial Order
 
-Create an order using `POST /2.0/orders` with the recurring metadata fields:
+Create an order using `POST /2.0/orders` with the recurring metadata fields. The following example shows the minimum required parameters:
 
 ```bash
 curl -X POST {{endpoint}}/2.0/orders \
@@ -51,6 +55,8 @@ curl -X POST {{endpoint}}/2.0/orders \
 | `value` | Yes | Amount to charge |
 | `metadata[recurring_type]` | Yes | Set to `cof` (Credential on File) |
 | `metadata[recurring_sca]` | Yes | Set to `mit` (Merchant Initiated Transaction) |
+| `buyer_confirmed_url` | No | URL to redirect the customer after a successful payment |
+| `buyer_denied_url` | No | URL to redirect the customer after a failed payment |
 
 <Note>
 The `recurring_type` and `recurring_sca` metadata fields tell the payment gateway that this is the initial transaction of a recurring series and that future charges will be merchant-initiated.
@@ -129,6 +135,10 @@ Once the customer taps the payment button, the Apple Pay or Google Pay payment s
 
 After the customer authorizes the payment, they will be redirected to the `buyer_confirmed_url` or `buyer_denied_url` that you set when creating the order.
 
+<Note>
+If you prefer to render the Apple Pay or Google Pay button yourself instead of using the Truust-hosted checkout, see the [Custom Payment Button](#custom-payment-button) section below.
+</Note>
+
 ---
 
 ## Step 4: Handle the Payment Confirmation
@@ -138,7 +148,9 @@ When the payment is completed, Truust will send a webhook to your configured end
 - **`PayinConfirmed`**: Triggered when the payin is confirmed.
 - **`EscrowPublished`**: Triggered when the order is published (payment completed). This event includes the full order and payin details.
 
-### EscrowPublished Webhook Payload
+### EscrowPublished Webhook Payload (simplified)
+
+The following is a simplified version of the payload showing the most relevant fields. The actual webhook includes additional order and payin details.
 
 ```json
 {
@@ -214,8 +226,18 @@ You can obtain it from:
 
 ### Card ID
 
-Retrieve the `card_id` from the payin's `connections` or directly from the webhook payload. This is the tokenized card that will be used for subsequent charges.
+Retrieve the `card_id` from the webhook payload (available as `payin.card_id`) or from the API response when viewing the payin. This is the tokenized card that will be used for subsequent charges.
 
+From the webhook payload:
+```json
+{
+  "payin": {
+    "card_id": 1234567
+  }
+}
+```
+
+From the API (`GET /2.0/payins/{payin_id}`):
 ```json
 {
   "data": {
@@ -274,6 +296,39 @@ curl -X POST {direct_link}
 
 Since the card is already tokenized and this is a merchant-initiated transaction, the payment will be processed automatically without requiring the customer to authenticate again.
 
+The same webhook events (`PayinConfirmed` and `EscrowPublished`) will be triggered when the recurring payment is confirmed.
+
 <Note>
 Use the same `type` (`REDSYS_APPLE_PAY` or `REDSYS_GOOGLE_PAY`) that was used in the initial payment.
 </Note>
+
+---
+
+## Custom Payment Button
+
+If you want to render the Apple Pay or Google Pay button in your own UI instead of using the Truust-hosted checkout via iframe, you can obtain the payment token yourself and send it directly to Truust.
+
+### Flow
+
+1. Follow **Step 1** and **Step 2** as described above to create the order and payin.
+2. Render the Apple Pay or Google Pay button in your application using the corresponding SDK ([Apple Pay JS](https://developer.apple.com/documentation/apple_pay_on_the_web) or [Google Pay API](https://developers.google.com/pay/api)).
+3. When the customer authorizes the payment, you will receive a payment token from Apple or Google.
+4. Send the token to Truust by making a `POST` request to the `direct_link` with the token parameter:
+
+**For Apple Pay:**
+
+```bash
+curl -X POST {direct_link} \
+  -H "Content-Type: application/json" \
+  -d '{"apple_token": "{token_from_apple_pay}"}'
+```
+
+**For Google Pay:**
+
+```bash
+curl -X POST {direct_link} \
+  -H "Content-Type: application/json" \
+  -d '{"google_token": "{token_from_google_pay}"}'
+```
+
+From this point, the payment confirmation and webhook flow is the same as described in **Step 4** and **Step 5**.
