@@ -1,5 +1,6 @@
 ---
 title: Build your perfect payments flow
+sidebarTitle: Home
 description: "We help you accept more payments, monitor your transactions in real-time and build a seamless payments flow"
 ---
 

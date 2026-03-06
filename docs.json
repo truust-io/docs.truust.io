@@ -2,7 +2,6 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "Truust",
-  "homepage": "index",
   "colors": {
     "primary": "#073963",
     "light": "#058ed8",
@@ -18,6 +17,7 @@
           {
             "group": "Overview",
             "pages": [
+              "index",
               "introduction",
               "getting-started"
             ]
