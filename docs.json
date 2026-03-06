@@ -17,7 +17,6 @@
           {
             "group": "Overview",
             "pages": [
-              "index",
               "introduction",
               "getting-started"
             ]
