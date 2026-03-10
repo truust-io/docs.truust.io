@@ -8,6 +8,7 @@
     "dark": "#073963"
   },
   "favicon": "/assets/logo-truust.png",
+  "openapi": "api-reference/openapi.yaml",
   "navigation": {
     "anchors": [
       {
@@ -38,15 +39,136 @@
             ]
           }
         ]
+      },
+      {
+        "anchor": "API Reference",
+        "icon": "code",
+        "groups": [
+          {
+            "group": "API Reference",
+            "pages": ["api-reference"]
+          },
+          {
+            "group": "Account",
+            "pages": [
+              "api-reference/get-account",
+              "api-reference/update-account",
+              "api-reference/create-account",
+              "api-reference/get-account-fees"
+            ]
+          },
+          {
+            "group": "Customers",
+            "pages": [
+              "api-reference/list-customers",
+              "api-reference/create-customer",
+              "api-reference/get-customer",
+              "api-reference/update-customer",
+              "api-reference/list-customer-wallets",
+              "api-reference/list-customer-cards",
+              "api-reference/create-card",
+              "api-reference/list-customer-bank-accounts",
+              "api-reference/list-customer-addresses",
+              "api-reference/create-customer-address",
+              "api-reference/get-customer-address",
+              "api-reference/update-customer-address",
+              "api-reference/list-customer-subscriptions"
+            ]
+          },
+          {
+            "group": "Orders",
+            "pages": [
+              "api-reference/list-orders",
+              "api-reference/create-order",
+              "api-reference/get-order",
+              "api-reference/update-order",
+              "api-reference/get-order-payin",
+              "api-reference/get-order-payout",
+              "api-reference/accept-order",
+              "api-reference/cancel-order",
+              "api-reference/validate-order",
+              "api-reference/send-order-receipt",
+              "api-reference/reimburse-order"
+            ]
+          },
+          {
+            "group": "Payins",
+            "pages": [
+              "api-reference/list-payins",
+              "api-reference/create-payin",
+              "api-reference/get-payin",
+              "api-reference/sync-payin",
+              "api-reference/refund-payin",
+              "api-reference/cancel-pre-auth",
+              "api-reference/request-to-pay"
+            ]
+          },
+          {
+            "group": "Payouts",
+            "pages": [
+              "api-reference/list-payouts",
+              "api-reference/create-payout",
+              "api-reference/get-payout",
+              "api-reference/sync-payout"
+            ]
+          },
+          {
+            "group": "Wallets",
+            "pages": [
+              "api-reference/create-wallet",
+              "api-reference/get-wallet",
+              "api-reference/update-wallet",
+              "api-reference/list-wallet-transactions"
+            ]
+          },
+          {
+            "group": "Bank Accounts",
+            "pages": [
+              "api-reference/create-bank-account",
+              "api-reference/get-bank-account",
+              "api-reference/get-bank-account-validation"
+            ]
+          },
+          {
+            "group": "Cards",
+            "pages": [
+              "api-reference/get-card",
+              "api-reference/delete-card"
+            ]
+          },
+          {
+            "group": "Subscriptions",
+            "pages": [
+              "api-reference/list-subscriptions",
+              "api-reference/create-subscription",
+              "api-reference/get-subscription",
+              "api-reference/cancel-subscription"
+            ]
+          },
+          {
+            "group": "Verifications",
+            "pages": [
+              "api-reference/list-verifications",
+              "api-reference/get-verification",
+              "api-reference/submit-verification",
+              "api-reference/request-verification",
+              "api-reference/list-verification-documents",
+              "api-reference/upload-verification-document",
+              "api-reference/get-verification-document"
+            ]
+          },
+          {
+            "group": "Refunds",
+            "pages": [
+              "api-reference/list-refunds",
+              "api-reference/get-refund"
+            ]
+          }
+        ]
       }
     ],
     "global": {
       "anchors": [
-        {
-          "anchor": "API Reference",
-          "href": "https://documenter.getpostman.com/view/27442666/2s93kxb5RQ",
-          "icon": "code"
-        },
         {
           "anchor": "Dashboard",
           "href": "http://dashboard-sandbox.truust.io",
@@ -73,8 +195,8 @@
     ],
     "primary": {
       "type": "button",
-      "label": "API Reference",
-      "href": "https://documenter.getpostman.com/view/27442666/2s93kxb5RQ"
+      "label": "Dashboard",
+      "href": "http://dashboard-sandbox.truust.io"
     }
   },
   "footer": {
