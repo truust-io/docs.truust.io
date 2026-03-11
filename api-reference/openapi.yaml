@@ -50,6 +50,8 @@ tags:
     description: Manage recurring payment subscriptions
   - name: Verifications
     description: KYC verification for customers and accounts
+  - name: Bundles
+    description: Manage product bundles for orders
   - name: Refunds
     description: View refund records
 
@@ -72,15 +74,27 @@ paths:
           application/json:
             schema:
               type: object
-              required: [name, country_code, email, password]
+              required: [name, slug, country_code, email, password]
+              example:
+                name: My Company
+                slug: my_company
+                country_code: ES
+                email: owner@mycompany.com
+                password: Str0ng!Pass
+                locale: es
               properties:
                 name:
                   type: string
                   maxLength: 255
-                  description: Business name (alphanumeric, spaces, dots, hyphens, underscores).
+                  description: Unique business name.
                   example: My Company
+                slug:
+                  type: string
+                  description: Unique slugged name derived from `name` (e.g. "My Account" → "my_account").
+                  example: my_company
                 country_code:
                   type: string
+                  maxLength: 2
                   description: ISO 3166-1 alpha-2 country code.
                   example: ES
                 email:
@@ -92,12 +106,171 @@ paths:
                   type: string
                   minLength: 8
                   maxLength: 255
-                  description: Must be a strong password (min 8 chars).
+                  description: Strong password (lower + upper case + symbol + number).
                   example: Str0ng!Pass
+                image:
+                  type: string
+                  description: Base64-encoded image or URL for the account logo.
                 locale:
                   type: string
-                  description: Preferred locale (e.g. `es`, `en`).
+                  description: Notifications will be sent in this language (e.g. `es`, `en`).
                   example: es
+                business_url:
+                  type: string
+                  description: URL of the business.
+                product_description:
+                  type: string
+                  description: Description of the product or service.
+                fee_percent:
+                  type: number
+                  description: Fee applied to orders (including platform's fee).
+                fee_amount:
+                  type: number
+                  description: Fixed fee applied to orders (including platform's fee).
+                fee_platform_percent:
+                  type: number
+                  description: Platform fee percentage applied to orders.
+                fee_platform_amount:
+                  type: number
+                  description: Fixed platform fee applied to orders.
+                fee_credit:
+                  type: number
+                  description: Credit fee applied to orders (including platform's fee).
+                fee_shipping_1:
+                  type: number
+                  description: Shipping fee for small-sized packages.
+                fee_shipping_2:
+                  type: number
+                  description: Shipping fee for medium-sized packages.
+                fee_shipping_3:
+                  type: number
+                  description: Shipping fee for large-sized packages.
+                default_parcel_size:
+                  type: string
+                  description: Default parcel size.
+                default_fee:
+                  type: number
+                  description: Default fee.
+                default_gateway:
+                  type: string
+                  description: Default payment gateway.
+                  enum: [ADDON, ADDON_V2, ADDON_ICE, ADDON_HPP, ADDON_APPLE_PAY, AZUPAY, BANKWIRE, WALLET, DCP, EPX, REDSYS_V2, REDSYS_APPLE_PAY, REDSYS_AUTH, STRIPE, DOCOMO, SIBS_MBWAY, SIBS_MULTIBANCO, SEQURA, UNNAX, PAYPAL, BIZUM, INESPAY]
+                allowed_gateways:
+                  type: array
+                  items:
+                    type: string
+                  description: List of allowed gateways besides the default gateway.
+                template_folder:
+                  type: string
+                  description: Template folder for the Checkout.
+                custom_domain:
+                  type: string
+                  description: Custom domain URL.
+                allow_insurance:
+                  type: integer
+                  enum: [0, 1]
+                  description: Allow orders to have an insurance option.
+                allow_shipping:
+                  type: integer
+                  enum: [0, 1]
+                  description: Allow orders to have a shipping option.
+                allow_select_parcel:
+                  type: integer
+                  enum: [0, 1]
+                  description: Allow the seller to select the parcel size.
+                allow_receipt:
+                  type: integer
+                  enum: [0, 1]
+                  description: Allow sending a receipt when a payment is performed.
+                allow_receipt_self:
+                  type: integer
+                  enum: [0, 1]
+                  description: Allow receiving a receipt in the account email when a payment is performed.
+                billing_address:
+                  type: string
+                  description: Company's billing address.
+                billing_address_line_2:
+                  type: string
+                  description: Company's billing address line 2.
+                billing_city:
+                  type: string
+                billing_state:
+                  type: string
+                billing_zip:
+                  type: string
+                billing_country:
+                  type: string
+                  maxLength: 2
+                vat_id:
+                  type: string
+                  description: Company's VAT identification number.
+                extra_billing_information:
+                  type: string
+                  description: Extra billing information.
+                legal_address:
+                  type: string
+                  description: Company's legal address.
+                legal_address_line_2:
+                  type: string
+                legal_city:
+                  type: string
+                legal_state:
+                  type: string
+                legal_zip:
+                  type: string
+                legal_country:
+                  type: string
+                  maxLength: 2
+                representative_name:
+                  type: string
+                  description: Name of the company's representative.
+                representative_phone:
+                  type: string
+                  description: Phone of the company's representative.
+                representative_email:
+                  type: string
+                  format: email
+                  description: Email of the company's representative.
+                twitter_token:
+                  type: string
+                  description: Twitter credentials to share orders.
+                twitter_secret:
+                  type: string
+                  description: Twitter credentials to share orders.
+                facebook_id:
+                  type: string
+                  description: Facebook credentials to share orders.
+                facebook_token:
+                  type: string
+                  description: Facebook credentials to share orders.
+                parent_id:
+                  type: integer
+                  description: Parent account ID. Only for subaccounts.
+                addon_key:
+                  type: string
+                  description: Payment gateway credential.
+                addon_secret:
+                  type: string
+                  description: Payment gateway credential.
+                addon_account:
+                  type: string
+                  description: Payment gateway credential.
+                addon_rebate:
+                  type: string
+                  description: Payment gateway credential.
+                psd2_enabled:
+                  type: integer
+                  enum: [0, 1]
+                  description: Whether the account is PSD2 enabled.
+                receipt_subject:
+                  type: string
+                  description: Subject of the email sent to the customer (selected pricing plans only).
+                receipt_message:
+                  type: string
+                  description: Message of the email sent to the customer (selected pricing plans only).
+                payment_success_message:
+                  type: string
+                  description: Message shown to customers on successful payment (selected pricing plans only).
       responses:
         "200":
           description: Account created
@@ -123,7 +296,7 @@ paths:
                 $ref: "#/components/schemas/Account"
     put:
       summary: Update current account
-      description: Updates settings for the authenticated account.
+      description: Updates settings for the authenticated account. Accepts all parameters from Create Account plus the ones listed here.
       operationId: updateAccount
       tags: [Account]
       requestBody:
@@ -132,6 +305,12 @@ paths:
           application/json:
             schema:
               type: object
+              required: [allow_shipping]
+              example:
+                name: My Company
+                allow_shipping: 0
+                business_phone: "+34666999666"
+                business_description: Description of the business
               properties:
                 name:
                   type: string
@@ -139,16 +318,45 @@ paths:
                 allow_shipping:
                   type: integer
                   enum: [0, 1]
+                  description: Required. Set to 1 to allow shipping on orders.
                 value_shipping:
                   type: number
-                  description: Required when `allow_shipping` is 1.
+                  description: Required when `allow_shipping` is 1. Shipping fee value.
+                fee_shipping:
+                  type: number
+                  description: Shipping fee amount (alternative to `value_shipping`).
                 business_phone:
                   type: string
+                  description: Must be a valid phone number.
                 business_description:
                   type: string
+                  description: Description of the account/business.
                 image:
                   type: string
-                  description: Base64-encoded image or URL.
+                  description: Base64-encoded image or URL for the account logo.
+                custom_domain:
+                  type: string
+                  description: Custom domain URL.
+                addon_account:
+                  type: string
+                  description: Addon's account credential.
+                subaccounts:
+                  type: array
+                  items:
+                    type: integer
+                  description: Array of subaccount IDs associated with this account.
+                allowed_gateways:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of allowed gateways for the account.
+                default_gateway:
+                  type: string
+                  description: Default payment gateway.
+                  enum: [ADDON, ADDON_V2, ADDON_ICE, ADDON_HPP, ADDON_APPLE_PAY, AZUPAY, BANKWIRE, WALLET, DCP, EPX, REDSYS_V2, REDSYS_APPLE_PAY, REDSYS_AUTH, STRIPE, DOCOMO, SIBS_MBWAY, SIBS_MULTIBANCO, SEQURA, UNNAX, PAYPAL, BIZUM, INESPAY]
+                psd2_enabled:
+                  type: integer
+                  enum: [0, 1]
                 metadata:
                   type: object
                   additionalProperties: true
@@ -183,6 +391,106 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Wallet"
+
+  /accounts/verify:
+    post:
+      summary: Verify account
+      description: |
+        Submits KYC (Know Your Customer) information for the authenticated account.
+        Use `NATURAL` for individuals and `LEGAL` for companies.
+        For `LEGAL` type, representative information is required.
+      operationId: verifyAccount
+      tags: [Account]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [type, first_name, last_name, vat_id, legal_address, legal_city, legal_zip, legal_state]
+              example:
+                type: LEGAL
+                first_name: John
+                last_name: Doe
+                vat_id: "123456789"
+                legal_name: My Company SL
+                legal_address: Llauder, 1
+                legal_city: Barcelona
+                legal_zip: "08001"
+                legal_state: Barcelona
+                legal_country: ES
+                representative_name: John Doe
+                representative_email: support@mycompany.com
+                representative_phone: "+34666999666"
+              properties:
+                type:
+                  type: string
+                  enum: [NATURAL, SOLETRADER, LEGAL]
+                  description: "Verification type: `NATURAL` for individuals, `SOLETRADER` for self-employed, `LEGAL` for companies."
+                first_name:
+                  type: string
+                  maxLength: 255
+                  description: First name of the account holder or representative.
+                last_name:
+                  type: string
+                  maxLength: 255
+                  description: Last name of the account holder or representative.
+                vat_id:
+                  type: string
+                  maxLength: 255
+                  description: Tax identification number (DNI, NIF, CIF, etc.).
+                legal_name:
+                  type: string
+                  maxLength: 255
+                  description: Company legal name. Required for `LEGAL` type.
+                legal_address:
+                  type: string
+                  maxLength: 255
+                  description: Legal registered address.
+                legal_city:
+                  type: string
+                  maxLength: 255
+                legal_zip:
+                  type: string
+                  maxLength: 255
+                legal_state:
+                  type: string
+                  maxLength: 255
+                legal_country:
+                  type: string
+                  maxLength: 2
+                  description: ISO 3166-1 alpha-2 country code.
+                birthday:
+                  type: string
+                  format: date
+                  description: Date of birth. Applicable for `NATURAL` type.
+                occupation:
+                  type: string
+                  maxLength: 255
+                  description: Title or short description of occupation. Applicable for `NATURAL` type.
+                income_range:
+                  type: number
+                  description: Income range value. Applicable for `NATURAL` type.
+                representative_name:
+                  type: string
+                  maxLength: 255
+                  description: Full name of the company representative. Required for `LEGAL` type.
+                representative_email:
+                  type: string
+                  format: email
+                  description: Email of the company representative. Required for `LEGAL` type.
+                representative_phone:
+                  type: string
+                  description: Phone of the company representative. Required for `LEGAL` type.
+      responses:
+        "200":
+          description: Account verification submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+        "422":
+          $ref: "#/components/responses/ValidationError"
 
   # ─────────────────────────────────────────
   # CUSTOMERS
@@ -225,6 +533,11 @@ paths:
           application/json:
             schema:
               type: object
+              example:
+                name: John Doe
+                email: john@example.com
+                prefix: "+34"
+                phone: "612345678"
               properties:
                 name:
                   type: string
@@ -302,11 +615,33 @@ paths:
           application/json:
             schema:
               type: object
+              example:
+                name: Name Test
+                email: john@example.com
               properties:
+                name:
+                  type: string
+                  maxLength: 255
+                  example: John Doe
+                first_name:
+                  type: string
+                  maxLength: 255
+                  example: John
+                last_name:
+                  type: string
+                  maxLength: 255
+                  example: Doe
                 email:
                   type: string
                   format: email
                   maxLength: 255
+                prefix:
+                  type: string
+                  description: Phone country prefix (e.g. `+34`).
+                  example: "+34"
+                phone:
+                  type: string
+                  example: "612345678"
                 tag:
                   type: string
                   maxLength: 100
@@ -362,29 +697,6 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Card"
-    post:
-      summary: Add card to customer
-      description: Initiates card tokenization for a customer. Returns a card with a `tokenization_link` to complete the process.
-      operationId: createCard
-      tags: [Customers]
-      parameters:
-        - $ref: "#/components/parameters/CustomerUuid"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                tag:
-                  type: string
-                  maxLength: 100
-      responses:
-        "200":
-          description: Card created with tokenization link
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/Card"
 
   /customers/{uuid}/bankaccounts:
     get:
@@ -496,6 +808,51 @@ paths:
               schema:
                 $ref: "#/components/schemas/Address"
 
+  /customers/{uuid}/verify:
+    post:
+      summary: Create KYC for a customer
+      description: |
+        Submits KYC (Know Your Customer) identity verification information for a customer.
+        Supported types: `NATURAL`, `SOLETRADER`, `LEGAL`.
+        For `LEGAL` type, `legal_name`, `representative_name`, `representative_email` and `representative_phone` are required.
+      operationId: createCustomerVerification
+      tags: [Verifications]
+      parameters:
+        - $ref: "#/components/parameters/CustomerUuid"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerificationInput"
+      responses:
+        "200":
+          description: KYC verification created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Verification"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /customers/{uuid}/verification:
+    get:
+      summary: Get KYC verification for a customer
+      description: Returns the current KYC verification record associated with the customer.
+      operationId: getCustomerVerification
+      tags: [Verifications]
+      parameters:
+        - $ref: "#/components/parameters/CustomerUuid"
+      responses:
+        "200":
+          description: Verification details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Verification"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
   /customers/{uuid}/subscriptions:
     get:
       summary: List customer subscriptions
@@ -555,8 +912,9 @@ paths:
     post:
       summary: Create order
       description: |
-        Creates a new escrow payment order. An order requires a buyer (`buyer_id`), optional seller (`seller_id`),
-        a `name`, and a `value`. Once created, the order has a `buyer_link` and `seller_link` for the payment flow.
+        Creates a new escrow payment order.
+        `buyer_id` and `seller_id` are required (both customers must exist).
+        Once created, the order has a `buyer_link` and `seller_link` for the payment flow.
       operationId: createOrder
       tags: [Orders]
       requestBody:
@@ -565,8 +923,21 @@ paths:
           application/json:
             schema:
               type: object
-              required: [name, value]
+              required: [buyer_id, seller_id, name, value]
+              example:
+                buyer_id: 7485
+                seller_id: 7485
+                name: Test New Order
+                value: 23.77
               properties:
+                buyer_id:
+                  type: integer
+                  description: Customer ID of the buyer.
+                  example: 7485
+                seller_id:
+                  type: integer
+                  description: Customer ID of the seller.
+                  example: 7485
                 name:
                   type: string
                   maxLength: 120
@@ -578,14 +949,6 @@ paths:
                   minimum: 0
                   description: Order amount in the account's base currency.
                   example: 150.00
-                buyer_id:
-                  type: integer
-                  description: Customer ID of the buyer. Required unless `trustee_type` is `account`.
-                  example: 42
-                seller_id:
-                  type: integer
-                  description: Customer ID of the seller. Required unless `auto_settle` is true.
-                  example: 99
                 fee_value:
                   type: number
                   format: float
@@ -596,29 +959,44 @@ paths:
                   format: float
                   minimum: 0
                   maximum: 100
-                  description: Platform fee as a percentage.
+                  description: Platform fee as a percentage. Min 0, max 100.
                 tag:
                   type: string
                   maxLength: 100
                   description: Custom reference tag.
-                  example: order-abc-123
+                auto_settle:
+                  type: integer
+                  enum: [0, 1]
+                  description: Set to `1` if there is no seller (e-commerce model). Auto-settles after payment.
                 metadata:
                   type: object
                   additionalProperties: true
                   description: Arbitrary key-value metadata stored on the order.
                 template:
                   type: object
-                  additionalProperties: true
                   description: Custom template data for the checkout page.
+                  properties:
+                    btn_submit_text:
+                      type: string
+                      description: Custom text for the submit button.
+                    iframe_title:
+                      type: string
+                      description: Title displayed in the payment iframe.
+                    expires_in:
+                      type: integer
+                      description: Session expiration time in seconds.
+                    hide_cardholder:
+                      type: boolean
+                      description: Whether to hide the cardholder name field. Default `false`.
+                    password_cvv:
+                      type: boolean
+                      description: Whether to require CVV. Default `true`.
                 images:
                   type: array
                   maxItems: 10
                   items:
                     type: string
                   description: Array of image URLs for the order.
-                auto_settle:
-                  type: boolean
-                  description: If true, the order is automatically settled after payment without seller confirmation.
                 buyer_confirmed_url:
                   type: string
                   format: uri
@@ -655,6 +1033,9 @@ paths:
                 buyer_shipping_id:
                   type: integer
                   description: Address ID to use as the buyer's shipping address.
+                bundle:
+                  type: integer
+                  description: Bundle ID to associate with this order.
       responses:
         "200":
           description: Order created
@@ -694,7 +1075,13 @@ paths:
           application/json:
             schema:
               type: object
+              example:
+                name: Demo Order
+                value: 15
               properties:
+                buyer_id:
+                  type: integer
+                  description: Customer ID of the buyer.
                 name:
                   type: string
                   maxLength: 120
@@ -716,7 +1103,18 @@ paths:
                   additionalProperties: true
                 template:
                   type: object
-                  additionalProperties: true
+                  description: Custom template data for the checkout page.
+                  properties:
+                    btn_submit_text:
+                      type: string
+                    iframe_title:
+                      type: string
+                    expires_in:
+                      type: integer
+                    hide_cardholder:
+                      type: boolean
+                    password_cvv:
+                      type: boolean
                 images:
                   type: array
                   maxItems: 10
@@ -939,20 +1337,27 @@ paths:
           application/json:
             schema:
               type: object
-              required: [order_id]
+              required: [order_id, type]
+              example:
+                order_id: 4950
+                type: REDSYS_V2
+                save_card: 1
               properties:
                 order_id:
                   type: integer
                   description: ID of the order to pay.
-                  example: 1234
+                  example: 4950
                 type:
                   type: string
-                  description: Payment method type. Required if `gateway_id` is not provided.
-                  enum: [CARD, BANKWIRE, WALLET]
-                  example: CARD
+                  description: |
+                    Payment method type. Valid values include `BANKWIRE`, `WALLET`, and any registered gateway type for the account
+                    (e.g. `REDSYS_V2`, `ADDON`, `ADDON_V2`, `ADDON_ICE`, `ADDON_HPP`, `ADDON_APPLE_PAY`, `AZUPAY`, `DCP`, `EPX`,
+                    `REDSYS_APPLE_PAY`, `REDSYS_AUTH`, `STRIPE`, `DOCOMO`, `SIBS_MBWAY`, `SIBS_MULTIBANCO`, `SEQURA`, `UNNAX`,
+                    `PAYPAL`, `BIZUM`, `INESPAY`).
+                  example: REDSYS_V2
                 gateway_id:
                   type: integer
-                  description: Gateway ID to use. Required if `type` is not provided.
+                  description: Gateway ID to use. Alternative to `type`.
                 card_id:
                   type: integer
                   description: Saved card ID to charge (for recurring or one-click payments).
@@ -960,8 +1365,9 @@ paths:
                   type: integer
                   description: Wallet ID to debit. Required when `type` is `WALLET`.
                 save_card:
-                  type: boolean
-                  description: Whether to tokenize and save the card for future use.
+                  type: integer
+                  enum: [0, 1]
+                  description: Set to `1` to tokenize and save the card for future use.
       responses:
         "200":
           description: Payin created
@@ -1018,20 +1424,27 @@ paths:
           application/json:
             schema:
               type: object
+              example:
+                amount: 2
+                multipayin: 0
               properties:
                 amount:
                   type: number
                   minimum: 0
-                  description: Amount to refund. Defaults to full amount.
+                  description: Amount to refund. Defaults to full amount if not provided.
+                multipayin:
+                  type: integer
+                  enum: [0, 1]
+                  description: Set to `1` to refund all payins associated with the order of this payin.
+                bankaccount_id:
+                  type: integer
+                  description: Required if the payin is of Bankwire type. Bank account ID to receive the refund.
                 tag:
                   type: string
                   maxLength: 100
                 metadata:
                   type: object
                   additionalProperties: true
-                bankaccount_id:
-                  type: integer
-                  description: Required for bank wire payins. ID of the account to receive the refund.
       responses:
         "200":
           description: Payin with refund details
@@ -1119,11 +1532,15 @@ paths:
             schema:
               type: object
               required: [order_id, type]
+              example:
+                order_id: 25955
+                type: WALLET
+                wallet_id: 28751
               properties:
                 order_id:
                   type: integer
                   description: ID of the order to pay out.
-                  example: 1234
+                  example: 25955
                 type:
                   type: string
                   description: Payout method type.
@@ -1139,6 +1556,18 @@ paths:
                   type: string
                   maxLength: 140
                   description: Custom reference for bank wire payouts.
+                azupay_id:
+                  type: string
+                  description: AzuPay destination ID. Required for AzuPay payouts.
+                azupay_type:
+                  type: string
+                  description: AzuPay account type.
+                azupay_bsb:
+                  type: string
+                  description: AzuPay BSB number (Australian bank routing number).
+                azupay_account:
+                  type: string
+                  description: AzuPay bank account number.
       responses:
         "200":
           description: Payout created
@@ -1220,6 +1649,8 @@ paths:
           application/json:
             schema:
               type: object
+              example:
+                tag: bills
               properties:
                 tag:
                   type: string
@@ -1236,6 +1667,26 @@ paths:
                 $ref: "#/components/schemas/Wallet"
 
   /wallets:
+    get:
+      summary: List wallets
+      description: Returns a list of all wallets associated with the authenticated account.
+      operationId: listWallets
+      tags: [Wallets]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+      responses:
+        "200":
+          description: List of wallets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Wallet"
     post:
       summary: Create wallet
       description: Creates a new wallet for a customer or the authenticated account.
@@ -1248,6 +1699,11 @@ paths:
             schema:
               type: object
               required: [currency]
+              example:
+                customer_type: user
+                customer_id: 7485
+                currency: EUR
+                tag: bills
               properties:
                 currency:
                   type: string
@@ -1259,8 +1715,12 @@ paths:
                   example: 42
                 customer_type:
                   type: string
-                  enum: [source]
-                  description: Pass `source` to create a wallet for the authenticated account instead of a customer.
+                  enum: [source, user]
+                  description: Pass `source` to create a wallet for the authenticated account. Pass `user` for a customer wallet (use with `customer_id`).
+                type:
+                  type: string
+                  enum: [CURRENCYCLOUD, CLEARJUNCTION]
+                  description: Optional wallet provider type.
                 tag:
                   type: string
                   maxLength: 100
@@ -1318,28 +1778,48 @@ paths:
           application/json:
             schema:
               type: object
+              required: [customer_id, name, type, number, bic]
+              example:
+                customer_id: 7485
+                name: My bank account
+                type: IBAN
+                number: ES1300812944953951475955
+                bic: CAIXESBBXXX
               properties:
                 customer_id:
                   type: integer
                   description: Customer ID to assign the bank account to. Required unless `customer_type` is `source`.
+                  example: 7485
+                name:
+                  type: string
+                  maxLength: 255
+                  description: Account holder name.
+                  example: My bank account
+                type:
+                  type: string
+                  description: Bank account type. Use `IBAN` for SEPA accounts, `OTHER` for other types.
+                  enum: [IBAN, OTHER]
+                  example: IBAN
+                number:
+                  type: string
+                  description: Bank account number (IBAN or other format).
+                  example: ES1300812944953951475955
+                bic:
+                  type: string
+                  maxLength: 11
+                  description: BIC/SWIFT code.
+                  example: CAIXESBBXXX
                 customer_type:
                   type: string
                   enum: [source]
-                  description: Pass `source` to register a bank account for the authenticated account.
+                  description: Pass `source` to register a bank account for the authenticated account instead of a customer.
                 iban:
                   type: string
-                  description: IBAN (for SEPA accounts).
+                  description: IBAN (alternative field to `number` for SEPA accounts).
                   example: ES9121000418450200051332
-                bic:
-                  type: string
-                  description: BIC/SWIFT code.
-                  example: CAIXESBBXXX
-                name:
-                  type: string
-                  description: Account holder name.
                 tag:
                   type: string
-                  maxLength: 100
+                  maxLength: 50
                 metadata:
                   type: object
                   additionalProperties: true
@@ -1479,7 +1959,13 @@ paths:
           application/json:
             schema:
               type: object
-              required: [buyer_id, name, value, type]
+              required: [buyer_id, seller_id, name, value, type]
+              example:
+                buyer_id: 7485
+                seller_id: 7485
+                name: Subscription Test
+                value: 10
+                type: ADDON
               properties:
                 buyer_id:
                   type: integer
@@ -1487,7 +1973,7 @@ paths:
                   example: 42
                 seller_id:
                   type: integer
-                  description: Customer ID of the seller. Required unless `auto_settle` is true.
+                  description: Customer ID of the seller.
                 name:
                   type: string
                   maxLength: 120
@@ -1508,6 +1994,10 @@ paths:
                   type: number
                   minimum: 0
                   maximum: 100
+                start_date:
+                  type: string
+                  format: date
+                  description: Date when the subscription starts. Defaults to creation date if not provided.
                 first_payment_value:
                   type: number
                   description: Amount for the first payment if different from `value`.
@@ -1705,7 +2195,7 @@ paths:
       description: |
         Uploads a KYC document for a verification. The `content` field must be a base64-encoded image.
 
-        Supported `type` values: `IDENTITY_PROOF`, `REGISTRATION_PROOF`, `ARTICLES_OF_ASSOCIATION`, `SHAREHOLDER_DECLARATION`, `ADDRESS_PROOF`.
+        Supported `type` values: `IDENTITY_PROOF`, `REGISTRATION_PROOF`, `ARTICLES_OF_ASSOCIATION`, `SHAREHOLDER_DECLARATION`, `ADDRESS_PROOF`, `TAX_VERIFICATION`, `BUSINESS_ADMINISTRATOR_ID`, `COMPANY_REGISTRATION_PROOF`, `BANK_VERIFICATION`.
       operationId: uploadVerificationDocument
       tags: [Verifications]
       parameters:
@@ -1717,6 +2207,9 @@ paths:
             schema:
               type: object
               required: [type, content]
+              example:
+                type: IDENTITY_PROOF
+                content: "data:image/jpeg;base64,/9j/4AAQSkZJRgAB..."
               properties:
                 type:
                   type: string
@@ -1726,6 +2219,10 @@ paths:
                     - ARTICLES_OF_ASSOCIATION
                     - SHAREHOLDER_DECLARATION
                     - ADDRESS_PROOF
+                    - TAX_VERIFICATION
+                    - BUSINESS_ADMINISTRATOR_ID
+                    - COMPANY_REGISTRATION_PROOF
+                    - BANK_VERIFICATION
                 content:
                   type: string
                   description: Base64-encoded image (JPG or PNG).
@@ -1758,6 +2255,303 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Document"
+    put:
+      summary: Update verification document
+      description: Updates the content or type of an existing KYC verification document.
+      operationId: updateVerificationDocument
+      tags: [Verifications]
+      parameters:
+        - $ref: "#/components/parameters/VerificationUuid"
+        - name: document_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [type, content]
+              example:
+                type: IDENTITY_PROOF
+                content: "data:application/pdf;base64,iVBORw0KGgo..."
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - IDENTITY_PROOF
+                    - REGISTRATION_PROOF
+                    - ARTICLES_OF_ASSOCIATION
+                    - SHAREHOLDER_DECLARATION
+                    - ADDRESS_PROOF
+                    - TAX_VERIFICATION
+                    - BUSINESS_ADMINISTRATOR_ID
+                    - COMPANY_REGISTRATION_PROOF
+                    - BANK_VERIFICATION
+                  description: Document type.
+                content:
+                  type: string
+                  description: Base64-encoded file content (image or PDF).
+                  example: "data:application/pdf;base64,iVBORw0KGgo..."
+      responses:
+        "200":
+          description: Document updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  # ─────────────────────────────────────────
+  # BUNDLES
+  # ─────────────────────────────────────────
+
+  /bundles:
+    get:
+      summary: List bundles
+      description: Returns a paginated list of all product bundles.
+      operationId: listBundles
+      tags: [Bundles]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/DateBegin"
+        - $ref: "#/components/parameters/DateEnd"
+        - $ref: "#/components/parameters/Order"
+        - $ref: "#/components/parameters/Sort"
+      responses:
+        "200":
+          description: Paginated list of bundles
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedBundles"
+    post:
+      summary: Create bundle
+      description: Creates a new product bundle that can be linked to orders.
+      operationId: createBundle
+      tags: [Bundles]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              example:
+                name: Test product
+                value: 1.24
+              properties:
+                name:
+                  type: string
+                  maxLength: 120
+                  description: Bundle name visible on the checkout page.
+                  example: Test product
+                description:
+                  type: string
+                  maxLength: 255
+                  description: Longer description of the product.
+                value:
+                  type: number
+                  format: float
+                  minimum: 0
+                  description: Price of the product.
+                  example: 1.24
+                is_active:
+                  type: boolean
+                  description: Whether the product link is available (`true`) or unavailable (`false`).
+                is_shippable:
+                  type: boolean
+                  description: Whether the product can be shipped. If `true`, the checkout will ask for shipping details.
+                value_shipping:
+                  type: number
+                  format: float
+                  minimum: 0
+                  description: Shipping cost. Required if `is_shippable` is `true`.
+                tag:
+                  type: string
+                  maxLength: 50
+                  description: Optional short tag for the product.
+                metadata:
+                  type: object
+                  additionalProperties: true
+                  description: Array to save any other data needed.
+                images:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of product image URLs.
+                expiration:
+                  type: string
+                  format: date-time
+                  description: Expiration date for the product link.
+                expiration_unit:
+                  type: number
+                  description: Expiration unit if stock is limited.
+                expiration_amount:
+                  type: number
+                  description: Expiration amount for reduced/augmented prices.
+                buyer_confirmed_url:
+                  type: string
+                  format: uri
+                  description: URL where the buyer is redirected after payment is completed.
+                buyer_denied_url:
+                  type: string
+                  format: uri
+                  description: URL where the buyer is redirected if payment fails.
+                seller_confirmed_url:
+                  type: string
+                  format: uri
+                  description: URL where the seller is redirected after the payout is completed.
+                seller_denied_url:
+                  type: string
+                  format: uri
+                  description: URL where the seller is redirected if the payout fails.
+      responses:
+        "200":
+          description: Bundle created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Bundle"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /bundles/expired:
+    get:
+      summary: List expired bundles
+      description: Returns a paginated list of all expired product bundles.
+      operationId: listExpiredBundles
+      tags: [Bundles]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+      responses:
+        "200":
+          description: Paginated list of expired bundles
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedBundles"
+
+  /bundles/{bundle_id}:
+    get:
+      summary: Get bundle
+      description: Returns the details of a specific bundle.
+      operationId: getBundle
+      tags: [Bundles]
+      parameters:
+        - name: bundle_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Bundle ID.
+      responses:
+        "200":
+          description: Bundle details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Bundle"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      summary: Update bundle
+      description: Updates an existing bundle's properties.
+      operationId: updateBundle
+      tags: [Bundles]
+      parameters:
+        - name: bundle_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Bundle ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: New product name
+                value: 10.00
+              properties:
+                name:
+                  type: string
+                  maxLength: 120
+                  example: New product name
+                description:
+                  type: string
+                  maxLength: 255
+                value:
+                  type: number
+                  format: float
+                  minimum: 0
+                  example: 10.00
+                is_active:
+                  type: boolean
+                is_shippable:
+                  type: boolean
+                value_shipping:
+                  type: number
+                  format: float
+                  minimum: 0
+                  description: Required if `is_shippable` is `true`.
+                tag:
+                  type: string
+                  maxLength: 50
+                metadata:
+                  type: object
+                  additionalProperties: true
+                images:
+                  type: array
+                  items:
+                    type: string
+                expiration:
+                  type: string
+                  format: date-time
+                expiration_unit:
+                  type: number
+                expiration_amount:
+                  type: number
+      responses:
+        "200":
+          description: Updated bundle
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Bundle"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /bundles/{bundle_id}/orders:
+    get:
+      summary: List orders for a bundle
+      description: Returns a paginated list of orders associated with the specified bundle.
+      operationId: listBundleOrders
+      tags: [Bundles]
+      parameters:
+        - name: bundle_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Bundle ID.
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+      responses:
+        "200":
+          description: Paginated list of orders for this bundle
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedOrders"
 
   # ─────────────────────────────────────────
   # REFUNDS
@@ -2021,6 +2815,13 @@ components:
           type: array
           items:
             type: string
+        gateways:
+          type: array
+          nullable: true
+          items:
+            type: object
+            additionalProperties: true
+          description: List of configured payment gateway objects for the account.
         default_gateway:
           type: string
           nullable: true
@@ -2506,11 +3307,21 @@ components:
     VerificationInput:
       type: object
       required: [type, first_name, last_name, vat_id, legal_address, legal_city, legal_zip, legal_state]
+      example:
+        type: NATURAL
+        first_name: John
+        last_name: Doe
+        vat_id: "12345678A"
+        legal_address: "Calle Mayor 1"
+        legal_city: Madrid
+        legal_zip: "28001"
+        legal_state: Madrid
+        legal_country: ES
       properties:
         type:
           type: string
-          enum: [INDIVIDUAL, SELFEMPLOYEE, LEGAL]
-          description: Verification type.
+          enum: [NATURAL, SOLETRADER, LEGAL]
+          description: Verification type. `NATURAL` for individuals, `SOLETRADER` for self-employed, `LEGAL` for companies.
         first_name:
           type: string
           maxLength: 255
@@ -2579,6 +3390,10 @@ components:
             - ARTICLES_OF_ASSOCIATION
             - SHAREHOLDER_DECLARATION
             - ADDRESS_PROOF
+            - TAX_VERIFICATION
+            - BUSINESS_ADMINISTRATOR_ID
+            - COMPANY_REGISTRATION_PROOF
+            - BANK_VERIFICATION
         status:
           type: string
           enum: [CREATED, VALIDATED, REFUSED]
@@ -2652,23 +3467,11 @@ components:
       properties:
         id:
           type: integer
+        self:
+          type: string
+          nullable: true
         uuid:
           type: string
-        street:
-          type: string
-          nullable: true
-        city:
-          type: string
-          nullable: true
-        zip:
-          type: string
-          nullable: true
-        state:
-          type: string
-          nullable: true
-        country:
-          type: string
-          nullable: true
         name:
           type: string
           nullable: true
@@ -2679,6 +3482,24 @@ components:
           type: string
           nullable: true
         phone:
+          type: string
+          nullable: true
+        line1:
+          type: string
+          nullable: true
+        line2:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        state:
+          type: string
+          nullable: true
+        country:
+          type: string
+          nullable: true
+        zip_code:
           type: string
           nullable: true
         tag:
@@ -2692,31 +3513,63 @@ components:
           type: string
           format: date-time
           nullable: true
+        connections:
+          $ref: "#/components/schemas/Connections"
 
     AddressInput:
       type: object
+      required: [name, line1, city, state, zip_code, country]
+      example:
+        name: my_address
+        line1: Main street 123
+        city: Barcelona
+        state: Catalonia
+        zip_code: "08001"
+        country: ES
       properties:
-        street:
-          type: string
-        city:
-          type: string
-        zip:
-          type: string
-        state:
-          type: string
-        country:
-          type: string
-          description: ISO 3166-1 alpha-2 country code.
         name:
           type: string
+          maxLength: 255
+          description: Address label or recipient name.
+          example: my_address
+        line1:
+          type: string
+          maxLength: 255
+          description: Address line 1 (street and number).
+          example: Main street 123
+        line2:
+          type: string
+          maxLength: 255
+          description: Address line 2 (apartment, suite, etc.).
+        city:
+          type: string
+          maxLength: 255
+          example: Barcelona
+        state:
+          type: string
+          maxLength: 255
+          example: Catalonia
+        zip_code:
+          type: string
+          description: ZIP or postal code.
+          example: "08001"
+        country:
+          type: string
+          maxLength: 2
+          description: ISO 3166-1 alpha-2 country code.
+          example: ES
         email:
           type: string
           format: email
+          maxLength: 255
         prefix:
           type: string
-          description: Phone country prefix (e.g. `+34`).
+          description: Phone country prefix (e.g. `+34`). Required with `phone`.
+          example: "+34"
         phone:
           type: string
+          description: Phone number. Required with `prefix`.
+          example: "612345678"
         tag:
           type: string
           maxLength: 100
@@ -2824,6 +3677,98 @@ components:
               type: array
               items:
                 $ref: "#/components/schemas/Refund"
+
+    PaginatedBundles:
+      allOf:
+        - $ref: "#/components/schemas/PaginationMeta"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "#/components/schemas/Bundle"
+
+    # ── BUNDLE ──────────────────────────
+
+    Bundle:
+      type: object
+      properties:
+        id:
+          type: integer
+        self:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        value:
+          type: number
+        value_shipping:
+          type: number
+          nullable: true
+        currency:
+          type: string
+          example: EUR
+        amount:
+          type: string
+          nullable: true
+          description: Formatted price with currency symbol.
+        amount_shipping:
+          type: string
+          nullable: true
+        buyer_link:
+          type: string
+          format: uri
+          nullable: true
+        images:
+          type: array
+          nullable: true
+          items:
+            type: string
+        expiration:
+          type: string
+          format: date-time
+          nullable: true
+        expiration_unit:
+          type: number
+          nullable: true
+        expiration_amount:
+          type: number
+          nullable: true
+        is_expired:
+          type: boolean
+        is_active:
+          type: boolean
+        is_shippable:
+          type: boolean
+        tag:
+          type: string
+          nullable: true
+        visits:
+          type: integer
+          nullable: true
+        metadata:
+          type: object
+          nullable: true
+          additionalProperties: true
+        created_by:
+          type: integer
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+        qr_link:
+          type: string
+          format: uri
+          nullable: true
+        connections:
+          $ref: "#/components/schemas/Connections"
 
     PaginationMeta:
       type: object

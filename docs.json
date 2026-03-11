@@ -54,7 +54,8 @@
                   "api-reference/get-account",
                   "api-reference/update-account",
                   "api-reference/create-account",
-                  "api-reference/get-account-fees"
+                  "api-reference/get-account-fees",
+                  "api-reference/verify-account"
                 ]
               },
               {
@@ -66,7 +67,6 @@
                   "api-reference/update-customer",
                   "api-reference/list-customer-wallets",
                   "api-reference/list-customer-cards",
-                  "api-reference/create-card",
                   "api-reference/list-customer-bank-accounts",
                   "api-reference/list-customer-addresses",
                   "api-reference/create-customer-address",
@@ -115,6 +115,7 @@
               {
                 "group": "Wallets",
                 "pages": [
+                  "api-reference/list-wallets",
                   "api-reference/create-wallet",
                   "api-reference/get-wallet",
                   "api-reference/update-wallet",
@@ -152,9 +153,23 @@
                   "api-reference/get-verification",
                   "api-reference/submit-verification",
                   "api-reference/request-verification",
+                  "api-reference/create-customer-verification",
+                  "api-reference/get-customer-verification",
                   "api-reference/list-verification-documents",
                   "api-reference/upload-verification-document",
-                  "api-reference/get-verification-document"
+                  "api-reference/get-verification-document",
+                  "api-reference/update-verification-document"
+                ]
+              },
+              {
+                "group": "Bundles",
+                "pages": [
+                  "api-reference/list-bundles",
+                  "api-reference/create-bundle",
+                  "api-reference/list-expired-bundles",
+                  "api-reference/get-bundle",
+                  "api-reference/update-bundle",
+                  "api-reference/list-bundle-orders"
                 ]
               },
               {
