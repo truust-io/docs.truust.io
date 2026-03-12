@@ -1,0 +1,3793 @@
+openapi: 3.1.0
+info:
+  title: Truust API
+  version: "2.0"
+  description: |
+    The Truust API allows you to manage payment flows, orders, customers, wallets, and more.
+
+    ## Authentication
+
+    All authenticated endpoints require a Bearer token using your account's **Secret Key**.
+
+    ```
+    Authorization: Bearer {your_secret_key}
+    ```
+
+    Your API keys are available in the Dashboard under **Account Settings → API Developers**.
+
+  contact:
+    email: hello@truust.io
+  license:
+    name: Proprietary
+
+servers:
+  - url: https://api.truust.io/2.0
+    description: Production
+  - url: https://api-sandbox.truust.io/2.0
+    description: Sandbox
+
+security:
+  - bearerAuth: []
+
+tags:
+  - name: Account
+    description: Manage your Truust account
+  - name: Customers
+    description: Manage buyers and sellers (end users)
+  - name: Orders
+    description: Create and manage escrow payment orders
+  - name: Payins
+    description: Manage incoming payments for orders
+  - name: Payouts
+    description: Manage outgoing payments from orders
+  - name: Wallets
+    description: Manage customer and account wallets
+  - name: Bank Accounts
+    description: Manage bank accounts for payouts
+  - name: Cards
+    description: Manage tokenized payment cards
+  - name: Subscriptions
+    description: Manage recurring payment subscriptions
+  - name: Verifications
+    description: KYC verification for customers and accounts
+  - name: Bundles
+    description: Manage product bundles for orders
+  - name: Refunds
+    description: View refund records
+
+paths:
+
+  # ─────────────────────────────────────────
+  # ACCOUNT
+  # ─────────────────────────────────────────
+
+  /accounts:
+    post:
+      summary: Create account
+      description: Registers a new merchant account and its associated manager.
+      operationId: createAccount
+      tags: [Account]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name, slug, country_code, email, password]
+              example:
+                name: My Company
+                slug: my_company
+                country_code: ES
+                email: owner@mycompany.com
+                password: Str0ng!Pass
+                locale: es
+              properties:
+                name:
+                  type: string
+                  maxLength: 255
+                  description: Unique business name.
+                  example: My Company
+                slug:
+                  type: string
+                  description: Unique slugged name derived from `name` (e.g. "My Account" → "my_account").
+                  example: my_company
+                country_code:
+                  type: string
+                  maxLength: 2
+                  description: ISO 3166-1 alpha-2 country code.
+                  example: ES
+                email:
+                  type: string
+                  format: email
+                  maxLength: 255
+                  example: owner@mycompany.com
+                password:
+                  type: string
+                  minLength: 8
+                  maxLength: 255
+                  description: Strong password (lower + upper case + symbol + number).
+                  example: Str0ng!Pass
+                image:
+                  type: string
+                  description: Base64-encoded image or URL for the account logo.
+                locale:
+                  type: string
+                  description: Notifications will be sent in this language (e.g. `es`, `en`).
+                  example: es
+                business_url:
+                  type: string
+                  description: URL of the business.
+                product_description:
+                  type: string
+                  description: Description of the product or service.
+                fee_percent:
+                  type: number
+                  description: Fee applied to orders (including platform's fee).
+                fee_amount:
+                  type: number
+                  description: Fixed fee applied to orders (including platform's fee).
+                fee_platform_percent:
+                  type: number
+                  description: Platform fee percentage applied to orders.
+                fee_platform_amount:
+                  type: number
+                  description: Fixed platform fee applied to orders.
+                fee_credit:
+                  type: number
+                  description: Credit fee applied to orders (including platform's fee).
+                fee_shipping_1:
+                  type: number
+                  description: Shipping fee for small-sized packages.
+                fee_shipping_2:
+                  type: number
+                  description: Shipping fee for medium-sized packages.
+                fee_shipping_3:
+                  type: number
+                  description: Shipping fee for large-sized packages.
+                default_parcel_size:
+                  type: string
+                  description: Default parcel size.
+                default_fee:
+                  type: number
+                  description: Default fee.
+                default_gateway:
+                  type: string
+                  description: Default payment gateway.
+                  enum: [ADDON, ADDON_V2, ADDON_ICE, ADDON_HPP, ADDON_APPLE_PAY, AZUPAY, BANKWIRE, WALLET, DCP, EPX, REDSYS_V2, REDSYS_APPLE_PAY, REDSYS_AUTH, STRIPE, DOCOMO, SIBS_MBWAY, SIBS_MULTIBANCO, SEQURA, UNNAX, PAYPAL, BIZUM, INESPAY]
+                allowed_gateways:
+                  type: array
+                  items:
+                    type: string
+                  description: List of allowed gateways besides the default gateway.
+                template_folder:
+                  type: string
+                  description: Template folder for the Checkout.
+                custom_domain:
+                  type: string
+                  description: Custom domain URL.
+                allow_insurance:
+                  type: integer
+                  enum: [0, 1]
+                  description: Allow orders to have an insurance option.
+                allow_shipping:
+                  type: integer
+                  enum: [0, 1]
+                  description: Allow orders to have a shipping option.
+                allow_select_parcel:
+                  type: integer
+                  enum: [0, 1]
+                  description: Allow the seller to select the parcel size.
+                allow_receipt:
+                  type: integer
+                  enum: [0, 1]
+                  description: Allow sending a receipt when a payment is performed.
+                allow_receipt_self:
+                  type: integer
+                  enum: [0, 1]
+                  description: Allow receiving a receipt in the account email when a payment is performed.
+                billing_address:
+                  type: string
+                  description: Company's billing address.
+                billing_address_line_2:
+                  type: string
+                  description: Company's billing address line 2.
+                billing_city:
+                  type: string
+                billing_state:
+                  type: string
+                billing_zip:
+                  type: string
+                billing_country:
+                  type: string
+                  maxLength: 2
+                vat_id:
+                  type: string
+                  description: Company's VAT identification number.
+                extra_billing_information:
+                  type: string
+                  description: Extra billing information.
+                legal_address:
+                  type: string
+                  description: Company's legal address.
+                legal_address_line_2:
+                  type: string
+                legal_city:
+                  type: string
+                legal_state:
+                  type: string
+                legal_zip:
+                  type: string
+                legal_country:
+                  type: string
+                  maxLength: 2
+                representative_name:
+                  type: string
+                  description: Name of the company's representative.
+                representative_phone:
+                  type: string
+                  description: Phone of the company's representative.
+                representative_email:
+                  type: string
+                  format: email
+                  description: Email of the company's representative.
+                twitter_token:
+                  type: string
+                  description: Twitter credentials to share orders.
+                twitter_secret:
+                  type: string
+                  description: Twitter credentials to share orders.
+                facebook_id:
+                  type: string
+                  description: Facebook credentials to share orders.
+                facebook_token:
+                  type: string
+                  description: Facebook credentials to share orders.
+                parent_id:
+                  type: integer
+                  description: Parent account ID. Only for subaccounts.
+                addon_key:
+                  type: string
+                  description: Payment gateway credential.
+                addon_secret:
+                  type: string
+                  description: Payment gateway credential.
+                addon_account:
+                  type: string
+                  description: Payment gateway credential.
+                addon_rebate:
+                  type: string
+                  description: Payment gateway credential.
+                psd2_enabled:
+                  type: integer
+                  enum: [0, 1]
+                  description: Whether the account is PSD2 enabled.
+                receipt_subject:
+                  type: string
+                  description: Subject of the email sent to the customer (selected pricing plans only).
+                receipt_message:
+                  type: string
+                  description: Message of the email sent to the customer (selected pricing plans only).
+                payment_success_message:
+                  type: string
+                  description: Message shown to customers on successful payment (selected pricing plans only).
+      responses:
+        "200":
+          description: Account created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /accounts/me:
+    get:
+      summary: Get current account
+      description: Returns the authenticated account's details.
+      operationId: getAccount
+      tags: [Account]
+      responses:
+        "200":
+          description: Account details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+    put:
+      summary: Update current account
+      description: Updates settings for the authenticated account. Accepts all parameters from Create Account plus the ones listed here.
+      operationId: updateAccount
+      tags: [Account]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [allow_shipping]
+              example:
+                name: My Company
+                allow_shipping: 0
+                business_phone: "+34666999666"
+                business_description: Description of the business
+              properties:
+                name:
+                  type: string
+                  maxLength: 255
+                allow_shipping:
+                  type: integer
+                  enum: [0, 1]
+                  description: Required. Set to 1 to allow shipping on orders.
+                value_shipping:
+                  type: number
+                  description: Required when `allow_shipping` is 1. Shipping fee value.
+                fee_shipping:
+                  type: number
+                  description: Shipping fee amount (alternative to `value_shipping`).
+                business_phone:
+                  type: string
+                  description: Must be a valid phone number.
+                business_description:
+                  type: string
+                  description: Description of the account/business.
+                image:
+                  type: string
+                  description: Base64-encoded image or URL for the account logo.
+                custom_domain:
+                  type: string
+                  description: Custom domain URL.
+                addon_account:
+                  type: string
+                  description: Addon's account credential.
+                subaccounts:
+                  type: array
+                  items:
+                    type: integer
+                  description: Array of subaccount IDs associated with this account.
+                allowed_gateways:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of allowed gateways for the account.
+                default_gateway:
+                  type: string
+                  description: Default payment gateway.
+                  enum: [ADDON, ADDON_V2, ADDON_ICE, ADDON_HPP, ADDON_APPLE_PAY, AZUPAY, BANKWIRE, WALLET, DCP, EPX, REDSYS_V2, REDSYS_APPLE_PAY, REDSYS_AUTH, STRIPE, DOCOMO, SIBS_MBWAY, SIBS_MULTIBANCO, SEQURA, UNNAX, PAYPAL, BIZUM, INESPAY]
+                psd2_enabled:
+                  type: integer
+                  enum: [0, 1]
+                metadata:
+                  type: object
+                  additionalProperties: true
+      responses:
+        "200":
+          description: Updated account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /accounts/fees/{currency}:
+    get:
+      summary: Get account fees and wallet balance
+      description: Returns the wallet with balance and fee information for the specified currency.
+      operationId: getAccountFees
+      tags: [Account]
+      parameters:
+        - name: currency
+          in: path
+          required: false
+          schema:
+            type: string
+            example: EUR
+          description: ISO 4217 currency code. Defaults to the account's base currency.
+      responses:
+        "200":
+          description: Wallet with fee information
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wallet"
+
+  /accounts/verify:
+    post:
+      summary: Verify account
+      description: |
+        Submits KYC (Know Your Customer) information for the authenticated account.
+        Use `NATURAL` for individuals and `LEGAL` for companies.
+        For `LEGAL` type, representative information is required.
+      operationId: verifyAccount
+      tags: [Account]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [type, first_name, last_name, vat_id, legal_address, legal_city, legal_zip, legal_state]
+              example:
+                type: LEGAL
+                first_name: John
+                last_name: Doe
+                vat_id: "123456789"
+                legal_name: My Company SL
+                legal_address: Llauder, 1
+                legal_city: Barcelona
+                legal_zip: "08001"
+                legal_state: Barcelona
+                legal_country: ES
+                representative_name: John Doe
+                representative_email: support@mycompany.com
+                representative_phone: "+34666999666"
+              properties:
+                type:
+                  type: string
+                  enum: [NATURAL, SOLETRADER, LEGAL]
+                  description: "Verification type: `NATURAL` for individuals, `SOLETRADER` for self-employed, `LEGAL` for companies."
+                first_name:
+                  type: string
+                  maxLength: 255
+                  description: First name of the account holder or representative.
+                last_name:
+                  type: string
+                  maxLength: 255
+                  description: Last name of the account holder or representative.
+                vat_id:
+                  type: string
+                  maxLength: 255
+                  description: Tax identification number (DNI, NIF, CIF, etc.).
+                legal_name:
+                  type: string
+                  maxLength: 255
+                  description: Company legal name. Required for `LEGAL` type.
+                legal_address:
+                  type: string
+                  maxLength: 255
+                  description: Legal registered address.
+                legal_city:
+                  type: string
+                  maxLength: 255
+                legal_zip:
+                  type: string
+                  maxLength: 255
+                legal_state:
+                  type: string
+                  maxLength: 255
+                legal_country:
+                  type: string
+                  maxLength: 2
+                  description: ISO 3166-1 alpha-2 country code.
+                birthday:
+                  type: string
+                  format: date
+                  description: Date of birth. Applicable for `NATURAL` type.
+                occupation:
+                  type: string
+                  maxLength: 255
+                  description: Title or short description of occupation. Applicable for `NATURAL` type.
+                income_range:
+                  type: number
+                  description: Income range value. Applicable for `NATURAL` type.
+                representative_name:
+                  type: string
+                  maxLength: 255
+                  description: Full name of the company representative. Required for `LEGAL` type.
+                representative_email:
+                  type: string
+                  format: email
+                  description: Email of the company representative. Required for `LEGAL` type.
+                representative_phone:
+                  type: string
+                  description: Phone of the company representative. Required for `LEGAL` type.
+      responses:
+        "200":
+          description: Account verification submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Account"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  # ─────────────────────────────────────────
+  # CUSTOMERS
+  # ─────────────────────────────────────────
+
+  /customers:
+    get:
+      summary: List customers
+      description: Returns a paginated list of customers associated with the authenticated account.
+      operationId: listCustomers
+      tags: [Customers]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Query"
+        - $ref: "#/components/parameters/DateBegin"
+        - $ref: "#/components/parameters/DateEnd"
+        - $ref: "#/components/parameters/Order"
+        - $ref: "#/components/parameters/Sort"
+      responses:
+        "200":
+          description: Paginated list of customers
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedCustomers"
+    post:
+      summary: Create customer
+      description: |
+        Creates a new customer (buyer or seller). If a customer with the same email/phone already exists
+        for this account, the existing record is updated and returned.
+
+        Either `email` or `phone` (with `prefix`) is required.
+      operationId: createCustomer
+      tags: [Customers]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: John Doe
+                email: john@example.com
+                prefix: "+34"
+                phone: "612345678"
+              properties:
+                name:
+                  type: string
+                  maxLength: 255
+                  example: John Doe
+                first_name:
+                  type: string
+                  maxLength: 255
+                  example: John
+                last_name:
+                  type: string
+                  maxLength: 255
+                  example: Doe
+                email:
+                  type: string
+                  format: email
+                  maxLength: 255
+                  description: Required if `phone` is not provided.
+                  example: john@example.com
+                prefix:
+                  type: string
+                  description: Phone country prefix (e.g. `+34`). Required with `phone`.
+                  example: "+34"
+                phone:
+                  type: string
+                  description: Phone number without prefix. Required if `email` is not provided.
+                  example: "612345678"
+                locale:
+                  type: string
+                  description: Customer's preferred locale.
+                  example: es
+                tag:
+                  type: string
+                  maxLength: 100
+                  description: Custom tag for grouping or filtering.
+                metadata:
+                  type: object
+                  additionalProperties: true
+                  description: Arbitrary key-value metadata.
+      responses:
+        "200":
+          description: Customer created or updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /customers/{uuid}:
+    get:
+      summary: Get customer
+      operationId: getCustomer
+      tags: [Customers]
+      parameters:
+        - $ref: "#/components/parameters/CustomerUuid"
+      responses:
+        "200":
+          description: Customer details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      summary: Update customer
+      operationId: updateCustomer
+      tags: [Customers]
+      parameters:
+        - $ref: "#/components/parameters/CustomerUuid"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Name Test
+                email: john@example.com
+              properties:
+                name:
+                  type: string
+                  maxLength: 255
+                  example: John Doe
+                first_name:
+                  type: string
+                  maxLength: 255
+                  example: John
+                last_name:
+                  type: string
+                  maxLength: 255
+                  example: Doe
+                email:
+                  type: string
+                  format: email
+                  maxLength: 255
+                prefix:
+                  type: string
+                  description: Phone country prefix (e.g. `+34`).
+                  example: "+34"
+                phone:
+                  type: string
+                  example: "612345678"
+                tag:
+                  type: string
+                  maxLength: 100
+                metadata:
+                  type: object
+                  additionalProperties: true
+      responses:
+        "200":
+          description: Updated customer
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Customer"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /customers/{uuid}/wallets:
+    get:
+      summary: List customer wallets
+      operationId: listCustomerWallets
+      tags: [Customers]
+      parameters:
+        - $ref: "#/components/parameters/CustomerUuid"
+      responses:
+        "200":
+          description: List of wallets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Wallet"
+
+  /customers/{uuid}/cards:
+    get:
+      summary: List customer cards
+      operationId: listCustomerCards
+      tags: [Customers]
+      parameters:
+        - $ref: "#/components/parameters/CustomerUuid"
+      responses:
+        "200":
+          description: List of tokenized cards
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Card"
+
+  /customers/{uuid}/bankaccounts:
+    get:
+      summary: List customer bank accounts
+      operationId: listCustomerBankAccounts
+      tags: [Customers]
+      parameters:
+        - $ref: "#/components/parameters/CustomerUuid"
+      responses:
+        "200":
+          description: List of bank accounts
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/BankAccount"
+
+  /customers/{uuid}/addresses:
+    get:
+      summary: List customer addresses
+      operationId: listCustomerAddresses
+      tags: [Customers]
+      parameters:
+        - $ref: "#/components/parameters/CustomerUuid"
+      responses:
+        "200":
+          description: List of addresses
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Address"
+    post:
+      summary: Add address to customer
+      operationId: createCustomerAddress
+      tags: [Customers]
+      parameters:
+        - $ref: "#/components/parameters/CustomerUuid"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AddressInput"
+      responses:
+        "200":
+          description: Address created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Address"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /customers/{uuid}/addresses/{address_uuid}:
+    get:
+      summary: Get customer address
+      operationId: getCustomerAddress
+      tags: [Customers]
+      parameters:
+        - $ref: "#/components/parameters/CustomerUuid"
+        - name: address_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Address details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Address"
+    put:
+      summary: Update customer address
+      description: Only the `metadata` field can be updated on an existing address.
+      operationId: updateCustomerAddress
+      tags: [Customers]
+      parameters:
+        - $ref: "#/components/parameters/CustomerUuid"
+        - name: address_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                metadata:
+                  type: object
+                  additionalProperties: true
+      responses:
+        "200":
+          description: Updated address
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Address"
+
+  /customers/{uuid}/verify:
+    post:
+      summary: Create KYC for a customer
+      description: |
+        Submits KYC (Know Your Customer) identity verification information for a customer.
+        Supported types: `NATURAL`, `SOLETRADER`, `LEGAL`.
+        For `LEGAL` type, `legal_name`, `representative_name`, `representative_email` and `representative_phone` are required.
+      operationId: createCustomerVerification
+      tags: [Verifications]
+      parameters:
+        - $ref: "#/components/parameters/CustomerUuid"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerificationInput"
+      responses:
+        "200":
+          description: KYC verification created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Verification"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /customers/{uuid}/verification:
+    get:
+      summary: Get KYC verification for a customer
+      description: Returns the current KYC verification record associated with the customer.
+      operationId: getCustomerVerification
+      tags: [Verifications]
+      parameters:
+        - $ref: "#/components/parameters/CustomerUuid"
+      responses:
+        "200":
+          description: Verification details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Verification"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /customers/{uuid}/subscriptions:
+    get:
+      summary: List customer subscriptions
+      operationId: listCustomerSubscriptions
+      tags: [Customers]
+      parameters:
+        - $ref: "#/components/parameters/CustomerUuid"
+      responses:
+        "200":
+          description: List of subscriptions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Subscription"
+
+  # ─────────────────────────────────────────
+  # ORDERS
+  # ─────────────────────────────────────────
+
+  /orders:
+    get:
+      summary: List orders
+      operationId: listOrders
+      tags: [Orders]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Query"
+        - $ref: "#/components/parameters/DateBegin"
+        - $ref: "#/components/parameters/DateEnd"
+        - $ref: "#/components/parameters/Order"
+        - $ref: "#/components/parameters/Sort"
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [DRAFT, PENDING_DETAILS, PENDING_PUBLISH, PUBLISHED, ACCEPTED, REJECTED, CANCELLED, RELEASED]
+          description: Filter by order status.
+        - name: sandbox
+          in: query
+          schema:
+            type: boolean
+          description: Filter sandbox orders.
+      responses:
+        "200":
+          description: Paginated list of orders
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedOrders"
+    post:
+      summary: Create order
+      description: |
+        Creates a new escrow payment order.
+        `buyer_id` and `seller_id` are required (both customers must exist).
+        Once created, the order has a `buyer_link` and `seller_link` for the payment flow.
+      operationId: createOrder
+      tags: [Orders]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [buyer_id, seller_id, name, value]
+              example:
+                buyer_id: 7485
+                seller_id: 7485
+                name: Test New Order
+                value: 23.77
+              properties:
+                buyer_id:
+                  type: integer
+                  description: Customer ID of the buyer.
+                  example: 7485
+                seller_id:
+                  type: integer
+                  description: Customer ID of the seller.
+                  example: 7485
+                name:
+                  type: string
+                  maxLength: 120
+                  description: Order description or product name.
+                  example: Product purchase
+                value:
+                  type: number
+                  format: float
+                  minimum: 0
+                  description: Order amount in the account's base currency.
+                  example: 150.00
+                fee_value:
+                  type: number
+                  format: float
+                  minimum: 0
+                  description: Fixed platform fee amount. Cannot exceed `value`.
+                fee_percent:
+                  type: number
+                  format: float
+                  minimum: 0
+                  maximum: 100
+                  description: Platform fee as a percentage. Min 0, max 100.
+                tag:
+                  type: string
+                  maxLength: 100
+                  description: Custom reference tag.
+                auto_settle:
+                  type: integer
+                  enum: [0, 1]
+                  description: Set to `1` if there is no seller (e-commerce model). Auto-settles after payment.
+                metadata:
+                  type: object
+                  additionalProperties: true
+                  description: Arbitrary key-value metadata stored on the order.
+                template:
+                  type: object
+                  description: Custom template data for the checkout page.
+                  properties:
+                    btn_submit_text:
+                      type: string
+                      description: Custom text for the submit button.
+                    iframe_title:
+                      type: string
+                      description: Title displayed in the payment iframe.
+                    expires_in:
+                      type: integer
+                      description: Session expiration time in seconds.
+                    hide_cardholder:
+                      type: boolean
+                      description: Whether to hide the cardholder name field. Default `false`.
+                    password_cvv:
+                      type: boolean
+                      description: Whether to require CVV. Default `true`.
+                images:
+                  type: array
+                  maxItems: 10
+                  items:
+                    type: string
+                  description: Array of image URLs for the order.
+                buyer_confirmed_url:
+                  type: string
+                  format: uri
+                  description: Redirect URL after buyer confirms payment.
+                buyer_denied_url:
+                  type: string
+                  format: uri
+                  description: Redirect URL if buyer cancels payment.
+                seller_confirmed_url:
+                  type: string
+                  format: uri
+                  description: Redirect URL after seller accepts the order.
+                seller_denied_url:
+                  type: string
+                  format: uri
+                  description: Redirect URL if seller rejects the order.
+                payin_intents:
+                  type: integer
+                  minimum: 1
+                  description: Maximum number of payin attempts allowed.
+                payin_method_types:
+                  type: array
+                  items:
+                    type: string
+                  description: Allowed payment method types for this order (e.g. `["CARD","BANKWIRE"]`).
+                payin_method_fallback:
+                  type: array
+                  items:
+                    type: string
+                  description: Fallback payment methods if primary types fail.
+                buyer_billing_id:
+                  type: integer
+                  description: Address ID to use as the buyer's billing address.
+                buyer_shipping_id:
+                  type: integer
+                  description: Address ID to use as the buyer's shipping address.
+                bundle:
+                  type: integer
+                  description: Bundle ID to associate with this order.
+      responses:
+        "200":
+          description: Order created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /orders/{id}:
+    get:
+      summary: Get order
+      operationId: getOrder
+      tags: [Orders]
+      parameters:
+        - $ref: "#/components/parameters/OrderId"
+      responses:
+        "200":
+          description: Order details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      summary: Update order
+      description: Updates an order's details. After payment, only `metadata`, `fee_value`, and `fee_percent` can be changed.
+      operationId: updateOrder
+      tags: [Orders]
+      parameters:
+        - $ref: "#/components/parameters/OrderId"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: Demo Order
+                value: 15
+              properties:
+                buyer_id:
+                  type: integer
+                  description: Customer ID of the buyer.
+                name:
+                  type: string
+                  maxLength: 120
+                value:
+                  type: number
+                  minimum: 0
+                fee_value:
+                  type: number
+                  minimum: 0
+                fee_percent:
+                  type: number
+                  minimum: 0
+                  maximum: 100
+                tag:
+                  type: string
+                  maxLength: 100
+                metadata:
+                  type: object
+                  additionalProperties: true
+                template:
+                  type: object
+                  description: Custom template data for the checkout page.
+                  properties:
+                    btn_submit_text:
+                      type: string
+                    iframe_title:
+                      type: string
+                    expires_in:
+                      type: integer
+                    hide_cardholder:
+                      type: boolean
+                    password_cvv:
+                      type: boolean
+                images:
+                  type: array
+                  maxItems: 10
+                  items:
+                    type: string
+      responses:
+        "200":
+          description: Updated order
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /orders/{id}/payin:
+    get:
+      summary: Get order payin
+      description: Returns the payin associated with the order.
+      operationId: getOrderPayin
+      tags: [Orders]
+      parameters:
+        - $ref: "#/components/parameters/OrderId"
+      responses:
+        "200":
+          description: Payin details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payin"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /orders/{id}/payout:
+    get:
+      summary: Get order payout
+      description: Returns the payout associated with the order.
+      operationId: getOrderPayout
+      tags: [Orders]
+      parameters:
+        - $ref: "#/components/parameters/OrderId"
+      responses:
+        "200":
+          description: Payout details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payout"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /orders/{id}/accept:
+    post:
+      summary: Accept order
+      description: Seller accepts the order, triggering the payout process.
+      operationId: acceptOrder
+      tags: [Orders]
+      parameters:
+        - $ref: "#/components/parameters/OrderId"
+      responses:
+        "200":
+          description: Order accepted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /orders/{id}/cancel:
+    post:
+      summary: Cancel order
+      description: Cancels an order and refunds the buyer if a payin was made.
+      operationId: cancelOrder
+      tags: [Orders]
+      parameters:
+        - $ref: "#/components/parameters/OrderId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                tag:
+                  type: string
+                  maxLength: 100
+                  description: Optional tag to record the cancellation reason.
+                metadata:
+                  type: object
+                  additionalProperties: true
+                bankaccount_id:
+                  type: integer
+                  description: Required when the payin was made via bank wire, to specify the refund account.
+      responses:
+        "200":
+          description: Order cancelled
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /orders/{id}/validate:
+    post:
+      summary: Validate (release) order
+      description: |
+        Releases funds from escrow to the seller. If `auto_accept` is true, the acceptance step is skipped.
+        Moves the order to `RELEASED` status.
+      operationId: validateOrder
+      tags: [Orders]
+      parameters:
+        - $ref: "#/components/parameters/OrderId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                auto_accept:
+                  type: boolean
+                  description: Skip the accept step and validate directly.
+      responses:
+        "200":
+          description: Order validated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /orders/{id}/receipt:
+    post:
+      summary: Send order receipt
+      description: Sends an email receipt to the buyer.
+      operationId: sendOrderReceipt
+      tags: [Orders]
+      parameters:
+        - $ref: "#/components/parameters/OrderId"
+      responses:
+        "200":
+          description: Receipt sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+
+  /orders/{id}/reimburse:
+    post:
+      summary: Reimburse order
+      description: Issues a partial or full reimbursement for a paid order via wallet credit.
+      operationId: reimburseOrder
+      tags: [Orders]
+      parameters:
+        - $ref: "#/components/parameters/OrderId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                amount:
+                  type: number
+                  minimum: 0
+                  description: Amount to reimburse. Defaults to full amount.
+                wallet_id:
+                  type: integer
+                  description: Target wallet ID for the reimbursement.
+                payin_id:
+                  type: integer
+                  description: Specific payin to reimburse (required when the order has multiple payins).
+      responses:
+        "200":
+          description: Order reimbursed
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/OrderResponse"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  # ─────────────────────────────────────────
+  # PAYINS
+  # ─────────────────────────────────────────
+
+  /payins:
+    get:
+      summary: List payins
+      operationId: listPayins
+      tags: [Payins]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Query"
+        - $ref: "#/components/parameters/DateBegin"
+        - $ref: "#/components/parameters/DateEnd"
+        - $ref: "#/components/parameters/Order"
+        - $ref: "#/components/parameters/Sort"
+      responses:
+        "200":
+          description: Paginated list of payins
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedPayins"
+    post:
+      summary: Create payin
+      description: |
+        Creates a payin (payment intent) for an order. Requires `order_id` and either `type` or `gateway_id`.
+
+        For card payments, the response includes a `direct_link` to the payment page.
+        For bank wire payments, the response includes bank transfer details in `provider`.
+      operationId: createPayin
+      tags: [Payins]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [order_id, type]
+              example:
+                order_id: 4950
+                type: REDSYS_V2
+                save_card: 1
+              properties:
+                order_id:
+                  type: integer
+                  description: ID of the order to pay.
+                  example: 4950
+                type:
+                  type: string
+                  description: |
+                    Payment method type. Valid values include `BANKWIRE`, `WALLET`, and any registered gateway type for the account
+                    (e.g. `REDSYS_V2`, `ADDON`, `ADDON_V2`, `ADDON_ICE`, `ADDON_HPP`, `ADDON_APPLE_PAY`, `AZUPAY`, `DCP`, `EPX`,
+                    `REDSYS_APPLE_PAY`, `REDSYS_AUTH`, `STRIPE`, `DOCOMO`, `SIBS_MBWAY`, `SIBS_MULTIBANCO`, `SEQURA`, `UNNAX`,
+                    `PAYPAL`, `BIZUM`, `INESPAY`).
+                  example: REDSYS_V2
+                gateway_id:
+                  type: integer
+                  description: Gateway ID to use. Alternative to `type`.
+                card_id:
+                  type: integer
+                  description: Saved card ID to charge (for recurring or one-click payments).
+                wallet_id:
+                  type: integer
+                  description: Wallet ID to debit. Required when `type` is `WALLET`.
+                save_card:
+                  type: integer
+                  enum: [0, 1]
+                  description: Set to `1` to tokenize and save the card for future use.
+      responses:
+        "200":
+          description: Payin created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payin"
+        "404":
+          $ref: "#/components/responses/ValidationError"
+
+  /payins/{id}:
+    get:
+      summary: Get payin
+      operationId: getPayin
+      tags: [Payins]
+      parameters:
+        - $ref: "#/components/parameters/PayinId"
+      responses:
+        "200":
+          description: Payin details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payin"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      summary: Sync payin status
+      description: Forces a status refresh by querying the payment provider. Useful for polling.
+      operationId: syncPayin
+      tags: [Payins]
+      parameters:
+        - $ref: "#/components/parameters/PayinId"
+      responses:
+        "200":
+          description: Updated payin
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payin"
+
+  /payins/{id}/refund:
+    post:
+      summary: Refund payin
+      description: |
+        Issues a partial or full refund for a confirmed payin. Only supported payment methods can be refunded.
+        For bank wire payins, a `bankaccount_id` is required to specify the refund destination.
+      operationId: refundPayin
+      tags: [Payins]
+      parameters:
+        - $ref: "#/components/parameters/PayinId"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                amount: 2
+                multipayin: 0
+              properties:
+                amount:
+                  type: number
+                  minimum: 0
+                  description: Amount to refund. Defaults to full amount if not provided.
+                multipayin:
+                  type: integer
+                  enum: [0, 1]
+                  description: Set to `1` to refund all payins associated with the order of this payin.
+                bankaccount_id:
+                  type: integer
+                  description: Required if the payin is of Bankwire type. Bank account ID to receive the refund.
+                tag:
+                  type: string
+                  maxLength: 100
+                metadata:
+                  type: object
+                  additionalProperties: true
+      responses:
+        "200":
+          description: Payin with refund details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payin"
+        "403":
+          description: Refunds not supported for this payment method
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /payins/{id}/cancelpreauth:
+    post:
+      summary: Cancel pre-authorization
+      description: Cancels an `AUTHORIZED` (pre-authorized) payin without capturing funds.
+      operationId: cancelPreAuth
+      tags: [Payins]
+      parameters:
+        - $ref: "#/components/parameters/PayinId"
+      responses:
+        "200":
+          description: Pre-authorization cancelled
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payin"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /payins/{id}/request:
+    post:
+      summary: Send payment request
+      description: Sends a payment request notification to the buyer for open-banking or request-to-pay type payins.
+      operationId: requestToPay
+      tags: [Payins]
+      parameters:
+        - $ref: "#/components/parameters/PayinId"
+      responses:
+        "200":
+          description: Payment request sent
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payin"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  # ─────────────────────────────────────────
+  # PAYOUTS
+  # ─────────────────────────────────────────
+
+  /payouts:
+    get:
+      summary: List payouts
+      operationId: listPayouts
+      tags: [Payouts]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Query"
+        - $ref: "#/components/parameters/DateBegin"
+        - $ref: "#/components/parameters/DateEnd"
+        - $ref: "#/components/parameters/Order"
+        - $ref: "#/components/parameters/Sort"
+      responses:
+        "200":
+          description: Paginated list of payouts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedPayouts"
+    post:
+      summary: Create payout
+      description: |
+        Creates a payout to transfer funds from a paid order to the seller.
+        Requires the order to not yet be released. The destination is either a `wallet_id` or a `bankaccount_id`.
+      operationId: createPayout
+      tags: [Payouts]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [order_id, type]
+              example:
+                order_id: 25955
+                type: WALLET
+                wallet_id: 28751
+              properties:
+                order_id:
+                  type: integer
+                  description: ID of the order to pay out.
+                  example: 25955
+                type:
+                  type: string
+                  description: Payout method type.
+                  enum: [WALLET, ACCOUNT, BANKWIRE]
+                  example: WALLET
+                wallet_id:
+                  type: integer
+                  description: Destination wallet ID. Required when `type` is `WALLET`.
+                bankaccount_id:
+                  type: integer
+                  description: Destination bank account ID. Required for `ACCOUNT` type.
+                bankwire_ref:
+                  type: string
+                  maxLength: 140
+                  description: Custom reference for bank wire payouts.
+                azupay_id:
+                  type: string
+                  description: AzuPay destination ID. Required for AzuPay payouts.
+                azupay_type:
+                  type: string
+                  description: AzuPay account type.
+                azupay_bsb:
+                  type: string
+                  description: AzuPay BSB number (Australian bank routing number).
+                azupay_account:
+                  type: string
+                  description: AzuPay bank account number.
+      responses:
+        "200":
+          description: Payout created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payout"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /payouts/{id}:
+    get:
+      summary: Get payout
+      operationId: getPayout
+      tags: [Payouts]
+      parameters:
+        - $ref: "#/components/parameters/PayoutId"
+      responses:
+        "200":
+          description: Payout details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payout"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /payouts/{id}/update:
+    post:
+      summary: Sync payout status
+      description: Forces a status refresh for a confirmed payout.
+      operationId: syncPayout
+      tags: [Payouts]
+      parameters:
+        - $ref: "#/components/parameters/PayoutId"
+      responses:
+        "200":
+          description: Updated payout
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Payout"
+
+  # ─────────────────────────────────────────
+  # WALLETS
+  # ─────────────────────────────────────────
+
+  /wallets/{uuid}:
+    get:
+      summary: Get wallet
+      operationId: getWallet
+      tags: [Wallets]
+      parameters:
+        - $ref: "#/components/parameters/WalletUuid"
+        - name: update
+          in: query
+          schema:
+            type: string
+            enum: ["1"]
+          description: Pass `1` to force a balance refresh from the provider before returning.
+      responses:
+        "200":
+          description: Wallet details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wallet"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      summary: Update wallet
+      description: Updates the `tag` or `metadata` of a customer wallet.
+      operationId: updateWallet
+      tags: [Wallets]
+      parameters:
+        - $ref: "#/components/parameters/WalletUuid"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                tag: bills
+              properties:
+                tag:
+                  type: string
+                  maxLength: 100
+                metadata:
+                  type: object
+                  additionalProperties: true
+      responses:
+        "200":
+          description: Updated wallet
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wallet"
+
+  /wallets:
+    get:
+      summary: List wallets
+      description: Returns a list of all wallets associated with the authenticated account.
+      operationId: listWallets
+      tags: [Wallets]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+      responses:
+        "200":
+          description: List of wallets
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Wallet"
+    post:
+      summary: Create wallet
+      description: Creates a new wallet for a customer or the authenticated account.
+      operationId: createWallet
+      tags: [Wallets]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [currency]
+              example:
+                customer_type: user
+                customer_id: 7485
+                currency: EUR
+                tag: bills
+              properties:
+                currency:
+                  type: string
+                  description: ISO 4217 currency code.
+                  example: EUR
+                customer_id:
+                  type: integer
+                  description: Customer ID to assign the wallet to. Required unless `customer_type` is `source`.
+                  example: 42
+                customer_type:
+                  type: string
+                  enum: [source, user]
+                  description: Pass `source` to create a wallet for the authenticated account. Pass `user` for a customer wallet (use with `customer_id`).
+                type:
+                  type: string
+                  enum: [CURRENCYCLOUD, CLEARJUNCTION]
+                  description: Optional wallet provider type.
+                tag:
+                  type: string
+                  maxLength: 100
+                metadata:
+                  type: object
+                  additionalProperties: true
+      responses:
+        "200":
+          description: Wallet created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Wallet"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /wallets/{uuid}/transactions:
+    get:
+      summary: List wallet transactions
+      operationId: listWalletTransactions
+      tags: [Wallets]
+      parameters:
+        - $ref: "#/components/parameters/WalletUuid"
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/DateBegin"
+        - $ref: "#/components/parameters/DateEnd"
+      responses:
+        "200":
+          description: List of transactions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Transaction"
+
+  # ─────────────────────────────────────────
+  # BANK ACCOUNTS
+  # ─────────────────────────────────────────
+
+  /bankaccounts:
+    post:
+      summary: Create bank account
+      description: |
+        Registers a bank account for a customer (or the authenticated account).
+        Use `GET /bankaccounts/validation` first to obtain the required fields for the given currency and country.
+      operationId: createBankAccount
+      tags: [Bank Accounts]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [customer_id, name, type, number, bic]
+              example:
+                customer_id: 7485
+                name: My bank account
+                type: IBAN
+                number: ES1300812944953951475955
+                bic: CAIXESBBXXX
+              properties:
+                customer_id:
+                  type: integer
+                  description: Customer ID to assign the bank account to. Required unless `customer_type` is `source`.
+                  example: 7485
+                name:
+                  type: string
+                  maxLength: 255
+                  description: Account holder name.
+                  example: My bank account
+                type:
+                  type: string
+                  description: Bank account type. Use `IBAN` for SEPA accounts, `OTHER` for other types.
+                  enum: [IBAN, OTHER]
+                  example: IBAN
+                number:
+                  type: string
+                  description: Bank account number (IBAN or other format).
+                  example: ES1300812944953951475955
+                bic:
+                  type: string
+                  maxLength: 11
+                  description: BIC/SWIFT code.
+                  example: CAIXESBBXXX
+                customer_type:
+                  type: string
+                  enum: [source]
+                  description: Pass `source` to register a bank account for the authenticated account instead of a customer.
+                iban:
+                  type: string
+                  description: IBAN (alternative field to `number` for SEPA accounts).
+                  example: ES9121000418450200051332
+                tag:
+                  type: string
+                  maxLength: 50
+                metadata:
+                  type: object
+                  additionalProperties: true
+      responses:
+        "200":
+          description: Bank account created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankAccount"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /bankaccounts/validation:
+    get:
+      summary: Get bank account validation rules
+      description: Returns the required fields and validation rules for a bank account given a currency, country, and type.
+      operationId: getBankAccountValidation
+      tags: [Bank Accounts]
+      parameters:
+        - name: currency
+          in: query
+          required: true
+          schema:
+            type: string
+            example: EUR
+        - name: country
+          in: query
+          required: true
+          schema:
+            type: string
+            example: ES
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+            example: IBAN
+      responses:
+        "200":
+          description: Validation rules object
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: true
+
+  /bankaccounts/{uuid}:
+    get:
+      summary: Get bank account
+      operationId: getBankAccount
+      tags: [Bank Accounts]
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Bank account details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BankAccount"
+
+  # ─────────────────────────────────────────
+  # CARDS
+  # ─────────────────────────────────────────
+
+  /cards/{uuid}:
+    get:
+      summary: Get card
+      operationId: getCard
+      tags: [Cards]
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Card details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Card"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    delete:
+      summary: Delete card
+      description: Removes a tokenized card from the customer.
+      operationId: deleteCard
+      tags: [Cards]
+      parameters:
+        - name: uuid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Card deleted
+
+  # ─────────────────────────────────────────
+  # SUBSCRIPTIONS
+  # ─────────────────────────────────────────
+
+  /subscriptions:
+    get:
+      summary: List subscriptions
+      operationId: listSubscriptions
+      tags: [Subscriptions]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+        - $ref: "#/components/parameters/Order"
+        - $ref: "#/components/parameters/Sort"
+      responses:
+        "200":
+          description: Paginated list of subscriptions
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedSubscriptions"
+    post:
+      summary: Create subscription
+      description: |
+        Creates a recurring payment subscription. The first order is created immediately;
+        subsequent orders are triggered on the defined schedule.
+      operationId: createSubscription
+      tags: [Subscriptions]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [buyer_id, seller_id, name, value, type]
+              example:
+                buyer_id: 7485
+                seller_id: 7485
+                name: Subscription Test
+                value: 10
+                type: ADDON
+              properties:
+                buyer_id:
+                  type: integer
+                  description: Customer ID of the subscriber (buyer).
+                  example: 42
+                seller_id:
+                  type: integer
+                  description: Customer ID of the seller.
+                name:
+                  type: string
+                  maxLength: 120
+                  example: Monthly plan
+                value:
+                  type: number
+                  minimum: 0
+                  description: Recurring charge amount.
+                  example: 9.99
+                type:
+                  type: string
+                  description: Payment method type for the subscription (e.g. `CARD`).
+                  example: CARD
+                fee_value:
+                  type: number
+                  minimum: 0
+                fee_percent:
+                  type: number
+                  minimum: 0
+                  maximum: 100
+                start_date:
+                  type: string
+                  format: date
+                  description: Date when the subscription starts. Defaults to creation date if not provided.
+                first_payment_value:
+                  type: number
+                  description: Amount for the first payment if different from `value`.
+                times:
+                  type: integer
+                  description: Number of billing cycles. Leave null for indefinite.
+                schedule:
+                  type: string
+                  description: Cron expression or schedule descriptor (e.g. `monthly`, `weekly`).
+                auto_settle:
+                  type: boolean
+                tag:
+                  type: string
+                  maxLength: 100
+                metadata:
+                  type: object
+                  additionalProperties: true
+                order_metadata:
+                  type: object
+                  additionalProperties: true
+                  description: Metadata applied to each generated order.
+                buyer_confirmed_url:
+                  type: string
+                  format: uri
+                buyer_denied_url:
+                  type: string
+                  format: uri
+                seller_confirmed_url:
+                  type: string
+                  format: uri
+                seller_denied_url:
+                  type: string
+                  format: uri
+      responses:
+        "200":
+          description: Subscription created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Subscription"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /subscriptions/{id}:
+    get:
+      summary: Get subscription
+      operationId: getSubscription
+      tags: [Subscriptions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Subscription details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Subscription"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /subscriptions/{id}/cancel:
+    put:
+      summary: Cancel subscription
+      description: Cancels an active subscription. No further charges will be made.
+      operationId: cancelSubscription
+      tags: [Subscriptions]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Subscription cancelled
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Subscription"
+        "404":
+          $ref: "#/components/responses/NotFound"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  # ─────────────────────────────────────────
+  # VERIFICATIONS
+  # ─────────────────────────────────────────
+
+  /verifications:
+    get:
+      summary: List verifications
+      operationId: listVerifications
+      tags: [Verifications]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Query"
+        - $ref: "#/components/parameters/DateBegin"
+        - $ref: "#/components/parameters/DateEnd"
+        - $ref: "#/components/parameters/Order"
+        - $ref: "#/components/parameters/Sort"
+      responses:
+        "200":
+          description: Paginated list of verifications
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedVerifications"
+
+  /verifications/{uuid}:
+    get:
+      summary: Get verification
+      operationId: getVerification
+      tags: [Verifications]
+      parameters:
+        - $ref: "#/components/parameters/VerificationUuid"
+      responses:
+        "200":
+          description: Verification details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Verification"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      summary: Create or update customer verification (KYC)
+      description: |
+        Submits KYC information for a customer. Supported types are `INDIVIDUAL`, `SELFEMPLOYEE`, and `LEGAL`.
+        For `LEGAL` type, representative information is required.
+      operationId: submitVerification
+      tags: [Verifications]
+      parameters:
+        - $ref: "#/components/parameters/VerificationUuid"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VerificationInput"
+      responses:
+        "200":
+          description: Verification submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Verification"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /verifications/{uuid}/request:
+    post:
+      summary: Request verification review
+      description: Submits a verification with `CREATED` status for manual review.
+      operationId: requestVerification
+      tags: [Verifications]
+      parameters:
+        - $ref: "#/components/parameters/VerificationUuid"
+      responses:
+        "200":
+          description: Verification review requested
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Verification"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /verifications/{uuid}/documents:
+    get:
+      summary: List verification documents
+      operationId: listVerificationDocuments
+      tags: [Verifications]
+      parameters:
+        - $ref: "#/components/parameters/VerificationUuid"
+      responses:
+        "200":
+          description: List of documents
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Document"
+    post:
+      summary: Upload verification document
+      description: |
+        Uploads a KYC document for a verification. The `content` field must be a base64-encoded image.
+
+        Supported `type` values: `IDENTITY_PROOF`, `REGISTRATION_PROOF`, `ARTICLES_OF_ASSOCIATION`, `SHAREHOLDER_DECLARATION`, `ADDRESS_PROOF`, `TAX_VERIFICATION`, `BUSINESS_ADMINISTRATOR_ID`, `COMPANY_REGISTRATION_PROOF`, `BANK_VERIFICATION`.
+      operationId: uploadVerificationDocument
+      tags: [Verifications]
+      parameters:
+        - $ref: "#/components/parameters/VerificationUuid"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [type, content]
+              example:
+                type: IDENTITY_PROOF
+                content: "data:image/jpeg;base64,/9j/4AAQSkZJRgAB..."
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - IDENTITY_PROOF
+                    - REGISTRATION_PROOF
+                    - ARTICLES_OF_ASSOCIATION
+                    - SHAREHOLDER_DECLARATION
+                    - ADDRESS_PROOF
+                    - TAX_VERIFICATION
+                    - BUSINESS_ADMINISTRATOR_ID
+                    - COMPANY_REGISTRATION_PROOF
+                    - BANK_VERIFICATION
+                content:
+                  type: string
+                  description: Base64-encoded image (JPG or PNG).
+      responses:
+        "200":
+          description: Document uploaded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /verifications/{uuid}/documents/{document_uuid}:
+    get:
+      summary: Get verification document
+      operationId: getVerificationDocument
+      tags: [Verifications]
+      parameters:
+        - $ref: "#/components/parameters/VerificationUuid"
+        - name: document_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Document details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+    put:
+      summary: Update verification document
+      description: Updates the content or type of an existing KYC verification document.
+      operationId: updateVerificationDocument
+      tags: [Verifications]
+      parameters:
+        - $ref: "#/components/parameters/VerificationUuid"
+        - name: document_uuid
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [type, content]
+              example:
+                type: IDENTITY_PROOF
+                content: "data:application/pdf;base64,iVBORw0KGgo..."
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - IDENTITY_PROOF
+                    - REGISTRATION_PROOF
+                    - ARTICLES_OF_ASSOCIATION
+                    - SHAREHOLDER_DECLARATION
+                    - ADDRESS_PROOF
+                    - TAX_VERIFICATION
+                    - BUSINESS_ADMINISTRATOR_ID
+                    - COMPANY_REGISTRATION_PROOF
+                    - BANK_VERIFICATION
+                  description: Document type.
+                content:
+                  type: string
+                  description: Base64-encoded file content (image or PDF).
+                  example: "data:application/pdf;base64,iVBORw0KGgo..."
+      responses:
+        "200":
+          description: Document updated
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Document"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  # ─────────────────────────────────────────
+  # BUNDLES
+  # ─────────────────────────────────────────
+
+  /bundles:
+    get:
+      summary: List bundles
+      description: Returns a paginated list of all product bundles.
+      operationId: listBundles
+      tags: [Bundles]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/DateBegin"
+        - $ref: "#/components/parameters/DateEnd"
+        - $ref: "#/components/parameters/Order"
+        - $ref: "#/components/parameters/Sort"
+      responses:
+        "200":
+          description: Paginated list of bundles
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedBundles"
+    post:
+      summary: Create bundle
+      description: Creates a new product bundle that can be linked to orders.
+      operationId: createBundle
+      tags: [Bundles]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [name]
+              example:
+                name: Test product
+                value: 1.24
+              properties:
+                name:
+                  type: string
+                  maxLength: 120
+                  description: Bundle name visible on the checkout page.
+                  example: Test product
+                description:
+                  type: string
+                  maxLength: 255
+                  description: Longer description of the product.
+                value:
+                  type: number
+                  format: float
+                  minimum: 0
+                  description: Price of the product.
+                  example: 1.24
+                is_active:
+                  type: boolean
+                  description: Whether the product link is available (`true`) or unavailable (`false`).
+                is_shippable:
+                  type: boolean
+                  description: Whether the product can be shipped. If `true`, the checkout will ask for shipping details.
+                value_shipping:
+                  type: number
+                  format: float
+                  minimum: 0
+                  description: Shipping cost. Required if `is_shippable` is `true`.
+                tag:
+                  type: string
+                  maxLength: 50
+                  description: Optional short tag for the product.
+                metadata:
+                  type: object
+                  additionalProperties: true
+                  description: Array to save any other data needed.
+                images:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of product image URLs.
+                expiration:
+                  type: string
+                  format: date-time
+                  description: Expiration date for the product link.
+                expiration_unit:
+                  type: number
+                  description: Expiration unit if stock is limited.
+                expiration_amount:
+                  type: number
+                  description: Expiration amount for reduced/augmented prices.
+                buyer_confirmed_url:
+                  type: string
+                  format: uri
+                  description: URL where the buyer is redirected after payment is completed.
+                buyer_denied_url:
+                  type: string
+                  format: uri
+                  description: URL where the buyer is redirected if payment fails.
+                seller_confirmed_url:
+                  type: string
+                  format: uri
+                  description: URL where the seller is redirected after the payout is completed.
+                seller_denied_url:
+                  type: string
+                  format: uri
+                  description: URL where the seller is redirected if the payout fails.
+      responses:
+        "200":
+          description: Bundle created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Bundle"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /bundles/expired:
+    get:
+      summary: List expired bundles
+      description: Returns a paginated list of all expired product bundles.
+      operationId: listExpiredBundles
+      tags: [Bundles]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+      responses:
+        "200":
+          description: Paginated list of expired bundles
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedBundles"
+
+  /bundles/{bundle_id}:
+    get:
+      summary: Get bundle
+      description: Returns the details of a specific bundle.
+      operationId: getBundle
+      tags: [Bundles]
+      parameters:
+        - name: bundle_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Bundle ID.
+      responses:
+        "200":
+          description: Bundle details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Bundle"
+        "404":
+          $ref: "#/components/responses/NotFound"
+    put:
+      summary: Update bundle
+      description: Updates an existing bundle's properties.
+      operationId: updateBundle
+      tags: [Bundles]
+      parameters:
+        - name: bundle_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Bundle ID.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                name: New product name
+                value: 10.00
+              properties:
+                name:
+                  type: string
+                  maxLength: 120
+                  example: New product name
+                description:
+                  type: string
+                  maxLength: 255
+                value:
+                  type: number
+                  format: float
+                  minimum: 0
+                  example: 10.00
+                is_active:
+                  type: boolean
+                is_shippable:
+                  type: boolean
+                value_shipping:
+                  type: number
+                  format: float
+                  minimum: 0
+                  description: Required if `is_shippable` is `true`.
+                tag:
+                  type: string
+                  maxLength: 50
+                metadata:
+                  type: object
+                  additionalProperties: true
+                images:
+                  type: array
+                  items:
+                    type: string
+                expiration:
+                  type: string
+                  format: date-time
+                expiration_unit:
+                  type: number
+                expiration_amount:
+                  type: number
+      responses:
+        "200":
+          description: Updated bundle
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Bundle"
+        "422":
+          $ref: "#/components/responses/ValidationError"
+
+  /bundles/{bundle_id}/orders:
+    get:
+      summary: List orders for a bundle
+      description: Returns a paginated list of orders associated with the specified bundle.
+      operationId: listBundleOrders
+      tags: [Bundles]
+      parameters:
+        - name: bundle_id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Bundle ID.
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+      responses:
+        "200":
+          description: Paginated list of orders for this bundle
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedOrders"
+
+  # ─────────────────────────────────────────
+  # REFUNDS
+  # ─────────────────────────────────────────
+
+  /refunds:
+    get:
+      summary: List refunds
+      operationId: listRefunds
+      tags: [Refunds]
+      parameters:
+        - $ref: "#/components/parameters/Page"
+        - $ref: "#/components/parameters/PerPage"
+        - $ref: "#/components/parameters/Search"
+        - $ref: "#/components/parameters/Query"
+        - $ref: "#/components/parameters/DateBegin"
+        - $ref: "#/components/parameters/DateEnd"
+        - $ref: "#/components/parameters/Order"
+        - $ref: "#/components/parameters/Sort"
+      responses:
+        "200":
+          description: Paginated list of refunds
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedRefunds"
+
+  /refunds/{id}:
+    get:
+      summary: Get refund
+      operationId: getRefund
+      tags: [Refunds]
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Refund details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Refund"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+# ─────────────────────────────────────────
+# COMPONENTS
+# ─────────────────────────────────────────
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: Use your account's **Secret Key** as the Bearer token.
+
+  parameters:
+    CustomerUuid:
+      name: uuid
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Customer UUID.
+
+    OrderId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: Order ID.
+
+    PayinId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: Payin ID.
+
+    PayoutId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: integer
+      description: Payout ID.
+
+    WalletUuid:
+      name: uuid
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Wallet UUID.
+
+    VerificationUuid:
+      name: uuid
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Verification UUID.
+
+    Page:
+      name: page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        default: 1
+      description: Page number for pagination.
+
+    PerPage:
+      name: per_page
+      in: query
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 15
+      description: Number of results per page.
+
+    Search:
+      name: search
+      in: query
+      schema:
+        type: string
+      description: Field to search by (e.g. `email`, `tag`).
+
+    Query:
+      name: query
+      in: query
+      schema:
+        type: string
+      description: Search term to filter by.
+
+    DateBegin:
+      name: date_begin
+      in: query
+      schema:
+        type: string
+        format: date
+        example: "2024-01-01"
+      description: Start date filter (ISO 8601).
+
+    DateEnd:
+      name: date_end
+      in: query
+      schema:
+        type: string
+        format: date
+        example: "2024-12-31"
+      description: End date filter (ISO 8601).
+
+    Order:
+      name: order
+      in: query
+      schema:
+        type: string
+        default: created_at
+      description: Field to sort results by.
+
+    Sort:
+      name: sort
+      in: query
+      schema:
+        type: string
+        enum: [asc, desc]
+        default: desc
+      description: Sort direction.
+
+  responses:
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: Not found
+
+    ValidationError:
+      description: Validation error
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                example: The given data was invalid.
+              errors:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string
+                example:
+                  name: ["The name field is required."]
+
+  schemas:
+
+    # ── ACCOUNT ──────────────────────────
+
+    Account:
+      type: object
+      properties:
+        self:
+          type: string
+          example: /2.0/accounts/me
+        merchant_id:
+          type: string
+          description: Unique merchant identifier (addon_key).
+        name:
+          type: string
+          example: My Company
+        email:
+          type: string
+          format: email
+        currency:
+          type: string
+          example: EUR
+        country_code:
+          type: string
+          example: ES
+        business_url:
+          type: string
+          nullable: true
+        business_phone:
+          type: string
+          nullable: true
+        business_description:
+          type: string
+          nullable: true
+        image_url:
+          type: string
+          nullable: true
+        public_key:
+          type: string
+        secret_key:
+          type: string
+          description: Secret API key. Only visible to the account owner.
+        allow_shipping:
+          type: integer
+          enum: [0, 1]
+        value_shipping:
+          type: number
+        is_active:
+          type: boolean
+        psd2_enabled:
+          type: integer
+          enum: [0, 1]
+        allowed_gateways:
+          type: array
+          items:
+            type: string
+        gateways:
+          type: array
+          nullable: true
+          items:
+            type: object
+            additionalProperties: true
+          description: List of configured payment gateway objects for the account.
+        default_gateway:
+          type: string
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    # ── CUSTOMER ──────────────────────────
+
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+        self:
+          type: string
+          example: /2.0/customers/abc123
+        uuid:
+          type: string
+        type:
+          type: string
+          nullable: true
+        name:
+          type: string
+          nullable: true
+        first_name:
+          type: string
+          nullable: true
+        last_name:
+          type: string
+          nullable: true
+        email:
+          type: string
+          format: email
+          nullable: true
+        prefix:
+          type: string
+          nullable: true
+          example: "+34"
+        phone:
+          type: string
+          nullable: true
+        tag:
+          type: string
+          nullable: true
+        metadata:
+          type: object
+          nullable: true
+          additionalProperties: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        connections:
+          $ref: "#/components/schemas/Connections"
+
+    # ── ORDER ──────────────────────────
+
+    OrderResponse:
+      type: object
+      properties:
+        id:
+          type: integer
+        self:
+          type: string
+          example: /2.0/orders/1234
+        public_id:
+          type: string
+          nullable: true
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        value:
+          type: number
+          description: Order amount.
+        fee_value:
+          type: number
+          nullable: true
+        fee_percent:
+          type: number
+          nullable: true
+        currency:
+          type: string
+          example: EUR
+        amount:
+          type: string
+          description: Formatted amount with currency symbol.
+          example: "150.00 €"
+        payin_amount:
+          type: string
+          nullable: true
+        payout_amount:
+          type: string
+          nullable: true
+        fee_amount:
+          type: string
+          nullable: true
+        shipping_amount:
+          type: string
+          nullable: true
+        buyer_link:
+          type: string
+          format: uri
+          description: Payment URL to share with the buyer.
+        seller_link:
+          type: string
+          format: uri
+          description: Acceptance URL to share with the seller.
+        qr_link:
+          type: string
+          format: uri
+          description: QR code image URL for the order.
+        status:
+          type: string
+          enum:
+            - DRAFT
+            - PENDING_DETAILS
+            - PENDING_PUBLISH
+            - PUBLISHED
+            - ACCEPTED
+            - REJECTED
+            - CANCELLED
+            - RELEASED
+        sandbox:
+          type: boolean
+        status_nicename:
+          type: string
+          description: Human-readable status label.
+        images:
+          type: array
+          items:
+            type: string
+        tag:
+          type: string
+          nullable: true
+        payin_intents:
+          type: integer
+          nullable: true
+        payin_types:
+          type: array
+          nullable: true
+          items:
+            type: string
+        payin_fallback:
+          type: array
+          nullable: true
+          items:
+            type: string
+        metadata:
+          type: object
+          nullable: true
+          additionalProperties: true
+        template:
+          type: object
+          nullable: true
+          additionalProperties: true
+        published_units:
+          type: integer
+          nullable: true
+        refund:
+          type: object
+          properties:
+            status:
+              type: string
+              nullable: true
+            reference_id:
+              type: string
+              nullable: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        published_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: When the order was paid.
+        accepted_at:
+          type: string
+          format: date-time
+          nullable: true
+        shipping_at:
+          type: string
+          format: date-time
+          nullable: true
+        cancelled_at:
+          type: string
+          format: date-time
+          nullable: true
+        validated_at:
+          type: string
+          format: date-time
+          nullable: true
+        released_at:
+          type: string
+          format: date-time
+          nullable: true
+        connections:
+          $ref: "#/components/schemas/Connections"
+
+    # ── PAYIN ──────────────────────────
+
+    Payin:
+      type: object
+      properties:
+        id:
+          type: integer
+        self:
+          type: string
+          example: /2.0/payins/456
+        reference:
+          type: string
+          nullable: true
+          description: Provider's payment reference ID.
+        type:
+          type: string
+          description: Payment method type (e.g. `CARD`, `BANKWIRE`, `WALLET`).
+        subtype:
+          type: string
+          nullable: true
+        status:
+          type: string
+          enum: [CREATED, AUTHORIZED, CONFIRMED, DENIED, REFUNDED, CANCELLED]
+        provider:
+          type: object
+          additionalProperties: true
+          description: Raw provider response data.
+        tag:
+          type: string
+          nullable: true
+        direct_link:
+          type: string
+          format: uri
+          nullable: true
+          description: Payment page URL. Only present when status is `CREATED` or `AUTHORIZED`.
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        confirmed_at:
+          type: string
+          format: date-time
+          nullable: true
+        denied_at:
+          type: string
+          format: date-time
+          nullable: true
+        connections:
+          $ref: "#/components/schemas/Connections"
+
+    # ── PAYOUT ──────────────────────────
+
+    Payout:
+      type: object
+      properties:
+        id:
+          type: integer
+        self:
+          type: string
+          example: /2.0/payouts/789
+        reference:
+          type: string
+          nullable: true
+        type:
+          type: string
+          description: Payout method type (e.g. `WALLET`, `ACCOUNT`, `BANKWIRE`).
+        status:
+          type: string
+          enum: [CREATED, CONFIRMED, DENIED, CANCELLED]
+        provider:
+          type: object
+          additionalProperties: true
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        confirmed_at:
+          type: string
+          format: date-time
+          nullable: true
+        denied_at:
+          type: string
+          format: date-time
+          nullable: true
+        connections:
+          $ref: "#/components/schemas/Connections"
+
+    # ── WALLET ──────────────────────────
+
+    Wallet:
+      type: object
+      properties:
+        id:
+          type: integer
+        self:
+          type: string
+        uuid:
+          type: string
+        type:
+          type: string
+          nullable: true
+          description: Wallet provider type (e.g. `CLEARJUNCTION`, `CURRENCYCLOUD`). Null for standard wallets.
+        balance:
+          type: number
+          format: float
+          example: 250.00
+        currency:
+          type: string
+          example: EUR
+        tag:
+          type: string
+          nullable: true
+        metadata:
+          type: object
+          nullable: true
+          additionalProperties: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        connections:
+          $ref: "#/components/schemas/Connections"
+
+    # ── BANK ACCOUNT ──────────────────────────
+
+    BankAccount:
+      type: object
+      properties:
+        id:
+          type: integer
+        self:
+          type: string
+        uuid:
+          type: string
+        type:
+          type: string
+          description: Account type (e.g. `IBAN`, `ACCOUNT`).
+        name:
+          type: string
+          nullable: true
+          description: Account holder name.
+        number:
+          type: string
+          description: Masked account number or IBAN.
+        bic:
+          type: string
+          nullable: true
+        tag:
+          type: string
+          nullable: true
+        metadata:
+          type: object
+          nullable: true
+          additionalProperties: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        connections:
+          $ref: "#/components/schemas/Connections"
+
+    # ── CARD ──────────────────────────
+
+    Card:
+      type: object
+      properties:
+        id:
+          type: integer
+        self:
+          type: string
+        uuid:
+          type: string
+        type:
+          type: string
+          nullable: true
+          description: Card brand (e.g. `VISA`, `MASTERCARD`).
+        cardholder:
+          type: string
+          nullable: true
+        alias:
+          type: string
+          nullable: true
+          description: Masked card number alias (e.g. `4242XXXXXXXX4242`).
+        expiration:
+          type: string
+          nullable: true
+          example: "12/26"
+        issuing_country:
+          type: string
+          nullable: true
+        issuing_bank:
+          type: string
+          nullable: true
+        is_3d_secure:
+          type: boolean
+          nullable: true
+        confirmed:
+          type: boolean
+          description: Whether the card has been successfully tokenized and confirmed.
+        payin_type:
+          type: string
+          nullable: true
+          description: Payment type this card is associated with.
+        tokenization_link:
+          type: string
+          format: uri
+          nullable: true
+          description: URL to complete card tokenization. Only present immediately after creation.
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        connections:
+          $ref: "#/components/schemas/Connections"
+
+    # ── SUBSCRIPTION ──────────────────────────
+
+    Subscription:
+      type: object
+      properties:
+        id:
+          type: integer
+        self:
+          type: string
+        reference_id:
+          type: string
+          nullable: true
+        name:
+          type: string
+        amount:
+          type: number
+        currency:
+          type: string
+          example: EUR
+        type:
+          type: string
+          description: Payment method type for this subscription.
+        status:
+          type: string
+          enum: [CREATED, ACTIVE, CANCELLED, EXPIRED]
+        metadata:
+          type: object
+          nullable: true
+          additionalProperties: true
+        published_at:
+          type: string
+          format: date-time
+          nullable: true
+        cancelled_at:
+          type: string
+          format: date-time
+          nullable: true
+        connections:
+          $ref: "#/components/schemas/Connections"
+
+    # ── VERIFICATION ──────────────────────────
+
+    Verification:
+      type: object
+      properties:
+        id:
+          type: integer
+        self:
+          type: string
+        uuid:
+          type: string
+        type:
+          type: string
+          enum: [INDIVIDUAL, SELFEMPLOYEE, LEGAL]
+        status:
+          type: string
+          enum: [CREATED, PENDING, VALIDATED, REFUSED]
+        refused_reason:
+          type: string
+          nullable: true
+        connections:
+          $ref: "#/components/schemas/Connections"
+
+    VerificationInput:
+      type: object
+      required: [type, first_name, last_name, vat_id, legal_address, legal_city, legal_zip, legal_state]
+      example:
+        type: NATURAL
+        first_name: John
+        last_name: Doe
+        vat_id: "12345678A"
+        legal_address: "Calle Mayor 1"
+        legal_city: Madrid
+        legal_zip: "28001"
+        legal_state: Madrid
+        legal_country: ES
+      properties:
+        type:
+          type: string
+          enum: [NATURAL, SOLETRADER, LEGAL]
+          description: Verification type. `NATURAL` for individuals, `SOLETRADER` for self-employed, `LEGAL` for companies.
+        first_name:
+          type: string
+          maxLength: 255
+        last_name:
+          type: string
+          maxLength: 255
+        vat_id:
+          type: string
+          maxLength: 255
+          description: Tax identification number (DNI, NIF, CIF, etc.).
+        legal_address:
+          type: string
+          maxLength: 255
+        legal_city:
+          type: string
+          maxLength: 255
+        legal_zip:
+          type: string
+          maxLength: 255
+        legal_state:
+          type: string
+          maxLength: 255
+        legal_country:
+          type: string
+          maxLength: 2
+          description: ISO 3166-1 alpha-2 country code.
+        legal_name:
+          type: string
+          maxLength: 255
+          description: Company legal name. Required for `LEGAL` type.
+        birthday:
+          type: string
+          format: date
+          nullable: true
+        occupation:
+          type: string
+          nullable: true
+        income_range:
+          type: number
+          nullable: true
+        representative_name:
+          type: string
+          description: Required for `LEGAL` type.
+        representative_email:
+          type: string
+          format: email
+          description: Required for `LEGAL` type.
+        representative_phone:
+          type: string
+          description: Required for `LEGAL` type.
+
+    # ── DOCUMENT ──────────────────────────
+
+    Document:
+      type: object
+      properties:
+        id:
+          type: integer
+        uuid:
+          type: string
+        type:
+          type: string
+          enum:
+            - IDENTITY_PROOF
+            - REGISTRATION_PROOF
+            - ARTICLES_OF_ASSOCIATION
+            - SHAREHOLDER_DECLARATION
+            - ADDRESS_PROOF
+            - TAX_VERIFICATION
+            - BUSINESS_ADMINISTRATOR_ID
+            - COMPANY_REGISTRATION_PROOF
+            - BANK_VERIFICATION
+        status:
+          type: string
+          enum: [CREATED, VALIDATED, REFUSED]
+        refused_reason:
+          type: string
+          nullable: true
+        url:
+          type: string
+          format: uri
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    # ── REFUND ──────────────────────────
+
+    Refund:
+      type: object
+      properties:
+        id:
+          type: integer
+        self:
+          type: string
+        reference_id:
+          type: string
+          nullable: true
+        amount:
+          type: string
+          description: Formatted refund amount.
+        status:
+          type: string
+          enum: [CREATED, CONFIRMED, DENIED, CANCELLED]
+        payin_id:
+          type: integer
+        wallet_id:
+          type: integer
+          nullable: true
+        escrow_id:
+          type: integer
+        tag:
+          type: string
+          nullable: true
+        provider:
+          type: object
+          nullable: true
+          additionalProperties: true
+        metadata:
+          type: object
+          nullable: true
+          additionalProperties: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+        denied_at:
+          type: string
+          format: date-time
+          nullable: true
+        connections:
+          $ref: "#/components/schemas/Connections"
+
+    # ── ADDRESS ──────────────────────────
+
+    Address:
+      type: object
+      properties:
+        id:
+          type: integer
+        self:
+          type: string
+          nullable: true
+        uuid:
+          type: string
+        name:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+        prefix:
+          type: string
+          nullable: true
+        phone:
+          type: string
+          nullable: true
+        line1:
+          type: string
+          nullable: true
+        line2:
+          type: string
+          nullable: true
+        city:
+          type: string
+          nullable: true
+        state:
+          type: string
+          nullable: true
+        country:
+          type: string
+          nullable: true
+        zip_code:
+          type: string
+          nullable: true
+        tag:
+          type: string
+          nullable: true
+        metadata:
+          type: object
+          nullable: true
+          additionalProperties: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        connections:
+          $ref: "#/components/schemas/Connections"
+
+    AddressInput:
+      type: object
+      required: [name, line1, city, state, zip_code, country]
+      example:
+        name: my_address
+        line1: Main street 123
+        city: Barcelona
+        state: Catalonia
+        zip_code: "08001"
+        country: ES
+      properties:
+        name:
+          type: string
+          maxLength: 255
+          description: Address label or recipient name.
+          example: my_address
+        line1:
+          type: string
+          maxLength: 255
+          description: Address line 1 (street and number).
+          example: Main street 123
+        line2:
+          type: string
+          maxLength: 255
+          description: Address line 2 (apartment, suite, etc.).
+        city:
+          type: string
+          maxLength: 255
+          example: Barcelona
+        state:
+          type: string
+          maxLength: 255
+          example: Catalonia
+        zip_code:
+          type: string
+          description: ZIP or postal code.
+          example: "08001"
+        country:
+          type: string
+          maxLength: 2
+          description: ISO 3166-1 alpha-2 country code.
+          example: ES
+        email:
+          type: string
+          format: email
+          maxLength: 255
+        prefix:
+          type: string
+          description: Phone country prefix (e.g. `+34`). Required with `phone`.
+          example: "+34"
+        phone:
+          type: string
+          description: Phone number. Required with `prefix`.
+          example: "612345678"
+        tag:
+          type: string
+          maxLength: 100
+        metadata:
+          type: object
+          additionalProperties: true
+
+    # ── TRANSACTION ──────────────────────────
+
+    Transaction:
+      type: object
+      properties:
+        id:
+          type: string
+        type:
+          type: string
+          description: Transaction type (e.g. `PAYIN`, `PAYOUT`, `REFUND`).
+        amount:
+          type: number
+        currency:
+          type: string
+        status:
+          type: string
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+
+    # ── CONNECTIONS ──────────────────────────
+
+    Connections:
+      type: object
+      description: Hypermedia links to related resources.
+      additionalProperties:
+        type: string
+
+    # ── PAGINATION WRAPPERS ──────────────────────────
+
+    PaginatedCustomers:
+      allOf:
+        - $ref: "#/components/schemas/PaginationMeta"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "#/components/schemas/Customer"
+
+    PaginatedOrders:
+      allOf:
+        - $ref: "#/components/schemas/PaginationMeta"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "#/components/schemas/OrderResponse"
+
+    PaginatedPayins:
+      allOf:
+        - $ref: "#/components/schemas/PaginationMeta"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "#/components/schemas/Payin"
+
+    PaginatedPayouts:
+      allOf:
+        - $ref: "#/components/schemas/PaginationMeta"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "#/components/schemas/Payout"
+
+    PaginatedSubscriptions:
+      allOf:
+        - $ref: "#/components/schemas/PaginationMeta"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "#/components/schemas/Subscription"
+
+    PaginatedVerifications:
+      allOf:
+        - $ref: "#/components/schemas/PaginationMeta"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "#/components/schemas/Verification"
+
+    PaginatedRefunds:
+      allOf:
+        - $ref: "#/components/schemas/PaginationMeta"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "#/components/schemas/Refund"
+
+    PaginatedBundles:
+      allOf:
+        - $ref: "#/components/schemas/PaginationMeta"
+        - type: object
+          properties:
+            data:
+              type: array
+              items:
+                $ref: "#/components/schemas/Bundle"
+
+    # ── BUNDLE ──────────────────────────
+
+    Bundle:
+      type: object
+      properties:
+        id:
+          type: integer
+        self:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+          nullable: true
+        value:
+          type: number
+        value_shipping:
+          type: number
+          nullable: true
+        currency:
+          type: string
+          example: EUR
+        amount:
+          type: string
+          nullable: true
+          description: Formatted price with currency symbol.
+        amount_shipping:
+          type: string
+          nullable: true
+        buyer_link:
+          type: string
+          format: uri
+          nullable: true
+        images:
+          type: array
+          nullable: true
+          items:
+            type: string
+        expiration:
+          type: string
+          format: date-time
+          nullable: true
+        expiration_unit:
+          type: number
+          nullable: true
+        expiration_amount:
+          type: number
+          nullable: true
+        is_expired:
+          type: boolean
+        is_active:
+          type: boolean
+        is_shippable:
+          type: boolean
+        tag:
+          type: string
+          nullable: true
+        visits:
+          type: integer
+          nullable: true
+        metadata:
+          type: object
+          nullable: true
+          additionalProperties: true
+        created_by:
+          type: integer
+          nullable: true
+        created_at:
+          type: string
+          format: date-time
+          nullable: true
+        updated_at:
+          type: string
+          format: date-time
+          nullable: true
+        qr_link:
+          type: string
+          format: uri
+          nullable: true
+        connections:
+          $ref: "#/components/schemas/Connections"
+
+    PaginationMeta:
+      type: object
+      properties:
+        current_page:
+          type: integer
+          example: 1
+        last_page:
+          type: integer
+          example: 5
+        per_page:
+          type: integer
+          example: 15
+        total:
+          type: integer
+          example: 73
+        from:
+          type: integer
+          example: 1
+        to:
+          type: integer
+          example: 15

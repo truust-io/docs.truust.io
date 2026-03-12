@@ -1,0 +1,22 @@
+---
+title: "API Reference"
+description: "Complete reference for the Truust REST API v2.0"
+---
+
+## Overview
+
+The Truust API is organized around REST. All requests must be made over HTTPS to:
+
+- **Production:** `https://api.truust.io/2.0`
+- **Sandbox:** `https://api-sandbox.truust.io/2.0`
+
+## Authentication
+
+All endpoints require a Bearer token using your account's **Secret Key**:
+
+```
+Authorization: Bearer {your_secret_key}
+```
+
+Your API keys are available in the Dashboard under **Account Settings → API Developers**.
+
