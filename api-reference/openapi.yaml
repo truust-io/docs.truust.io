@@ -573,10 +573,56 @@ paths:
                   type: string
                   maxLength: 100
                   description: Custom tag for grouping or filtering.
+                vat_id:
+                  type: string
+                  maxLength: 255
+                  description: Tax identification number.
+                type:
+                  type: string
+                  enum: [CLEARJUNCTION, CURRENCYCLOUD]
+                  description: |
+                    Gateway-linked customer type. When set, additional KYC fields become required.
+                    `CLEARJUNCTION` requires id card fields; `CURRENCYCLOUD` also requires email and phone.
                 metadata:
                   type: object
                   additionalProperties: true
-                  description: Arbitrary key-value metadata.
+                  description: |
+                    Arbitrary key-value metadata. For `CLEARJUNCTION` and `CURRENCYCLOUD` types,
+                    pass KYC data under `metadata.kyc`.
+                  properties:
+                    kyc:
+                      type: object
+                      description: KYC identity data. Required for CLEARJUNCTION / CURRENCYCLOUD.
+                      properties:
+                        date_birth:
+                          type: string
+                          format: date
+                          description: Date of birth. Required for CLEARJUNCTION / CURRENCYCLOUD.
+                        type:
+                          type: string
+                          enum: [company, individual]
+                          description: Entity type. Required for CURRENCYCLOUD.
+                        street_residence:
+                          type: string
+                          description: Street address. Required for CLEARJUNCTION / CURRENCYCLOUD.
+                        city_residence:
+                          type: string
+                          description: City. Required for CLEARJUNCTION / CURRENCYCLOUD.
+                        zip_residence:
+                          type: string
+                          description: Postal code. Required for CLEARJUNCTION.
+                        country_residence:
+                          type: string
+                          description: 2-letter country code. Required for CLEARJUNCTION / CURRENCYCLOUD.
+                        id_card_type:
+                          type: string
+                          description: ID document type. Required for CLEARJUNCTION.
+                        id_card:
+                          type: string
+                          description: ID document number. Required for CLEARJUNCTION.
+                        id_card_country:
+                          type: string
+                          description: 2-letter country code of the ID. Required for CLEARJUNCTION.
       responses:
         "200":
           description: Customer created or updated
@@ -642,6 +688,10 @@ paths:
                 phone:
                   type: string
                   example: "612345678"
+                locale:
+                  type: string
+                  description: Customer's preferred locale.
+                  example: es
                 tag:
                   type: string
                   maxLength: 100
@@ -923,7 +973,7 @@ paths:
           application/json:
             schema:
               type: object
-              required: [buyer_id, seller_id, name, value]
+              required: [name, value]
               example:
                 buyer_id: 7485
                 seller_id: 7485
@@ -932,12 +982,20 @@ paths:
               properties:
                 buyer_id:
                   type: integer
-                  description: Customer ID of the buyer.
+                  description: |
+                    Customer ID of the buyer. Required unless `auto_settle` is `1` or `trustee_type` is `account`.
                   example: 7485
                 seller_id:
                   type: integer
-                  description: Customer ID of the seller.
+                  description: |
+                    Customer ID of the seller. Required unless `auto_settle` is `1`.
                   example: 7485
+                trustee_type:
+                  type: string
+                  enum: [account]
+                  description: |
+                    Pass `account` to use the authenticated account itself as the buyer
+                    (the `buyer_id` is then set automatically).
                 name:
                   type: string
                   maxLength: 120
@@ -1033,6 +1091,21 @@ paths:
                 buyer_shipping_id:
                   type: integer
                   description: Address ID to use as the buyer's shipping address.
+                subscription_id:
+                  type: integer
+                  description: |
+                    Associate this order with an existing ACTIVE subscription. The subscription must
+                    belong to the `buyer_id` customer.
+                discount_amount:
+                  type: number
+                  minimum: 0
+                  description: Discount amount to apply to the order value.
+                discount_coupon_id:
+                  type: integer
+                  description: Coupon ID to apply as a discount.
+                discount_wallet_id:
+                  type: integer
+                  description: Wallet ID to fund a discount credit.
                 bundle:
                   type: integer
                   description: Bundle ID to associate with this order.
@@ -1778,7 +1851,7 @@ paths:
           application/json:
             schema:
               type: object
-              required: [customer_id, name, type, number, bic]
+              required: [name, type, number]
               example:
                 customer_id: 7485
                 name: My bank account
@@ -1790,6 +1863,10 @@ paths:
                   type: integer
                   description: Customer ID to assign the bank account to. Required unless `customer_type` is `source`.
                   example: 7485
+                customer_type:
+                  type: string
+                  enum: [source]
+                  description: Pass `source` to register a bank account for the authenticated account instead of a customer.
                 name:
                   type: string
                   maxLength: 255
@@ -1797,32 +1874,86 @@ paths:
                   example: My bank account
                 type:
                   type: string
-                  description: Bank account type. Use `IBAN` for SEPA accounts, `OTHER` for other types.
-                  enum: [IBAN, OTHER]
+                  description: |
+                    Bank account type. `IBAN` for SEPA accounts, `BSB_ACCOUNT` for Australian accounts,
+                    `INTERNATIONAL` for SWIFT/BIC accounts, `CLEARJUNCTION` / `CURRENCYCLOUD` for gateway-linked accounts,
+                    `PA_CTE` / `PA_AHORRO` for Spanish payment accounts, and `OTHER` / `CL_CTE` / `CL_VISTA` /
+                    `CL_AHORRO` / `ZEPTO` for other formats.
+                  enum: [IBAN, OTHER, BSB_ACCOUNT, PA_AHORRO, PA_CTE, CL_CTE, CL_VISTA, CL_AHORRO, INTERNATIONAL, ZEPTO, CLEARJUNCTION, CURRENCYCLOUD]
                   example: IBAN
                 number:
                   type: string
-                  description: Bank account number (IBAN or other format).
+                  description: Bank account number or IBAN. Must be a valid IBAN when `type` is `IBAN`, `CLEARJUNCTION`, or `CURRENCYCLOUD`.
                   example: ES1300812944953951475955
                 bic:
                   type: string
                   maxLength: 11
-                  description: BIC/SWIFT code.
+                  description: BIC/SWIFT code. Required for `INTERNATIONAL` type. Auto-populated from `bsb` for `BSB_ACCOUNT`.
                   example: CAIXESBBXXX
-                customer_type:
+                bsb:
                   type: string
-                  enum: [source]
-                  description: Pass `source` to register a bank account for the authenticated account instead of a customer.
+                  description: 6-digit BSB code (Australian bank routing number). Required for `BSB_ACCOUNT` type.
+                  example: "062000"
+                cod_entidad:
+                  type: string
+                  description: Entity code for Spanish payment accounts (`PA_CTE` / `PA_AHORRO`). Auto-populated from `bic`.
                 iban:
                   type: string
                   description: IBAN (alternative field to `number` for SEPA accounts).
                   example: ES9121000418450200051332
                 tag:
                   type: string
-                  maxLength: 50
+                  maxLength: 100
                 metadata:
                   type: object
                   additionalProperties: true
+                  description: Additional metadata. For `CLEARJUNCTION` and `CURRENCYCLOUD` types the following beneficiary fields are required.
+                  properties:
+                    currency:
+                      type: string
+                      description: "3-letter ISO 4217 currency code. Required for CLEARJUNCTION / CURRENCYCLOUD."
+                      example: EUR
+                    country:
+                      type: string
+                      description: "2-letter ISO 3166-1 country code. Required for CLEARJUNCTION / CURRENCYCLOUD."
+                      example: ES
+                    beneficiary_entity_type:
+                      type: string
+                      enum: [individual, company]
+                      description: "Required for CLEARJUNCTION / CURRENCYCLOUD."
+                    beneficiary_company_name:
+                      type: string
+                      description: "Required when `beneficiary_entity_type` is `company`."
+                    beneficiary_first_name:
+                      type: string
+                      description: "Required when `beneficiary_entity_type` is `individual`."
+                    beneficiary_last_name:
+                      type: string
+                      description: "Required when `beneficiary_entity_type` is `individual`."
+                    beneficiary_address:
+                      type: string
+                      description: "Required for CLEARJUNCTION / CURRENCYCLOUD."
+                    beneficiary_city:
+                      type: string
+                      description: "Required for CLEARJUNCTION / CURRENCYCLOUD."
+                    beneficiary_postcode:
+                      type: string
+                    beneficiary_state:
+                      type: string
+                    beneficiary_country:
+                      type: string
+                      description: "2-letter country code. Required for CLEARJUNCTION / CURRENCYCLOUD."
+                    bank_account_type:
+                      type: string
+                      enum: [checking, savings]
+                    routing_code_type:
+                      type: string
+                    routing_code_value:
+                      type: string
+                    payment_types:
+                      type: array
+                      items:
+                        type: string
       responses:
         "200":
           description: Bank account created
