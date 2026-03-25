@@ -210,11 +210,6 @@
         "href": "https://truust.io/contact/"
       }
     ],
-    "primary": {
-      "type": "button",
-      "label": "Dashboard",
-      "href": "http://dashboard-sandbox.truust.io"
-    }
   },
   "footer": {
     "socials": {
