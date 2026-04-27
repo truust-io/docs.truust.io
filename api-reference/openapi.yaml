@@ -21,10 +21,18 @@ info:
     name: Proprietary
 
 servers:
-  - url: https://api.truust.io/2.0
+  - url: https://{subdomain}.truust.io/2.0
     description: Production
-  - url: https://api-sandbox.truust.io/2.0
+    variables:
+      subdomain:
+        default: your-subdomain
+        description: Your account subdomain
+  - url: https://{subdomain}-sandbox.truust.io/2.0
     description: Sandbox
+    variables:
+      subdomain:
+        default: your-subdomain
+        description: Your account subdomain
 
 security:
   - bearerAuth: []

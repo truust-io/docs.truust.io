@@ -55,8 +55,8 @@ The environment specifies where requests via the API should be directed – sand
 
 There are both production and sandbox environments for the API. The URL endpoints will be:
 
-- https://api-sandbox.truust.io/ - Testing environment
-- https://api.truust.io/ - Live production environment
+- `https://<your subdomain>-sandbox.truust.io/2.0` - Testing environment
+- `https://<your subdomain>.truust.io/2.0` - Live production environment
 
 ## Webhooks
 
