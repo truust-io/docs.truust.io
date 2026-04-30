@@ -180,6 +180,24 @@
                 ]
               }
             ]
+          },
+          {
+            "group": "Guides",
+            "pages": [
+              {
+                "group": "Telefonica Checkout",
+                "pages": [
+                  "guides/telefonica-checkout-literals",
+                  "guides/telefonica-iframe-events"
+                ]
+              },
+              {
+                "group": "Guides",
+                "pages": [
+                  "guides/recurring-payments-apple-pay-google-pay"
+                ]
+              }
+            ]
           }
         ]
       }

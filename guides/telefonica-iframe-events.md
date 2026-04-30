@@ -1,5 +1,5 @@
 ---
-title: 'Telefonica Checkout: Iframe Event Communication'
+title: 'Iframe Event Communication'
 ---
 
 > How to listen to payment lifecycle events dispatched by the Telefonica checkout iframe using the `postMessage` API.
