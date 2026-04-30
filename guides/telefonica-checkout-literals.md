@@ -1,5 +1,5 @@
 ---
-title: 'Custom Literals'
+title: 'Telefonica Checkout: Custom Literals'
 ---
 
 > Override the wording of the Telefonica checkout on a per-order basis using the `template.lang` field of `POST /2.0/orders` and `PUT /2.0/orders/{id}`.
