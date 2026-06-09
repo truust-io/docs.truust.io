@@ -320,15 +320,61 @@ If you want to render the Apple Pay or Google Pay button in your own UI instead 
 ```bash
 curl -X POST {direct_link} \
   -H "Content-Type: application/json" \
-  -d '{"apple_token": "{token_from_apple_pay}"}'
+  -d '{"apple_token": "{payment_data}"}'
 ```
+
+The `apple_token` parameter must contain the **`paymentData` object** from the Apple Pay token, i.e. `event.payment.token.paymentData` from the `onpaymentauthorized` event, serialized as a JSON string. Send it exactly as Apple returns it; do not Base64-encode it or alter its structure.
+
+The `paymentData` object has the following structure:
+
+```json
+{
+  "data": "CZOOPbi/R7UBdW3as7T…0YYWuQ1iZhvtjAfx+A==",
+  "signature": "MIAGCSqGSIb3DQEHAqCA…3gAtcDwfdZIAAAAAAAA=",
+  "header": {
+    "publicKeyHash": "i4BsP3h7AdaM3DU30UA2pucLcPYT1J9bAj3gi8eAOzw=",
+    "ephemeralPublicKey": "MFkwEwYHKoZIzj0CAQYI…OyHpyVnRod+CpBTMxQ==",
+    "transactionId": "a9bf8e71ca58173d42af5f24b57ce047528fb285759b296c12f3d8f2e5926644"
+  },
+  "version": "EC_v1"
+}
+```
+
+<Warning>
+Send the `paymentData` object serialized as a JSON string. Do not include the `token` wrapper, `paymentMethod` or `transactionIdentifier`, and do not Base64-encode the value — sending an altered structure will cause the payment to be rejected.
+</Warning>
 
 **For Google Pay:**
 
 ```bash
 curl -X POST {direct_link} \
   -H "Content-Type: application/json" \
-  -d '{"google_token": "{token_from_google_pay}"}'
+  -d '{"google_token": "{payment_method_data}"}'
 ```
+
+The `google_token` parameter must contain the **`paymentMethodData` object** returned by the Google Pay API (`PaymentData.paymentMethodData`), serialized as a JSON string. Send the object exactly as Google returns it — do not extract the inner `token` and do not Base64-encode it.
+
+```json
+{
+  "type": "CARD",
+  "description": "Mastercard •••• 9148",
+  "info": {
+    "cardNetwork": "MASTERCARD",
+    "cardDetails": "9148"
+  },
+  "tokenizationData": {
+    "type": "PAYMENT_GATEWAY",
+    "token": "{\"signature\":\"...\",\"intermediateSigningKey\":{...},\"protocolVersion\":\"ECv2\",\"signedMessage\":\"...\"}"
+  }
+}
+```
+
+<Note>
+When configuring the Google Pay API on your side, the `tokenizationSpecification` must be of type `PAYMENT_GATEWAY` with `gateway` set to `redsys` and your corresponding `gatewayMerchantId`, so that the resulting `token` is encrypted for processing.
+</Note>
+
+<Warning>
+Send the **entire** `paymentMethodData` object — including `type`, `info` and the nested `tokenizationData.token` — as a JSON string. Sending only the inner `token`, an altered structure, or a Base64-encoded value will cause the payment to be rejected.
+</Warning>
 
 From this point, the payment confirmation and webhook flow is the same as described in **Step 4** and **Step 5**.
