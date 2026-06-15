@@ -377,4 +377,52 @@ When configuring the Google Pay API on your side, the `tokenizationSpecification
 Send the **entire** `paymentMethodData` object — including `type`, `info` and the nested `tokenizationData.token` — as a JSON string. Sending only the inner `token`, an altered structure, or a Base64-encoded value will cause the payment to be rejected.
 </Warning>
 
+### Handling the 3DS Authentication Challenge
+
+When you send the `apple_token` / `google_token` to the `direct_link`, the response is the **payin resource**. There are two possible outcomes:
+
+- **Frictionless** — the payin comes back already resolved (`status: "CONFIRMED"` or `status: "DENIED"`). You can finish the flow as usual.
+- **Challenge required** — if the issuer requires 3D Secure authentication, the payin comes back with `status: "CREATED"` and a `provider.challenge_3ds` object containing the data you need to render the authentication form. The payment is **not** finished yet: you must present the challenge to the customer.
+
+Example response when a challenge is required:
+
+```json
+{
+  "data": {
+    "id": 24286726,
+    "type": "REDSYS_GOOGLE_PAY",
+    "status": "CREATED",
+    "provider": {
+      "Ds_Order": "324147861",
+      "Ds_EMV3DS": {
+        "threeDSInfo": "ChallengeRequest",
+        "protocolVersion": "2.2.0",
+        "acsURL": "https://acs-challenge.example.com/v1/BrowserCReq",
+        "creq": "eyJ0aHJlZURTU2VydmVyVHJhbnNJRCI6Ijc4..."
+      },
+      "challenge_3ds": {
+        "acsURL": "https://acs-challenge.example.com/v1/BrowserCReq",
+        "creq": "eyJ0aHJlZURTU2VydmVyVHJhbnNJRCI6Ijc4...",
+        "method": "post"
+      }
+    }
+  }
+}
+```
+
+To continue, build an HTML form that **POSTs the `creq` value (as a field named `creq`) to the `acsURL`** and auto-submit it — typically inside an iframe or by redirecting the browser. This renders the issuer's 3DS challenge to the customer:
+
+```html
+<form id="challenge-form" method="post" action="{{ provider.challenge_3ds.acsURL }}">
+  <input type="hidden" name="creq" value="{{ provider.challenge_3ds.creq }}" />
+</form>
+<script>document.getElementById('challenge-form').submit();</script>
+```
+
+<Note>
+Detect this case by checking `status === "CREATED"` together with the presence of `provider.challenge_3ds`. A `CONFIRMED` or `DENIED` status means the payment was resolved without a challenge.
+</Note>
+
+After the customer completes the challenge, the ACS notifies Truust and the payment is finalized automatically — the final result is delivered through the same webhook events described in **Step 4**.
+
 From this point, the payment confirmation and webhook flow is the same as described in **Step 4** and **Step 5**.
