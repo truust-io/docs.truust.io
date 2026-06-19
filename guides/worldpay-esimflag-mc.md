@@ -15,6 +15,7 @@ The flow is the standard order + payin flow:
 1. Create an order with [`POST /2.0/orders`](https://docs.truust.io/api-reference/create-order), choosing the currency and the payment methods that will be offered.
 2. Either share the `buyer_link` returned by the order (Truust renders the available payment methods), or create a payin explicitly with [`POST /2.0/payins`](https://docs.truust.io/api-reference/create-payin) using `type=WORLDPAY_HPP`.
 3. Optionally set the checkout language with the `hl` parameter.
+4. Optionally request a Worldpay FOREX rate for a currency pair, with an automatic fallback to Truust's own rate.
 
 ---
 
@@ -51,12 +52,15 @@ curl -X POST {{endpoint}}/2.0/orders \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
   -d '{
-    "buyer_id": {buyer_id},
     "auto_settle": 1,
-    "name": "eSIM Data Plan",
-    "value": 19.99,
-    "currency": "USD",
-    "payin_types": ["WORLDPAY_HPP", "REDSYS_APPLE_PAY"]
+    "name": "Andorra 1 día",
+    "value": 3.00,
+    "currency": "EUR",
+    "payin_types": ["WORLDPAY_HPP", "REDSYS_APPLE_PAY"],
+    "metadata": {
+      "brand_name": "GECOMMERCE",
+      "msisdn": "+34638077680"
+    }
   }'
 ```
 
@@ -64,8 +68,10 @@ curl -X POST {{endpoint}}/2.0/orders \
 | ------------- | -------- | ---------------------------------------------------------------------------------------- |
 | `name`        | Yes      | Order description or product name (max 120 chars)                                        |
 | `value`       | Yes      | Order amount                                                                             |
+| `auto_settle` | No       | Set to `1` for the e-commerce model (no seller; auto-settles after payment)              |
 | `currency`    | No       | Currency of the order: `EUR`, `USD`, `GBP` or `MXN`                                      |
 | `payin_types` | No       | Array of payment methods shown on the link (e.g. `["WORLDPAY_HPP", "REDSYS_APPLE_PAY"]`) |
+| `metadata`    | No       | Arbitrary key-value data stored on the order (e.g. `brand_name`, `msisdn`)               |
 
 The response includes a `buyer_link` that you can share with the customer. Truust will render the payment methods listed in `payin_types`.
 
