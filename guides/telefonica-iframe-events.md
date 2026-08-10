@@ -49,6 +49,9 @@ window.addEventListener('message', function (event) {
         case 'errorPayment':
             // The payment request failed
             break;
+        case 'timedoutPayment':
+            // The checkout session expired before the payment was submitted
+            break;
         case 'statePayment':
             // The pay button's enabled/disabled state changed
             console.log('Button disabled:', data.isDisabled);
@@ -130,6 +133,18 @@ Dispatched when the payment request fails (network error, server error, etc.).
 
 ---
 
+### `timedoutPayment`
+
+Dispatched when the checkout session expires before the payment is submitted. The session timeout is configurable in minutes via the `session_timeout` field of the order's `template` parameter, or at account level (default: 30 minutes; `0` disables it). The order is **not** cancelled: it stays pending and the payment link can be reopened to start a new session.
+
+After dispatching this event the iframe redirects to the denied flow, appending `TIMEDOUT=true` as a GET parameter to the final `URL_KO` redirection so it can be distinguished from a payment denial without querying the order status.
+
+| Field      | Type   | Value             |
+|------------|--------|-------------------|
+| `dispatch` | string | `timedoutPayment` |
+
+---
+
 ### `statePayment`
 
 Dispatched whenever the pay button's `disabled` attribute changes. The iframe uses a `MutationObserver` to detect this. Use this event to mirror the button state in your parent UI.
@@ -148,7 +163,7 @@ Dispatched on the final result pages (confirmation or denial) to communicate the
 | Field          | Type   | Description                                      |
 |----------------|--------|--------------------------------------------------|
 | `dispatch`     | string | `orderStatus`                                    |
-| `detail`       | string | `confirmed_payment` or `denied_payment`          |
+| `detail`       | string | `confirmed_payment`, `denied_payment` or `timedout_payment` |
 | `confirmed_at` | string | ISO 8601 timestamp of confirmation (only on confirmed, may be `null`) |
 | `denied_at`    | string | ISO 8601 timestamp of denial (only on confirmed page, may be `null`)  |
 
