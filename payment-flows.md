@@ -39,20 +39,24 @@ When the buyer finishes the payment process, **he will be redirected to the URL 
 
 The order status on this moment shall be `PUBLISHED` if the payment is successful or `FAILURE` if there is a problem during the payment. In this case, **you can use the same link to allow the user a new try** without the need to create a new order/payin.
 
-### 3. Seller receives seller_link, accepts the order and completes the Payout
+### 3. The order is accepted and the Payout is created through the API
 
-After the payment is done, you should notify the seller about the payment status. The seller must navigate to the `seller_link` provided by us, accept the order and fill the bank account information where the money will be deposited. Once the seller fills in that information, he is redirected to the URL that you set on Step 1.
+After the payment is done, the money must be sent to the seller. **This is done through our API**: you must **accept the order** and create the associated `payout` to this order.
 
-Again, if **you prefer to complete this process totally on your side**, you must create the associated `payout` to this order and **accept the order with our API**. The available payout types are:
+**Accepting an order means that the seller agrees to the transaction** and states where the money should be sent. It does not move any money: it only confirms that the seller takes the order and defines the destination of the funds. The available payout types are:
 
 - `ACCOUNT` - Sends the money to the bank account specified at the `bankaccount_id` API parameter
 - `WALLET` - Sends the money to the wallet specified at the `wallet_id` API parameter
 
-The final status of this process shall be `PENDING_VALIDATE`.
+The order status right after the acceptance is `ACCEPTED`, and it becomes `PENDING_VALIDATE` once the payout details are set.
 
 ### 4. The order is validated.
 
-At this moment, the money will be held and waiting for release. **This action is not automatic and you are responsible to trigger the validation**, depending on your business rules. Use [our API](/developers) to complete this action or use our Dashboard [Order Actions](/dashboard#orderactions).
+At this moment, the money is held by us and waiting for release. **Validating an order means that you (the marketplace) confirm that the funds can be released to the seller**, usually because the service was delivered or the goods were received.
+
+Until this validation happens **the money does not leave our platform**, no matter that the buyer already paid and the seller already accepted the order. The seller's acceptance is not enough to release the funds: the marketplace has the final word.
+
+**This action is not automatic and you are responsible to trigger the validation**, depending on your business rules. Use [our API](/developers) to complete this action or use our Dashboard [Order Actions](/dashboard#orderactions).
 
 The status at this moment shall be `PENDING_RELEASE`.
 
@@ -72,9 +76,9 @@ Remember. As money travels from the customer to your (or other) bank account, th
 - `FAILURE` - The order payin has failed. The reason could be checked on the payins list.
 - `PUBLISHED` - The order has been paid and is waiting for acceptance.
 - `CANCELLED` - The order has been canceled by the buyer. The refund is automatically done.
-- `ACCEPTED` - The order has been accepted by the seller and waiting for payout details.
+- `ACCEPTED` - The seller has agreed to the transaction and the order is waiting for payout details.
 - `REJECTED` - The order has been rejected by the seller. The refund will be manually handled.
-- `PENDING_VALIDATE` - The payout details are completed and the order is waiting to be validated by someone (usually you or your platform).
+- `PENDING_VALIDATE` - The payout details are completed and the order is waiting for the marketplace to confirm that the money can be released. The funds are still held by us.
 - `PENDING_RELEASE` - The order has been validated and waiting to be released. This process is automatic and does not require further action by your part.
 - `BLOCKED_RELEASE` - The order release has been blocked for some reason and will not be completed. Contact us for more information.
 - `RELEASED` - The order has been released.
