@@ -119,12 +119,13 @@ Stripe rejects cardholder names containing digits or special characters. `Test U
 curl -X POST {{endpoint}}/2.0/customers/{customer_uuid}/cards \
   -H "Authorization: Bearer {token}" \
   -H "Content-Type: application/json" \
-  -d '{ "wallet_id": "wRe8bN" }'
+  -d '{ "payin_type": "STRIPE", "wallet_id": 7485 }'
 ```
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `wallet_id` | string | Yes | UUID of the wallet that funds the card. Must belong to the customer and be in EUR. |
+| `payin_type` | string | Yes | `STRIPE`. |
+| `wallet_id` | integer | Yes | ID of the wallet that funds the card. Must belong to the customer and be in EUR. |
 
 Response:
 
@@ -350,10 +351,10 @@ curl -X POST {{endpoint}}/2.0/wallets \
 curl -X POST {{endpoint}}/2.0/customers/{customer_uuid}/cards \
   -H "Authorization: Bearer {token}" \
   -H "Content-Type: application/json" \
-  -d '{ "wallet_id": "{wallet_uuid}" }'
+  -d '{ "payin_type": "STRIPE", "wallet_id": {wallet_id} }'
 ```
 
-`customer_id` here is the numeric customer id, while `wallet_id` on the card endpoint is the wallet **UUID**.
+Both `customer_id` and `wallet_id` are numeric ids, as in every `POST`; UUIDs are only used in URLs.
 
 ### 5. Fund the wallet
 

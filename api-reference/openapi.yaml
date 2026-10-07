@@ -762,7 +762,7 @@ paths:
 
         - `DCP`, `DCP_AUTH`: tokenizes a card. The response includes a `tokenization_link` the customer must visit to enter the card details.
         - `STRIPE`: issues a virtual card against `wallet_id`. See [Stripe Authorization](/guides/stripe-authorization).
-        - `M2P_ISSUING` (only when card issuing is enabled): issues a card linked to a wallet previously created with `POST /wallets` and `type: M2P_ISSUING`. Issuance is asynchronous: the card is returned with `confirmed: false` and becomes `confirmed: true`, with the issuer token in `gateway_reference_id`, once the issuer confirms it.
+        - `M2P_ISSUING` (only when card issuing is enabled): issues a card linked to a wallet previously created with `POST /wallets` and `type: M2P_ISSUING`. Issuance is asynchronous: the card is returned with `confirmed: false` and becomes `confirmed: true`, with the issuer token in `gateway_reference_id`, once the issuer confirms it. See [M2P Issuing](/guides/m2p-issuing).
       operationId: createCustomerCard
       tags: [Customers]
       parameters:
@@ -776,15 +776,15 @@ paths:
               required: [payin_type]
               example:
                 payin_type: M2P_ISSUING
-                wallet_id: b3l2bk
+                wallet_id: 51
               properties:
                 payin_type:
                   type: string
                   enum: [DCP, DCP_AUTH, STRIPE, M2P_ISSUING]
                 wallet_id:
-                  type: string
-                  description: UUID of the wallet that backs the card. Required for `STRIPE` and `M2P_ISSUING`. Must belong to the customer.
-                  example: b3l2bk
+                  type: integer
+                  description: ID of the wallet that backs the card. Required for `STRIPE` and `M2P_ISSUING`. Must belong to the customer.
+                  example: 51
                 ficha_beneficiario:
                   type: object
                   description: "`M2P_ISSUING` only. Optional cardholder data; cards are issued anonymous by default."
