@@ -762,7 +762,7 @@ paths:
 
         - `DCP`, `DCP_AUTH`: tokenizes a card. The response includes a `tokenization_link` the customer must visit to enter the card details.
         - `STRIPE`: issues a virtual card against `wallet_id`. See [Stripe Authorization](/guides/stripe-authorization).
-        - `M2P_ISSUING` (only when card issuing is enabled): issues a card linked to a wallet previously created with `POST /wallets` and `type: M2P_ISSUING`. Issuance is asynchronous: the card is returned with `confirmed: false` and becomes `confirmed: true`, with the issuer token in `gateway_reference_id`, once the issuer confirms it. See [M2P Issuing](/guides/m2p-issuing).
+        - `M2P_ISSUING` (only when card issuing is enabled): issues a card linked to a wallet previously created with `POST /wallets` and `type: M2P_ISSUING`. Issuance is asynchronous: the card is returned with `confirmed: false` and becomes `confirmed: true`, with the issuer token in `gateway_reference_id`, once the issuer confirms it.
       operationId: createCustomerCard
       tags: [Customers]
       parameters:
