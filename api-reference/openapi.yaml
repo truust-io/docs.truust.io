@@ -755,6 +755,68 @@ paths:
                     type: array
                     items:
                       $ref: "#/components/schemas/Card"
+    post:
+      summary: Add card to customer
+      description: |
+        Adds a card to a customer. The behaviour depends on `payin_type`:
+
+        - `DCP`, `DCP_AUTH`: tokenizes a card. The response includes a `tokenization_link` the customer must visit to enter the card details.
+        - `STRIPE`: issues a virtual card against `wallet_id`. See [Stripe Authorization](/guides/stripe-authorization).
+        - `M2P_ISSUING` (only when card issuing is enabled): issues a card linked to a wallet previously created with `POST /wallets` and `type: M2P_ISSUING`. Issuance is asynchronous: the card is returned with `confirmed: false` and becomes `confirmed: true`, with the issuer token in `gateway_reference_id`, once the issuer confirms it.
+      operationId: createCustomerCard
+      tags: [Customers]
+      parameters:
+        - $ref: "#/components/parameters/CustomerUuid"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [payin_type]
+              example:
+                payin_type: M2P_ISSUING
+                wallet_id: b3l2bk
+              properties:
+                payin_type:
+                  type: string
+                  enum: [DCP, DCP_AUTH, STRIPE, M2P_ISSUING]
+                wallet_id:
+                  type: string
+                  description: UUID of the wallet that backs the card. Required for `STRIPE` and `M2P_ISSUING`. Must belong to the customer.
+                  example: b3l2bk
+                ficha_beneficiario:
+                  type: object
+                  description: "`M2P_ISSUING` only. Optional cardholder data; cards are issued anonymous by default."
+                  properties:
+                    nombre: { type: string }
+                    primer_apellido: { type: string }
+                    segundo_apellido: { type: string }
+                    nif: { type: string }
+                    email: { type: string, format: email }
+                    telefono: { type: string }
+                    fecha_nacimiento: { type: string, format: date }
+                    calle: { type: string }
+                    numero: { type: string }
+                    codigo_postal: { type: string }
+                    localidad: { type: string }
+                product_id:
+                  type: string
+                  description: "`M2P_ISSUING` only. Card product identifier."
+                card_type:
+                  type: string
+                  description: "`M2P_ISSUING` only. Card type or program code."
+      responses:
+        "200":
+          description: Card created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Card"
+        "404":
+          description: Customer or wallet not found, or the wallet is not an `M2P_ISSUING` wallet of this customer.
+        "422":
+          $ref: "#/components/responses/ValidationError"
 
   /customers/{uuid}/bankaccounts:
     get:
@@ -1800,7 +1862,7 @@ paths:
                   description: Pass `source` to create a wallet for the authenticated account. Pass `user` for a customer wallet (use with `customer_id`).
                 type:
                   type: string
-                  enum: [CURRENCYCLOUD, CLEARJUNCTION]
+                  enum: [CURRENCYCLOUD, CLEARJUNCTION, M2P_ISSUING]
                   description: Optional wallet provider type.
                 tag:
                   type: string
@@ -3373,6 +3435,10 @@ components:
           format: uri
           nullable: true
           description: URL to complete card tokenization. Only present immediately after creation.
+        gateway_reference_id:
+          type: string
+          nullable: true
+          description: Identifier of the card at the issuer (`STRIPE`, `M2P_ISSUING`). Only present for cards linked to a wallet.
         created_at:
           type: string
           format: date-time
