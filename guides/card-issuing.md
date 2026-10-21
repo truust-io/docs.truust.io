@@ -92,15 +92,15 @@ You use the same orders, payins and payouts you already use for any other wallet
 
 This is the one real difference between issuers, and it decides how fast things happen.
 
-### Truust authorises — `STRIPE`
+### Truust authorises
 
-The wallet balance **is** the card balance. When the cardholder pays, the issuer asks Truust in real time, and Truust approves or declines against the available balance of the wallet. Card issuing and top-ups are immediate.
+With `STRIPE` cards, the wallet balance **is** the card balance. When the cardholder pays, the issuer asks Truust in real time, and Truust approves or declines against the available balance of the wallet. Card issuing and top-ups are immediate.
 
 Every purchase attempt, declines included, is recorded as an order with the `Authorization` category, so you see each payment the moment it happens.
 
-### The issuer authorises — `M2P_ISSUING`, `ICCP`
+### The issuer authorises
 
-The spendable balance is held outside Truust, and every purchase is authorised there without asking Truust. The wallet carries the issuer as its `type` and **mirrors** that balance.
+With `M2P_ISSUING` and `ICCP` cards, the spendable balance is held outside Truust, and every purchase is authorised there without asking Truust. The wallet carries the issuer as its `type` and **mirrors** that balance.
 
 For `M2P_ISSUING`, operations that touch the card are **asynchronous**:
 
