@@ -12,11 +12,11 @@ Card issuing on Truust is built around one idea: **your integration should not d
 
 What changes from one issuer to another is a single parameter, the **card type** (`payin_type`):
 
-| Card type | Issuer | Card | Status |
-|---|---|---|---|
-| `STRIPE` | Stripe Issuing | Virtual Visa card funded by a Truust wallet | Available |
-| `M2P_ISSUING` | CaixaBank (TCR) | Prepaid card | In rollout |
-| `ICCP` | Mastercard iCCP | B2B virtual card with a spending limit, drawing on a parent card | Coming soon |
+| Card type | Issuer | Card |
+|---|---|---|
+| `STRIPE` | Stripe Issuing | Virtual Visa card funded by a Truust wallet |
+| `M2P_ISSUING` | CaixaBank (TCR) | Prepaid card |
+| `M2P_ICCP` | Mastercard iCCP | B2B virtual card with a spending limit, drawing on a parent card |
 
 Switching issuer, or running several of them in parallel for different Accounts, does not require changes in your integration beyond that value.
 
@@ -29,7 +29,7 @@ Switching issuer, or running several of them in parallel for different Accounts,
 | **Account** | Your company in Truust. It owns the issuer configuration and funds the cards from its own wallet. |
 | **Customer** | The cardholder: the person or business the card is issued to. |
 | **Wallet** | The balance behind a card. Every `STRIPE` and `M2P_ISSUING` card is backed by exactly one wallet. |
-| **Parent card** | Only for `ICCP`: the card that holds the balance the virtual cards spend from. Its wallet is the one `ICCP` cards are issued against, so several of them can share it. |
+| **Parent card** | Only for `M2P_ICCP`: the card that holds the balance the virtual cards spend from. Its wallet is the one `M2P_ICCP` cards are issued against, so several of them can share it. |
 | **Card** | The card record: its status, the last four digits and the id of the card at the issuer. Truust never stores the full card number. |
 | **Issuer gateway** | The issuer credentials and programme data of the Account, configured once in the Dashboard under **Source → Edit → Add Other Gateway**. |
 
@@ -59,8 +59,8 @@ curl -X POST {{endpoint}}/2.0/customers/{customer_uuid}/cards \
 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
-| `payin_type` | string | Yes | The card type: `STRIPE`, `M2P_ISSUING`, `ICCP`. |
-| `wallet_id` | integer | Yes | Numeric id of the wallet that backs the card. Must belong to the customer. For `ICCP`, the wallet of the parent card. |
+| `payin_type` | string | Yes | The card type: `STRIPE`, `M2P_ISSUING`, `M2P_ICCP`. |
+| `wallet_id` | integer | Yes | Numeric id of the wallet that backs the card. Must belong to the customer. For `M2P_ICCP`, the wallet of the parent card. |
 
 There are no issuer-specific endpoints. Optional fields that only make sense for one issuer (for instance cardholder data for CaixaBank) are documented in that issuer's guide and ignored by the rest.
 
@@ -100,14 +100,14 @@ Every purchase attempt, declines included, is recorded as an order with the `Aut
 
 ### The issuer authorises
 
-With `M2P_ISSUING` and `ICCP` cards, the spendable balance is held outside Truust, and every purchase is authorised there without asking Truust. The wallet carries the issuer as its `type` and **mirrors** that balance.
+With `M2P_ISSUING` and `M2P_ICCP` cards, the spendable balance is held outside Truust, and every purchase is authorised there without asking Truust. The wallet carries the issuer as its `type` and **mirrors** that balance.
 
 For `M2P_ISSUING`, operations that touch the card are **asynchronous**:
 
 - A new card is returned with `confirmed: false` and becomes `confirmed: true` when the issuer confirms it.
 - A top-up or recovery payout stays `IN_PROGRESS`, with the money held in the order, until the issuer confirms it. It then becomes `CONFIRMED`, or `DENIED` with the payin refunded to its origin.
 
-For `ICCP`, issuing a virtual card is **immediate**: it only assigns a limit, so no money has to move. Balance is loaded and recovered on the parent card.
+For `M2P_ICCP`, issuing a virtual card is **immediate**: it only assigns a limit, so no money has to move. Balance is loaded and recovered on the parent card.
 
 In both cases purchases reach Truust **after** they happen, when the issuer reports them, and are then reflected on the wallet. The wallet balance can therefore lag behind the real one until the next report.
 
@@ -115,7 +115,7 @@ Your integration does not need to poll the issuer or know how it communicates: l
 
 ### At a glance
 
-| | `STRIPE` | `M2P_ISSUING` | `ICCP` |
+| | `STRIPE` | `M2P_ISSUING` | `M2P_ICCP` |
 |---|---|---|---|
 | Who holds the balance | Truust (the wallet) | CaixaBank | The parent card |
 | Who authorises purchases | Truust, in real time | CaixaBank | Mastercard checks the card limit, the parent card issuer checks the balance |
@@ -141,14 +141,14 @@ Prepaid cards issued by CaixaBank. Cards are anonymous by default, with optional
 
 Full details: [M2P Issuing](/guides/m2p-issuing).
 
-### Mastercard iCCP — `ICCP`
+### Mastercard iCCP — `M2P_ICCP`
 
 **iCCP** (In Control for Commercial Payments) is a Mastercard solution for B2B payments, designed for companies that pay many suppliers — for example travel agencies paying hotels, airlines or wholesalers.
 
-An `ICCP` card is a virtual card with a particularity: it always **hangs from a parent card**.
+An `M2P_ICCP` card is a virtual card with a particularity: it always **hangs from a parent card**.
 
 - **Parent card.** The company's corporate card. It is the only card that holds money: the company loads funds onto it.
-- **`ICCP` cards.** Created against the parent card, one per payment or use case. They hold **no balance of their own**: each one has a **limit**, a spending cap that can be restricted by:
+- **`M2P_ICCP` cards.** Created against the parent card, one per payment or use case. They hold **no balance of their own**: each one has a **limit**, a spending cap that can be restricted by:
 
 | Control | Example |
 |---|---|
@@ -171,7 +171,7 @@ Virtual C  limit 3,000 €
 Purchase of 1,200 € with A     → parent card 8,800 €, A has 800 € of limit left
 ```
 
-On Truust, `ICCP` follows the same contract as the other card types: cards are issued with `POST /customers/{uuid}/cards`, `payin_type: "ICCP"` and the `wallet_id` of the parent card, plus the controls. Balance is loaded onto the parent card with regular orders, and purchases are reported back as they are charged.
+On Truust, `M2P_ICCP` follows the same contract as the other card types: cards are issued with `POST /customers/{uuid}/cards`, `payin_type: "M2P_ICCP"` and the `wallet_id` of the parent card, plus the controls. Balance is loaded onto the parent card with regular orders, and purchases are reported back as they are charged.
 
 The full card number, expiry and CVC are generated by Mastercard and never pass through the Truust API. They are shown to the company through a short-lived secure link, in the same spirit as the Stripe secure elements. Once delivered, keeping them safe is the responsibility of whoever uses the card.
 
@@ -183,7 +183,7 @@ The full card number, expiry and CVC are generated by Mastercard and never pass 
 |---|---|
 | Instant issuing and real-time control of every purchase | `STRIPE` |
 | Prepaid cards from a Spanish bank, anonymous or nominative | `M2P_ISSUING` |
-| Single-use or capped virtual cards to pay suppliers, funded from one pool | `ICCP` |
+| Single-use or capped virtual cards to pay suppliers, funded from one pool | `M2P_ICCP` |
 
 The choice is made per Account when the issuer gateway is configured. Contact the Truust team to enable an issuer on your Account.
 
@@ -192,8 +192,8 @@ The choice is made per Account when the issuer gateway is configured. Contact th
 ## Notes
 
 - Always send numeric ids (`customer_id`, `wallet_id`) in request bodies; UUIDs are only used in URLs.
-- One `STRIPE` or `M2P_ISSUING` card per wallet. Issuing another card means creating another wallet. `ICCP` cards are the exception: many can be issued against the wallet of the same parent card.
-- A limit is not a balance. The sum of the limits of the `ICCP` cards can exceed the parent card balance; each purchase still needs enough balance on the parent card.
+- One `STRIPE` or `M2P_ISSUING` card per wallet. Issuing another card means creating another wallet. `M2P_ICCP` cards are the exception: many can be issued against the wallet of the same parent card.
+- A limit is not a balance. The sum of the limits of the `M2P_ICCP` cards can exceed the parent card balance; each purchase still needs enough balance on the parent card.
 - Truust never stores or returns the full card number. Only the last four digits are exposed in `alias`.
 - For issuer-authorised cards, treat `confirmed` and the payout status as the source of truth: an operation is done when the issuer has confirmed it, not when the API accepts it.
 - Cancelling a card cannot be undone. Issue a new one instead.
