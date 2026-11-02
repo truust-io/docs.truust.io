@@ -190,6 +190,10 @@ paths:
                   type: integer
                   enum: [0, 1]
                   description: Allow sending a receipt when a payment is performed.
+                allow_refund_receipt:
+                  type: integer
+                  enum: [0, 1]
+                  description: Allow sending a receipt when a refund is performed.
                 allow_receipt_self:
                   type: integer
                   enum: [0, 1]
