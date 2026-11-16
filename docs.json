@@ -29,6 +29,7 @@
               "hosted-checkout",
               "payment-methods",
               "payment-flows",
+              "guides/card-issuing",
               "reporting"
             ]
           },
