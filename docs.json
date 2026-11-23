@@ -26,8 +26,9 @@
             "group": "Platform",
             "pages": [
               "dashboard",
-              "hosted-checkout",
               "payment-methods",
+              "hosted-checkout",
+              "guides/pci-card-module",
               "payment-flows",
               "guides/card-issuing",
               "reporting"

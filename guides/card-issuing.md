@@ -1,6 +1,6 @@
 ---
 title: 'Card Issuing: One API, Any Issuer'
-sidebarTitle: 'Card issuing'
+sidebarTitle: 'Card Issuing'
 ---
 
 > Issue payment cards to your customers through a single API, whatever issuer sits underneath. Truust is multi-tenant and issuer-agnostic: every Account chooses which issuer backs its cards, and the same calls create cards, fund them and track what is spent. This guide explains the common model; each issuer has its own guide for the details.
