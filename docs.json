@@ -27,8 +27,19 @@
             "pages": [
               "dashboard",
               "payment-methods",
-              "hosted-checkout",
-              "guides/pci-card-module",
+              {
+                "group": "The Hosted Checkout",
+                "pages": [
+                  "hosted-checkout",
+                  "guides/pci-card-module"
+                ]
+              },
+              {
+                "group": "The POS Checkout",
+                "pages": [
+                  "guides/card-present-payments"
+                ]
+              },
               "payment-flows",
               "guides/card-issuing",
               "reporting"

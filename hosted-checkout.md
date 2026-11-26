@@ -1,5 +1,6 @@
 ---
 title: The Hosted Checkout
+sidebarTitle: Online
 ---
 
 > Truust Hosted Checkout: the ultimate payment hub. Build and scale the payment experience in any market and channel.

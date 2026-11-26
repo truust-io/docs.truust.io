@@ -1,6 +1,6 @@
 ---
 title: 'PCI Card Module: Capture, Store and Show Cards'
-sidebarTitle: 'PCI Card Module'
+sidebarTitle: 'Online PCI'
 ---
 
 > Take card payments in a card form with your own look, keep the card for later and show it back to your customers. Truust keeps everything that handles card data in a dedicated PCI module, deployed in a PCI DSS certified environment, so your integration only deals with ids and links.
