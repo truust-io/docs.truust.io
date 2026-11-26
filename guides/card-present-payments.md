@@ -52,9 +52,9 @@ sequenceDiagram
 
 The Truust Checkout app and the bank payment app run on the same Android device.
 
-1. Your system creates the **order** for the amount to collect, assigning it to the service account logged in on the device that will collect the payment.
+1. Your system creates the **order** for the amount to collect, assigning it to the manager logged in on the device that will collect the payment.
 2. Your system creates a **payin** with the card-present type. The payin is created in `CREATED` status and stays pending until the device reports a result.
-3. Truust sends a push notification to the Truust Checkout app logged in with that service account.
+3. Truust sends a push notification to the Truust Checkout app logged in with that manager.
 4. The Truust Checkout app asks for confirmation and launches the bank payment app with the amount and the gateway credentials configured in the account.
 5. The buyer taps their card on the device (and enters the PIN if requested).
 6. The bank app returns the result to the Truust Checkout app.
@@ -63,53 +63,63 @@ The Truust Checkout app and the bank payment app run on the same Android device.
 
 ---
 
-## Accounts, Gateways, Service Accounts and Devices
+## Setup Options
 
-A card-present integration relies on four pieces. Getting the relationship between them right is what makes each payment reach the right device with the right bank credentials.
+A card-present integration relies on four pieces:
+
+| Piece | What it is |
+|---|---|
+| **Account** | The merchant that sells and gets paid: a shop, a clinic, a center. Orders, payins and webhooks belong to it. |
+| **Gateway** | The credentials of a payment method contracted by the account with its bank. A card-present gateway (`TAP_PHONE`, `TAP_PAY`...) is configured the same way as an online one (`REDSYS_V2`...), both can coexist, and an account can have several gateways of the same type, for example one per bank terminal. |
+| **Manager** | A user of the account. Managers log in to the Dashboard and to the Truust Checkout app, and a manager can belong to several accounts. |
+| **Device** | The Android phone or terminal where the Truust Checkout app and the bank app are installed. |
+
+How you combine them depends on whether you need to send each payment to a specific device.
+
+<Note>
+The Truust Checkout app works with a single account: the first one linked to the manager it logs in with. A manager linked to several accounts can only collect payments for one of them on a device.
+</Note>
+
+### Shared setup
+
+The simplest setup: the account has one card-present gateway, and any of its managers can log in to the Truust Checkout app on any device. You create the order and the payin with the card-present type, and the payment is collected from the order detail in the app, on whichever device the merchant chooses.
+
+Every device collects with the same bank credentials, and Truust does not route the payment to any device in particular.
+
+### Per-device setup
+
+When your system must send each payment to a specific device, without anyone looking for the order in the app, give every device its own identity:
+
+- **A gateway per device**, with the credentials of that device's bank terminal.
+- **A service account per device**: a manager created only for that device (e.g. `reception-1@clinic.example`), that represents the device and not a person.
 
 ```mermaid
 flowchart TD
     A["Account<br/>(the merchant, e.g. a clinic)"]
-    A --> G1["Online gateway<br/>REDSYS_V2"]
-    A --> G2["Card-present gateway<br/>TAP_PHONE / TAP_PAY"]
+    A --> G1["Gateway TAP_PHONE<br/>terminal 1"]
+    A --> G2["Gateway TAP_PHONE<br/>terminal 2"]
     A --> M1["Service account<br/>reception-1@clinic.example"]
     A --> M2["Service account<br/>cabin-2@clinic.example"]
-    M1 --> D1["Android device 1<br/>Truust Checkout + bank app"]
-    M2 --> D2["Android device 2<br/>Truust Checkout + bank app"]
+    G1 --- D1["Android device 1"]
+    M1 --- D1
+    G2 --- D2["Android device 2"]
+    M2 --- D2
 ```
 
-| Piece | What it is | Rule |
-|---|---|---|
-| **Account** | The merchant that sells and gets paid: a shop, a clinic, a center. Orders, payins and webhooks belong to it. | One account per merchant. |
-| **Gateway** | The credentials of a payment method contracted by the account with its bank. A card-present gateway (`TAP_PHONE`, `TAP_PAY`...) is configured the same way as an online one (`REDSYS_V2`...), and both can coexist in the same account. | The bank credentials are those of the account: every device of the account collects with them. |
-| **Service account** | The identity the Truust Checkout app on a device logs in with. It represents a device, not a person. | One service account per device, and one account per service account. |
-| **Device** | The Android phone or terminal where the Truust Checkout app and the bank app are installed. | Logged in with its own service account. |
+Your system then addresses each payment to a device:
 
-<Note>
-In the API, a service account is a **manager** of the account: you create it with `POST /2.0/managers` and address it with the `X-Truust-Manager` header. In general a manager is a person who uses the Dashboard and can belong to several accounts. The rules below apply only to managers used as service accounts for card-present devices.
-</Note>
+1. It creates the order with the `X-Truust-Manager` header, set to the email of the device's service account. Truust assigns the order to it **only if it belongs to the account** that owns the API token. Otherwise the header is ignored and the order is created unassigned, so no device will receive it.
+2. It creates the payin with the `gateway_id` of the device's gateway (see [Step 5](#step-5-create-the-payin)).
+3. Truust sends a push notification to the device logged in with that service account, and the device launches the bank app with the credentials of that gateway.
 
-### One service account per device
+In this setup, a service account must stay tied to one device and one account:
 
-Truust keeps, for every service account, **the device it last logged in from**: push notifications and the availability heartbeat (`last_alive`) are linked to the service account, not to the device. If two devices log in with the same service account, only the last one to log in receives payment requests, and the heartbeat of one hides that the other is off.
-
-That is why each device needs its own service account, and why the order is addressed to a service account: choosing the service account is choosing the device that will collect the payment.
-
-### One account per service account
-
-The Truust Checkout app works with **a single account**: the first account linked to the service account it logs in with. A service account linked to two accounts would only see, collect and refund the orders of one of them, and payment requests for the other account would fail on the device.
-
-Use a different email for each service account of each account. If several merchants share devices, create one service account per account and device (e.g. `reception-1@clinic-bcn.example` and `reception-1@clinic-mad.example`), never the same one in both.
+- **Not shared between devices.** Truust keeps, for every manager, only **the device it last logged in from**: push notifications and the availability heartbeat (`last_alive`) follow the last login. If two devices log in with the same service account, only the last one receives payment requests.
+- **Not shared between accounts.** Since the app works with the first account of the manager, a service account linked to two accounts would not receive the payments of the other one. Use a different email for each service account of each account.
 
 <Warning>
 `POST /2.0/managers` with an email that already exists does not create a new manager: if the password matches, it links the existing one to your account as well. Do not reuse service account emails across accounts.
 </Warning>
-
-### How an order reaches a device
-
-1. Your system creates the order with the `X-Truust-Manager` header, set to the email of the service account. Truust assigns the order to it **only if the service account belongs to the account** that owns the API token. Otherwise the header is ignored and the order is created unassigned, so no device will receive it.
-2. When the payin is created, Truust sends the push notification to the device last logged in with the service account assigned to the order.
-3. The device launches the bank app with the credentials of the account's card-present gateway.
 
 <Note>
 Push notifications to the Truust Checkout app are enabled per platform. Contact Truust support to confirm they are active for your platform before going live.
@@ -119,7 +129,7 @@ Push notifications to the Truust Checkout app are enabled per platform. Contact 
 
 ## Prerequisites
 
-- A Truust account with the `TAP_*` type in its list of allowed gateways (see [Step 1](#step-1-allow-the-gateway-on-the-account)).
+- A Truust account with the `TAP_*` type in its list of allowed gateways (see [Step 1](#step-1-allow-the-gateway)).
 - Card-present credentials provided by the merchant's acquiring bank (merchant number, terminal number and activation code for `TAP_PHONE`).
 - An Android device with:
   - The **Truust Checkout** app (provided by Truust as an APK, optionally with your own look & feel).
@@ -129,7 +139,7 @@ Push notifications to the Truust Checkout app are enabled per platform. Contact 
 
 ---
 
-## Step 1: Allow the Gateway on the Account
+## Step 1: Allow the Gateway
 
 A gateway type can only be created on an account if it is included in the account's `allowed_gateways`. You can set it when creating the account:
 
@@ -178,11 +188,9 @@ Fields required by each type:
 For `TAP_PHONE` the Truust Checkout app registers the Smartphone TPV app automatically with these credentials the first time a payment is launched. The merchant does not need to log in manually in the bank app. If the credentials in the gateway are wrong, the payment will fail with a registration error even if the bank app has a session open.
 </Note>
 
-## Step 3: Create the Service Accounts
+## Step 3: Create the Managers
 
-The Truust Checkout app on each device logs in with a **service account**: the identity the device uses to receive and report payments, not a specific employee. Service accounts are created as managers of the account.
-
-Create **one service account per device** (e.g. `reception-1@clinic.example`, `cabin-2@clinic.example`), so that each order can be sent to a specific device and its availability can be tracked individually, and never link the same service account to more than one account (see [One service account per device](#one-service-account-per-device) and [One account per service account](#one-account-per-service-account)).
+The Truust Checkout app logs in with a manager of the account. In the [per-device setup](#per-device-setup), create one **service account** per device (e.g. `reception-1@clinic.example`, `cabin-2@clinic.example`), so that each order can be sent to a specific device and its availability can be tracked individually.
 
 ```bash
 curl -X POST {{endpoint}}/2.0/managers \
@@ -192,11 +200,11 @@ curl -X POST {{endpoint}}/2.0/managers \
   -d password="{password}"
 ```
 
-The response returns the service account `uuid`, which you can use later to check whether the device is online (see [Device Availability](#device-availability)).
+The response returns the manager `uuid`, which you can use later to check whether the device is online (see [Device Availability](#device-availability)).
 
 ## Step 4: Create the Order
 
-Create the order with `POST /2.0/orders` and send the `X-Truust-Manager` header with the email of the service account logged in on the device that will collect the payment. The order is assigned to that service account, and that device will receive the payment request.
+Create the order with `POST /2.0/orders` and send the `X-Truust-Manager` header with the email of the manager logged in on the device that will collect the payment. The order is assigned to that manager, and that device will receive the payment request.
 
 ```bash
 curl -X POST {{endpoint}}/2.0/orders \
@@ -220,7 +228,9 @@ curl -X POST {{endpoint}}/2.0/payins \
   -d type=TAP_PHONE
 ```
 
-The payin is created in `CREATED` status. The device logged in with the service account assigned to the order receives a push notification, shows the payment details and, once accepted, opens the bank payment app so the buyer can tap their card.
+If the account has several gateways of the same type, as in the [per-device setup](#per-device-setup), send `gateway_id` to choose the gateway of the device that will collect the payment.
+
+The payin is created in `CREATED` status. The device logged in with the manager assigned to the order receives a push notification, shows the payment details and, once accepted, opens the bank payment app so the buyer can tap their card.
 
 <Note>
 The payment can also be retried from the order detail in the Truust Checkout app, for example if the device was offline when the push notification was sent.
@@ -247,7 +257,7 @@ When the payin is confirmed, the masked card number used in the payment is avail
 Card-present refunds also require the card to be **physically present**, and it must be the **same card** used for the original payment.
 
 1. Request the refund through the API with [`POST /2.0/payins/{id}/refund`](/api-reference/refund-payin), or from the order detail in the Truust Checkout app.
-2. The refund is created in `CREATED` status and Truust sends a push notification to the device logged in with the service account assigned to the order.
+2. The refund is created in `CREATED` status and Truust sends a push notification to the device logged in with the manager assigned to the order.
 3. The Truust Checkout app opens the bank payment app in refund mode, with the original transaction reference.
 4. The buyer taps the same card. The 40-second timeout also applies.
 5. The device reports the result and Truust notifies you.
@@ -275,7 +285,7 @@ The payload includes the account the order belongs to, so a single endpoint can 
 
 Since card-present payments are synchronous, it is useful to know whether the collecting device is available before sending a payment to it.
 
-While the service account is logged in on the device and the Truust Checkout app is in the **foreground**, the app reports a heartbeat to Truust **every minute**. The last heartbeat is available in the `last_alive` property of the service account (`YYYY-MM-DD hh:mm:ss`):
+While the manager is logged in on the device and the Truust Checkout app is in the **foreground**, the app reports a heartbeat to Truust **every minute**. The last heartbeat is available in the `last_alive` property of the manager (`YYYY-MM-DD hh:mm:ss`):
 
 ```bash
 curl {{endpoint}}/2.0/managers/{uuid} \
@@ -301,6 +311,6 @@ If `last_alive` is older than ~2 minutes, consider the device unavailable (phone
 | Registration / login error | Wrong `merchant_id`, `terminal_id` or activation code in the gateway | Check the gateway credentials against the bank's onboarding data |
 | Errors `912`, `014`, `104` (Smartphone TPV) | The Smartphone TPV app is not available | Check that the app is installed, up to date and registered |
 | Payment denied after ~40 seconds | The card was not presented in time | Create a new payin and try again |
-| No push notification on the device | The device is not logged in with the service account, the order was not assigned with `X-Truust-Manager` (or the service account does not belong to the account), the same service account is logged in on another device, or the device has no connectivity | Check `last_alive` and retry from the order detail in the app |
-| The device does not see the order | The service account is linked to more than one account and the app is working with the other one | Use one service account per account |
+| No push notification on the device | The device is not logged in with the manager, the order was not assigned with `X-Truust-Manager` (or the manager does not belong to the account), the same manager is logged in on another device, or the device has no connectivity | Check `last_alive` and retry from the order detail in the app |
+| The device does not see the order | The manager is linked to more than one account and the app is working with the other one | Use a different manager for each account |
 | The payment option is not shown | The account has no `TAP_*` gateway configured | Complete [Step 2](#step-2-configure-the-gateway) |
