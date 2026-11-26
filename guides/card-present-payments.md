@@ -1,5 +1,5 @@
 ---
-title: 'Card-Present Payments (Tap to Pay & Tap to Phone)'
+title: 'Card-Present Payments'
 sidebarTitle: 'In-person'
 ---
 
